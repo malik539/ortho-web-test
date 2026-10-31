@@ -16,7 +16,9 @@ import { FAQS } from '../data/content.js';
 
 const jsonld = [
   {
-    '@type': 'ProfessionalService', '@id': `${SITE.url}/#service`, name: SITE.name, url: `${SITE.url}/`,
+    // A nationwide service, not a LocalBusiness: ProfessionalService would require a street address.
+    '@type': 'Service', '@id': `${SITE.url}/#service`, name: SITE.name, url: `${SITE.url}/`,
+    serviceType: 'Marketing for orthodontic practices',
     description: SITE.description, provider: { '@id': `${SITE.url}/#organization` }, areaServed: 'US',
     hasOfferCatalog: {
       '@type': 'OfferCatalog', name: 'Marketing for orthodontic practices',

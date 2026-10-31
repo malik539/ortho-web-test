@@ -17,6 +17,8 @@ const { c } = Astro.props;
 const trail = crumbs({ label: 'Results', href: '/results/' }, { label: c.practice, href: `/results/${c.slug}/` });
 ---
 <BaseLayout
+  image="/og/og-results.png"
+  imageAlt="Results — Same practice. Different market."
   title={`Case file: ${c.practice}`}
   description={`${c.summary} ${c.insight}`}
   noindex={c.illustrative}

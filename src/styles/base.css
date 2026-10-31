@@ -314,3 +314,23 @@ html.motion-failed [data-reveal]::after { opacity: 0 !important; }
 .credits__nav a:hover { color: var(--c-signal); }
 .credits__fine { color: var(--c-nitinol-dim); }
 
+
+/* ======================================================================
+   SCENE CUT — cross-document view transitions (Chromium 126+, Safari 18.2+).
+   The next page opens from the midline, the way a jump cut works on the homepage; the old page
+   recedes on the exit curve. The nav is its own layer so it holds still across the cut.
+   Browsers without support navigate normally. Reduced motion (OS or in-site toggle) skips it:
+   the media query covers the OS setting, the inline head script skips it for the toggle.
+   ====================================================================== */
+@view-transition { navigation: auto; }
+.nav { view-transition-name: site-nav; }
+::view-transition-group(root) { animation-duration: 700ms; }
+::view-transition-old(root) { animation: vt-recede 360ms var(--ease-release) both; }
+::view-transition-new(root) { animation: vt-midline 700ms var(--ease-force) both; }
+::view-transition-group(site-nav) { animation-duration: 420ms; animation-timing-function: var(--ease-settle); }
+html[data-motion="lite"]::view-transition-new(root) { animation-duration: 480ms; }
+@keyframes vt-midline { from { clip-path: inset(50% 0 50% 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes vt-recede { to { opacity: 0.35; transform: scale(0.985); } }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}

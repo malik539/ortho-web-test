@@ -16,6 +16,8 @@ const { p, next } = Astro.props;
 const trail = crumbs({ label: 'Treatment', href: '/treatment/' }, { label: p.name, href: `/treatment/${p.slug}/` });
 ---
 <BaseLayout
+  image={`/og/og-${p.slug}.png`}
+  imageAlt={`Phase ${p.number} · ${p.name} — ${p.headline.join(' ')}`}
   title={`${p.name}: ${p.summary} for orthodontists`}
   description={p.copy}
   jsonld={[breadcrumbLd(trail), serviceLd(p), faqLd(p.faqs)]}

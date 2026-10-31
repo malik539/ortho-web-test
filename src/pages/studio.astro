@@ -10,6 +10,8 @@ import { crumbs, breadcrumbLd } from '../data/seo.js';
 const trail = crumbs({ label: 'Studio', href: '/studio/' });
 ---
 <BaseLayout
+  image="/og/og-studio.png"
+  imageAlt="Studio — A family practice, for family practices."
   title="Studio: a family practice for family practices"
   description={`Ortho Marketing has been family-run since ${SITE.founded}, led by ${SITE.president.title} ${SITE.president.name}. Meet the studio and how we work with orthodontic practices.`}
   jsonld={[breadcrumbLd(trail), { '@type': 'AboutPage', name: 'Studio', url: `${SITE.url}/studio/`, about: { '@id': `${SITE.url}/#organization` } }]}

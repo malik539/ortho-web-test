@@ -20,7 +20,9 @@ const episodeLd = {
 };
 const more = EPISODES.filter((x) => x.slug !== e.slug);
 ---
-<BaseLayout title={`Ep. ${e.number}: ${e.title}`} description={e.summary} jsonld={[breadcrumbLd(trail), episodeLd]} ogType="article">
+<BaseLayout
+  image="/og/og-live.png"
+  imageAlt="Ortho Marketing Live — Conversations on practice growth." title={`Ep. ${e.number}: ${e.title}`} description={e.summary} jsonld={[breadcrumbLd(trail), episodeLd]} ogType="article">
   <PageHero crumbs={trail} lead={`Ep. ${e.number}`} label={SITE.podcast.name} title={[e.title]} lede={e.summary} meta={`${e.guest} · Hosted by ${SITE.podcast.host}`}>
     <p class="cta-row page-hero__cta" data-reveal="rise">
       <a class="btn btn--primary" href={SITE.podcast.appleUrl} rel="noopener" target="_blank"><span>Listen on Apple Podcasts</span><Wire /><span class="sr-only"> (opens in a new tab)</span></a>

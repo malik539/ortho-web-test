@@ -100,6 +100,8 @@ const graph = { '@context': 'https://schema.org', '@graph': [org, { '@type': 'We
         : (w.matchMedia('(pointer: coarse)').matches || low) ? 'lite' : 'full';
       el.setAttribute('data-motion', tier);
       if (seen || tier === 'reduced') c.add('no-loader');
+      // In-site "reduce motion" toggle also skips the cross-document scene cut (base.css § SCENE CUT).
+      w.addEventListener('pagereveal', function (e) { if (e.viewTransition && el.getAttribute('data-motion') === 'reduced') e.viewTransition.skipTransition(); });
       // Failsafe: if scripts never boot (blocked or failed), never strand content invisible.
       w.setTimeout(function () { if (!c.contains('motion-ready') || !c.contains('scenes-ready')) c.add('motion-failed'); }, 4000);
     })(document, window);
