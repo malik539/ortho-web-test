@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ortho Marketing — Light, Continuous Force</title>
+  <meta name="description" content="Concept prototype: a cinematic creative direction for Ortho Marketing, the brand, web and growth studio for orthodontic practices.">
+  <meta name="theme-color" content="#0D0C0B">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body data-scene="dark">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Persistent layers -------------------------------------------------- -->
+<div class="midline" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav" data-nav>
+  <a class="brand" href="#top" aria-label="Ortho Marketing — home">
+    <svg class="brand__mark" viewBox="0 0 28 22" aria-hidden="true">
+      <path d="M2 21 C 2 4, 26 4, 26 21" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <rect x="1" y="12" width="3" height="3" fill="currentColor"/>
+      <rect x="6.6" y="5.6" width="3" height="3" fill="currentColor"/>
+      <rect x="12.5" y="3.4" width="3" height="3" fill="var(--c-ligature)"/>
+      <rect x="18.4" y="5.6" width="3" height="3" fill="currentColor"/>
+      <rect x="24" y="12" width="3" height="3" fill="currentColor"/>
+    </svg>
+    <span class="brand__word">Ortho Marketing</span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#treatment">Treatment</a>
+    <a href="#results">Results</a>
+    <a href="#studio">Studio</a>
+    <a href="#live">Live</a>
+  </nav>
+  <a class="btn btn--primary btn--sm" href="#consult">
+    <span class="hide-sm">Book a consultation</span><span class="show-sm">Consult</span><span class="btn__wire" aria-hidden="true"></span>
+  </a>
+</header>
+
+<main id="main">
+
+  <!-- COLD OPEN ======================================================== -->
+  <section class="hero" id="top" data-scene="dark" aria-labelledby="hero-title">
+    <div class="hero__light" aria-hidden="true"></div>
+
+    <div class="hero__meta mono" aria-hidden="true">
+      <span>Case file · Ortho Marketing</span>
+      <span>Est. 2008</span>
+      <span>For orthodontic practices</span>
+    </div>
+
+    <h1 class="hero__title" id="hero-title" data-crowd aria-label="We move markets the way you move teeth.">
+      <span class="line">We move markets</span>
+      <span class="line" data-wire-line>the way you move</span>
+      <span class="line"><em>teeth.</em></span>
+    </h1>
+
+    <svg class="hero__wire" data-hero-wire viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 50 L1000 50" />
+    </svg>
+
+    <div class="hero__foot">
+      <p class="lede">
+        Since 2008, we’ve applied the principle you practice every day — <em>light, continuous force</em> — to brands,
+        websites and search. Steadily. Measurably. Until your practice is exactly where it should be.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href="#consult"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
+        <a class="link" href="#results">See the results</a>
+      </div>
+    </div>
+
+    <div class="hero__cue mono" aria-hidden="true"><span class="hero__cue-wire"></span>Scroll to begin treatment</div>
+
+    <aside class="dnote" aria-label="Director's note">
+      <b>Cold open.</b> The operatory light switches on; the headline arrives “crowded” and moves into alignment along the archwire.
+      No video, no stock — the type <i>is</i> the hero image, so LCP is text.
+    </aside>
+  </section>
+
+  <!-- ACT I — DIAGNOSIS ================================================ -->
+  <section class="crowd" id="crowding" data-scene="light" aria-labelledby="crowd-title">
+    <div class="crowd__sticky">
+      <header class="crowd__head wrap">
+        <p class="eyebrow mono"><span>Act I</span> Diagnosis</p>
+        <h2 class="d1" id="crowd-title">Your market is <em>crowded.</em></h2>
+        <p class="crowd__copy">
+          Every practice in your zip code promises a free consult, flexible financing and the latest technology.
+          To a parent comparing options at 11:48&nbsp;p.m., you all look the same.
+        </p>
+      </header>
+
+      <div class="crowd__field" data-crowd-field aria-hidden="true">
+        <span class="claim">Free consultation!</span>
+        <span class="claim claim--cyan">Accepting new patients</span>
+        <span class="claim claim--serif">Award-winning team</span>
+        <span class="claim claim--bold">0% financing</span>
+        <span class="claim">State-of-the-art technology</span>
+        <span class="claim claim--stars">★★★★★</span>
+        <span class="claim claim--cyan">Clear aligners</span>
+        <span class="claim">Smile today!</span>
+        <span class="claim claim--bold">Book now</span>
+        <span class="claim claim--serif">Family friendly</span>
+        <span class="claim claim--cyan">Most insurance accepted</span>
+        <span class="claim">Gentle, caring staff</span>
+        <span class="claim claim--bold">Same-day starts</span>
+        <span class="claim claim--serif">Your smile, our passion</span>
+      </div>
+
+      <div class="crowd__resolve">
+        <h3 class="d2">We don’t push harder.<br><em>We create space.</em></h3>
+        <p>
+          You never force a tooth into a crowded arch — you make room first. Marketing works the same way.
+          We find the space in your market no one else occupies, then move your practice into it.
+        </p>
+      </div>
+    </div>
+
+    <aside class="dnote" aria-label="Director's note">
+      <b>Scroll-scrubbed.</b> The only time category cyan appears on the site is here — as noise.
+      Scrolling applies force: claims drift to the edges and settle, and the center becomes space.
+    </aside>
+  </section>
+
+  <!-- ACT II — TREATMENT PLAN ========================================== -->
+  <section class="plan" id="treatment" data-scene="dark" aria-labelledby="plan-title">
+    <header class="plan__intro wrap">
+      <p class="eyebrow mono"><span>Act II</span> Treatment plan</p>
+      <h2 class="d1" id="plan-title" data-align>Four phases.<br> <em>One continuous force.</em></h2>
+      <p class="lede" data-align>
+        Every engagement follows the arc of good treatment: thorough records, a precise plan,
+        steady movement, and a retention phase that protects the result.
+      </p>
+    </header>
+
+    <div class="plan__body wrap">
+      <div class="plan__rail" aria-hidden="true">
+        <div class="plan__nums">
+          <span class="plan__num is-active">01</span>
+          <span class="plan__num">02</span>
+          <span class="plan__num">03</span>
+          <span class="plan__num">04</span>
+        </div>
+        <div class="plan__track">
+          <span class="plan__fill" data-plan-fill></span>
+          <span class="plan__bracket is-active" style="--at:0%"><i>Records</i></span>
+          <span class="plan__bracket" style="--at:33.333%"><i>Alignment</i></span>
+          <span class="plan__bracket" style="--at:66.666%"><i>Force</i></span>
+          <span class="plan__bracket" style="--at:100%"><i>Retention</i></span>
+        </div>
+      </div>
+
+      <div class="plan__phases">
+        <article class="phase" data-phase="0">
+          <p class="phase__label mono">Phase 01 — Records</p>
+          <h3 class="d2" data-align>Before we move anything, we measure <em>everything.</em></h3>
+          <p class="phase__copy">
+            We start the way you do: with records. A full diagnostic of your market — competitors, search demand,
+            referral patterns, reviews, and the real reasons patients choose one practice over another.
+          </p>
+          <dl class="spec">
+            <div><dt>Deliverables</dt><dd><ul><li>Market cephalometrics (competitive audit)</li><li>Search &amp; demand analysis</li><li>Brand positioning</li><li>Analytics &amp; call-tracking baseline</li></ul></dd></div>
+            <div><dt>Clinical parallel</dt><dd>Photos, scans and a lateral ceph before any appliance goes on.</dd></div>
+            <div><dt>Timeline</dt><dd>Weeks 1–4</dd></div>
+          </dl>
+        </article>
+
+        <article class="phase" data-phase="1">
+          <p class="phase__label mono">Phase 02 — Alignment</p>
+          <h3 class="d2" data-align>An identity and website that feel like your <em>best appointment.</em></h3>
+          <p class="phase__copy">
+            Your brand and website are where a parent decides whether to trust you. We design both from the ground up —
+            identity, photography, film, and a site engineered to turn attention into booked consultations.
+          </p>
+          <dl class="spec">
+            <div><dt>Deliverables</dt><dd><ul><li>Brand identity systems</li><li>Custom websites</li><li>Photography &amp; film direction</li><li>Conversion &amp; booking architecture</li></ul></dd></div>
+            <div><dt>Clinical parallel</dt><dd>Brackets bonded, archwire engaged — the system that carries all future movement.</dd></div>
+            <div><dt>Timeline</dt><dd>Months 1–4</dd></div>
+          </dl>
+        </article>
+
+        <article class="phase" data-phase="2">
+          <p class="phase__label mono">Phase 03 — Force</p>
+          <h3 class="d2" data-align>Steady pressure. <em>Never a burst.</em></h3>
+          <p class="phase__copy">
+            Local SEO, Google Business Profile, paid search and paid social, tuned month by month. Not campaigns that
+            spike and vanish — a continuous, measured force that moves your practice up the map and keeps it there.
+          </p>
+          <dl class="spec">
+            <div><dt>Deliverables</dt><dd><ul><li>Local SEO &amp; map pack</li><li>Paid search &amp; paid social</li><li>Content &amp; video</li><li>Monthly force reports</li></ul></dd></div>
+            <div><dt>Clinical parallel</dt><dd>Light, continuous force — the biomechanical principle behind efficient tooth movement.</dd></div>
+            <div><dt>Timeline</dt><dd>Ongoing, adjusted monthly</dd></div>
+          </dl>
+        </article>
+
+        <article class="phase" data-phase="3">
+          <p class="phase__label mono">Phase 04 — Retention</p>
+          <h3 class="d2" data-align>The work doesn’t end <em>at debond.</em></h3>
+          <p class="phase__copy">
+            Reviews, reputation, social storytelling and referring-doctor relationships — the retention phase that
+            protects every result and turns finished patients into your most persuasive marketing.
+          </p>
+          <dl class="spec">
+            <div><dt>Deliverables</dt><dd><ul><li>Review generation &amp; reputation</li><li>Social storytelling</li><li>Referring-doctor programs</li><li>Patient reactivation</li></ul></dd></div>
+            <div><dt>Clinical parallel</dt><dd>Retainers hold the result. Without them, everything drifts back.</dd></div>
+            <div><dt>Timeline</dt><dd>For the life of the practice</dd></div>
+          </dl>
+        </article>
+      </div>
+    </div>
+
+    <aside class="dnote" aria-label="Director's note">
+      <b>Services as treatment phases.</b> The sticky rail is the archwire; each bracket engages as its phase scrolls into view.
+      Numerals arrive rotated and settle — the alignment reveal, never a generic fade-up.
+    </aside>
+  </section>
+
+  <!-- INTERLUDE — THE CRAFT ============================================ -->
+  <section class="craft" id="craft" data-scene="dark" aria-labelledby="craft-title">
+    <figure class="plate plate--macro" data-radiograph>
+      <!-- Photographic layer -->
+      <svg class="macro macro--photo" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Macro still life: a steel orthodontic bracket with a red elastic ligature, lit by a single raking light on black velvet.">
+        <defs>
+          <radialGradient id="g-key" cx="28%" cy="18%" r="85%">
+            <stop offset="0" stop-color="#2b2723"/>
+            <stop offset=".45" stop-color="#14120f"/>
+            <stop offset="1" stop-color="#070606"/>
+          </radialGradient>
+          <linearGradient id="g-steel" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f3f4f4"/>
+            <stop offset=".18" stop-color="#b9bdbf"/>
+            <stop offset=".42" stop-color="#5d6164"/>
+            <stop offset=".62" stop-color="#c9cdcf"/>
+            <stop offset=".85" stop-color="#4a4e51"/>
+            <stop offset="1" stop-color="#26292b"/>
+          </linearGradient>
+          <linearGradient id="g-steel-dark" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#7d8285"/>
+            <stop offset=".5" stop-color="#34383a"/>
+            <stop offset="1" stop-color="#17191a"/>
+          </linearGradient>
+          <linearGradient id="g-wire" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#5a5e61"/>
+            <stop offset=".28" stop-color="#f6f7f7"/>
+            <stop offset=".55" stop-color="#8c9194"/>
+            <stop offset="1" stop-color="#2a2d2f"/>
+          </linearGradient>
+          <linearGradient id="g-elastic" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ff7a5c"/>
+            <stop offset=".35" stop-color="#e2412b"/>
+            <stop offset="1" stop-color="#7a1609"/>
+          </linearGradient>
+          <linearGradient id="g-spec" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+            <stop offset=".5" stop-color="#fff" stop-opacity=".85"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <pattern id="p-mesh" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="9" height="9" fill="#2c2f31"/>
+            <rect width="4" height="9" fill="#3d4143"/>
+          </pattern>
+          <filter id="f-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="22" dy="30" stdDeviation="22" flood-color="#000" flood-opacity=".75"/>
+          </filter>
+          <filter id="f-soft"><feGaussianBlur stdDeviation="1.2"/></filter>
+          <radialGradient id="g-vignette" cx="50%" cy="50%" r="75%">
+            <stop offset=".55" stop-color="#000" stop-opacity="0"/>
+            <stop offset="1" stop-color="#000" stop-opacity=".8"/>
+          </radialGradient>
+        </defs>
+
+        <rect width="1600" height="900" fill="url(#g-key)"/>
+
+        <!-- archwire runs edge to edge -->
+        <g filter="url(#f-shadow)">
+          <rect x="-20" y="430" width="1640" height="40" rx="6" fill="url(#g-wire)"/>
+        </g>
+
+        <g transform="translate(800 450) scale(1.35)" filter="url(#f-shadow)">
+          <!-- mesh base pad -->
+          <rect x="-205" y="-185" width="410" height="370" rx="58" fill="url(#p-mesh)"/>
+          <rect x="-205" y="-185" width="410" height="370" rx="58" fill="none" stroke="#61666a" stroke-width="3"/>
+          <!-- body -->
+          <rect x="-165" y="-150" width="330" height="300" rx="26" fill="url(#g-steel-dark)"/>
+          <!-- slot -->
+          <rect x="-185" y="-44" width="370" height="88" fill="#0b0c0c"/>
+          <rect x="-185" y="-44" width="370" height="6" fill="#000" opacity=".6"/>
+          <!-- archwire in slot -->
+          <rect x="-185" y="-20" width="370" height="40" fill="url(#g-wire)"/>
+          <!-- elastic ligature -->
+          <rect x="-150" y="-128" width="300" height="256" rx="92" fill="none" stroke="url(#g-elastic)" stroke-width="34"/>
+          <rect x="-150" y="-128" width="300" height="256" rx="92" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="6" transform="translate(-6 -8)" filter="url(#f-soft)"/>
+          <!-- tie wings -->
+          <g>
+            <rect x="-160" y="-170" width="118" height="118" rx="30" fill="url(#g-steel)"/>
+            <rect x="42" y="-170" width="118" height="118" rx="30" fill="url(#g-steel)"/>
+            <rect x="-160" y="52" width="118" height="118" rx="30" fill="url(#g-steel)"/>
+            <rect x="42" y="52" width="118" height="118" rx="30" fill="url(#g-steel)"/>
+          </g>
+          <!-- specular strips -->
+          <g opacity=".75">
+            <rect x="-150" y="-160" width="70" height="10" rx="5" fill="url(#g-spec)"/>
+            <rect x="52" y="-160" width="70" height="10" rx="5" fill="url(#g-spec)"/>
+            <rect x="-150" y="62" width="70" height="8" rx="4" fill="url(#g-spec)" opacity=".6"/>
+            <rect x="52" y="62" width="70" height="8" rx="4" fill="url(#g-spec)" opacity=".6"/>
+          </g>
+          <!-- identification dot (distal-gingival) -->
+          <circle cx="-118" cy="-128" r="7" fill="#e2412b" opacity=".85"/>
+        </g>
+
+        <rect width="1600" height="900" fill="url(#g-vignette)"/>
+      </svg>
+
+      <!-- Radiograph layer: metal is radiopaque (glows); the elastic is radiolucent (disappears) -->
+      <svg class="macro macro--xray" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <radialGradient id="x-bg" cx="50%" cy="50%" r="80%">
+            <stop offset="0" stop-color="#16222b"/>
+            <stop offset="1" stop-color="#05090c"/>
+          </radialGradient>
+          <filter id="x-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="6" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <rect width="1600" height="900" fill="url(#x-bg)"/>
+        <g filter="url(#x-glow)" fill="#cfe0ea">
+          <rect x="-20" y="430" width="1640" height="40" rx="6" opacity=".9"/>
+          <g transform="translate(800 450) scale(1.35)">
+            <rect x="-205" y="-185" width="410" height="370" rx="58" opacity=".22"/>
+            <rect x="-165" y="-150" width="330" height="300" rx="26" opacity=".45"/>
+            <rect x="-185" y="-44" width="370" height="88" fill="#0a1218" opacity=".9"/>
+            <rect x="-185" y="-20" width="370" height="40" opacity=".95"/>
+            <rect x="-160" y="-170" width="118" height="118" rx="30" opacity=".85"/>
+            <rect x="42" y="-170" width="118" height="118" rx="30" opacity=".85"/>
+            <rect x="-160" y="52" width="118" height="118" rx="30" opacity=".85"/>
+            <rect x="42" y="52" width="118" height="118" rx="30" opacity=".85"/>
+          </g>
+        </g>
+        <!-- measurement annotations -->
+        <g class="xray-annot" stroke="#9DB6C6" stroke-width="1.2" fill="none">
+          <path d="M1090 391 H1230 M1090 509 H1230 M1210 391 V509"/>
+          <path d="M600 236 L520 160 H300"/>
+          <path d="M330 472 V600 H120"/>
+          <path d="M556 450 A244 244 0 0 1 650 262" stroke-dasharray="4 6"/>
+        </g>
+        <g class="xray-annot" fill="#9DB6C6" font-family="IBM Plex Mono, monospace" font-size="22" letter-spacing="2">
+          <text x="1246" y="444">SLOT</text>
+          <text x="1246" y="474">.022 × .028″</text>
+          <text x="300" y="146">TIE WING · MESIAL</text>
+          <text x="120" y="632">.019 × .025″ SS ARCHWIRE</text>
+          <text x="400" y="330">TORQUE +17°</text>
+          <text x="1060" y="790" opacity=".75">ELASTIC LIGATURE: RADIOLUCENT</text>
+        </g>
+      </svg>
+
+      <span class="plate__scan" aria-hidden="true"></span>
+      <figcaption class="plate__caption mono">
+        <span>Plate 04</span>
+        <span>Twin bracket, elastic ligature · 100mm macro, f/11 · single strip light, camera left · black velvet</span>
+        <span class="plate__hint">Move across the plate → radiograph</span>
+      </figcaption>
+    </figure>
+
+    <div class="craft__text wrap">
+      <p class="eyebrow mono"><span>Interlude</span> The craft</p>
+      <h2 class="d2" id="craft-title" data-align>We light a bracket the way others light <em>a watch.</em></h2>
+      <p>
+        Precision deserves to be seen. Every image we make for a practice is directed with the discipline of luxury
+        still life — one light, deep shadow, nothing accidental. Move across the plate to see what’s underneath:
+        the same rigor we apply to your data.
+      </p>
+    </div>
+
+    <aside class="dnote" aria-label="Director's note">
+      <b>Photography direction, demonstrated.</b> Macro on black velvet, one raking light, the ligature as the only color.
+      Radiograph mode: metal glows (radiopaque), the elastic vanishes (radiolucent). Annotations use the Radiograph token only.
+    </aside>
+  </section>
+
+  <!-- ACT III — BEFORE / AFTER ========================================= -->
+  <section class="results" id="results" data-scene="light" aria-labelledby="results-title">
+    <header class="results__head wrap">
+      <p class="eyebrow mono"><span>Act III</span> Before / After</p>
+      <h2 class="d1" id="results-title" data-align>Same practice.<br> <em>Different market.</em></h2>
+      <p class="lede" data-align>Orthodontists trust a before-and-after more than any claim. So do we. Drag the wire.</p>
+    </header>
+
+    <div class="compare wrap">
+      <div class="compare__frame" data-compare style="--pos:50%">
+        <div class="compare__chrome mono" aria-hidden="true"><span></span>alderlaneortho.com</div>
+
+        <div class="compare__stage">
+          <!-- BEFORE: the category template -->
+          <div class="mock mock--before" aria-hidden="true">
+            <div class="mb-top">
+              <span class="mb-logo"><i></i>SmileCare Orthodontics</span>
+              <span class="mb-nav">Home · About · Services · Contact</span>
+              <span class="mb-call">Call Today!</span>
+            </div>
+            <div class="mb-hero">
+              <div class="mb-copy">
+                <b>Welcome to SmileCare Orthodontics!</b>
+                <p>We are dedicated to providing the highest quality orthodontic care in a fun and friendly environment!</p>
+                <span class="mb-btn">Schedule Your Free Consultation!</span>
+              </div>
+              <div class="mb-photo"><span>stock photo<br>smiling teen</span></div>
+            </div>
+            <div class="mb-cards">
+              <span><i></i>Braces</span><span><i></i>Clear Aligners</span><span><i></i>Payment Plans</span>
+            </div>
+          </div>
+
+          <!-- AFTER: a practice brand, built on its own palette -->
+          <div class="mock mock--after" aria-hidden="true">
+            <div class="ma-top">
+              <span class="ma-logo">Alder Lane <i>Orthodontics</i></span>
+              <span class="ma-nav">Treatment &nbsp; Doctors &nbsp; First visit</span>
+              <span class="ma-cta">Book a first visit</span>
+            </div>
+            <div class="ma-hero">
+              <div class="ma-copy">
+                <span class="ma-eyebrow">Specialist orthodontists · Since 1994</span>
+                <b>Confidence, <i>quietly engineered.</i></b>
+                <p>Braces and clear aligners for children, teens and adults — planned to the tenth of a millimeter.</p>
+              </div>
+              <div class="ma-plate"><span>Portrait · north window · 85mm</span></div>
+            </div>
+            <div class="ma-strip"><span>4.9 · 640 Google reviews</span><span>Evening &amp; Saturday visits</span><span>Most insurance accepted</span></div>
+          </div>
+
+          <div class="compare__wire" aria-hidden="true"><span class="compare__bracket"></span></div>
+          <span class="compare__tag compare__tag--before mono" aria-hidden="true">Before · Template</span>
+          <span class="compare__tag compare__tag--after mono" aria-hidden="true">After · Ortho Marketing</span>
+        </div>
+
+        <label class="sr-only" for="compare-range">Reveal the redesigned website: drag to compare before and after</label>
+        <input class="compare__range" id="compare-range" type="range" min="0" max="100" value="50" step="1">
+      </div>
+    </div>
+
+    <div class="metrics wrap" role="list">
+      <figure class="metric" role="listitem" data-align>
+        <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
+        <span class="metric__num">+212%</span>
+        <figcaption class="mono">Organic consultation requests, 12 months</figcaption>
+      </figure>
+      <figure class="metric" role="listitem" data-align>
+        <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
+        <span class="metric__num">9<small>/11</small></span>
+        <figcaption class="mono">Target zip codes where the practice holds #1 in the map pack</figcaption>
+      </figure>
+      <figure class="metric" role="listitem" data-align>
+        <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
+        <span class="metric__num">−38%</span>
+        <figcaption class="mono">Cost per new-patient start</figcaption>
+      </figure>
+    </div>
+    <p class="results__note mono wrap">Illustrative figures for concept presentation — replace with verified client results before launch.</p>
+
+    <aside class="dnote" aria-label="Director's note">
+      <b>The format orthodontists already trust.</b> The divider is the archwire. The “after” uses the practice’s own palette:
+      we design their brand, not a copy of ours. Metrics are set as cephalometric annotations.
+    </aside>
+  </section>
+
+  <!-- ACT IV — THE FAMILY ============================================= -->
+  <section class="studio" id="studio" data-scene="dark" aria-labelledby="studio-title">
+    <div class="studio__grid wrap">
+      <figure class="plate plate--portrait" data-align>
+        <svg class="lightplan" viewBox="0 0 400 500" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="200" cy="270" r="34"/>
+            <path d="M166 300 Q200 330 234 300" />
+            <rect x="60" y="80" width="90" height="14" transform="rotate(-38 105 87)"/>
+            <path d="M118 112 L182 236" stroke-dasharray="3 5"/>
+            <path d="M118 112 L214 220" stroke-dasharray="3 5"/>
+            <rect x="300" y="250" width="10" height="110"/>
+            <path d="M200 440 V380" />
+            <rect x="186" y="440" width="28" height="18"/>
+          </g>
+          <g fill="currentColor" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.2">
+            <text x="44" y="60">KEY · NORTH WINDOW</text>
+            <text x="44" y="74">DIFFUSED · 45° HIGH</text>
+            <text x="318" y="306">NEG. FILL</text>
+            <text x="222" y="474">85MM · f/1.8</text>
+            <text x="150" y="222">SUBJECT</text>
+          </g>
+        </svg>
+        <figcaption class="plate__caption mono">
+          <span>Plate 07</span>
+          <span>Portrait, President · north window, 7:10 a.m. · 85mm f/1.8 · negative fill camera right · Portra 400 grade</span>
+        </figcaption>
+      </figure>
+
+      <div class="studio__text">
+        <p class="eyebrow mono"><span>Act IV</span> The family</p>
+        <h2 class="d1" id="studio-title" data-align>A family practice, <em>for family practices.</em></h2>
+        <p class="lede">
+          Ortho Marketing has been family-run since 2008. So are many of the practices we serve — parents and children,
+          partners of thirty years, associates who became owners. We know what it means to build something with your
+          name on it, and to protect it for the next generation.
+        </p>
+        <dl class="facts">
+          <div><dt class="mono">Founded</dt><dd>2008</dd></div>
+          <div><dt class="mono">Structure</dt><dd>Family-run</dd></div>
+          <div><dt class="mono">President</dt><dd>Dean Steinman — 25+ years in orthodontic &amp; dental marketing</dd></div>
+          <div><dt class="mono">Specialism</dt><dd>Orthodontic practices</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <aside class="dnote" aria-label="Director's note">
+      <b>Portrait direction.</b> Real people, real rooms, one motivated key light. The plate shows the lighting plan
+      that replaces stock photography everywhere on the site.
+    </aside>
+  </section>
+
+  <!-- ACT V — LIVE ===================================================== -->
+  <section class="live" id="live" data-scene="dark" aria-labelledby="live-title">
+    <div class="live__head wrap">
+      <div>
+        <p class="onair mono"><i aria-hidden="true"></i>On air</p>
+        <h2 class="d1" id="live-title" data-align>Ortho Marketing <em>Live.</em></h2>
+      </div>
+      <p class="lede">
+        Conversations with the orthodontists, operators and specialists redefining practice growth.
+        Hosted by Dean Steinman.
+      </p>
+    </div>
+
+    <div class="wave wrap" data-wave aria-hidden="true"></div>
+
+    <ol class="episodes wrap">
+      <li><a href="#live">
+        <span class="ep__no mono">Ep. 172</span>
+        <span class="ep__title">Streamlining your practice with virtual assistants</span>
+        <span class="ep__guest mono">with the COO of MyOrthoVA</span>
+        <span class="ep__play" aria-hidden="true"></span>
+      </a></li>
+      <li><a href="#live">
+        <span class="ep__no mono">Ep. 168</span>
+        <span class="ep__title">Bringing past patients back</span>
+        <span class="ep__guest mono">with Blair Feldman, Retainer Club</span>
+        <span class="ep__play" aria-hidden="true"></span>
+      </a></li>
+      <li><a href="#live">
+        <span class="ep__no mono">Archive</span>
+        <span class="ep__title">How site speed shapes your Google ranking</span>
+        <span class="ep__guest mono">with Dean Steinman</span>
+        <span class="ep__play" aria-hidden="true"></span>
+      </a></li>
+      <li><a href="#live">
+        <span class="ep__no mono">Ep. 79</span>
+        <span class="ep__title">Protecting your practice website from hackers</span>
+        <span class="ep__guest mono">with our SEO manager</span>
+        <span class="ep__play" aria-hidden="true"></span>
+      </a></li>
+    </ol>
+    <p class="wrap live__all"><a class="link" href="#live">Listen to every episode</a></p>
+
+    <aside class="dnote" aria-label="Director's note">
+      <b>The podcast as broadcast.</b> The On-air lamp is the only pulsing element on the whole site.
+      Episode rows tension their wire on hover; the play bracket fills with Ligature.
+    </aside>
+  </section>
+
+  <!-- FINALE — DEBOND ================================================== -->
+  <section class="debond" id="consult" data-scene="dark" aria-labelledby="consult-title">
+    <svg class="arch" data-arch viewBox="0 0 1200 760" aria-hidden="true">
+      <path class="arch__wire" d="M120 740 C 120 120, 360 40, 600 40 C 840 40, 1080 120, 1080 740" />
+      <g class="arch__brackets"></g>
+    </svg>
+
+    <div class="debond__text">
+      <p class="eyebrow mono"><span>Finale</span> Debond</p>
+      <h2 class="d1" id="consult-title">Let’s see where your practice <em>could be.</em></h2>
+      <p class="lede">
+        Your first consultation is a records appointment for your brand. We map your market, audit your search
+        presence and walk you through a treatment plan — thirty minutes with a strategist, not a salesperson.
+      </p>
+      <div class="cta-row cta-row--center">
+        <a class="btn btn--primary btn--lg" href="#consult"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
+        <a class="link" href="#live">Or listen first</a>
+      </div>
+    </div>
+
+    <aside class="dnote" aria-label="Director's note">
+      <b>The finale.</b> Scroll tensions the wire until it settles into a perfect arch — fourteen brackets, one per tooth.
+      It is the only moment on the site with a spring overshoot: debond day is a celebration.
+    </aside>
+  </section>
+</main>
+
+<!-- END CREDITS ======================================================== -->
+<footer class="credits" data-scene="dark">
+  <div class="credits__roll wrap">
+    <p class="mono">Ortho Marketing presents</p>
+    <p class="credits__title">Light, <em>Continuous</em> Force</p>
+    <dl>
+      <div><dt class="mono">Starring</dt><dd>Your practice</dd></div>
+      <div><dt class="mono">Treatment</dt><dd>Strategy · Identity · Websites · Search · Reputation</dd></div>
+      <div><dt class="mono">Filmed on location</dt><dd>In every zip code you serve</dd></div>
+      <div><dt class="mono">Running time</dt><dd>18 to 24 months. Then, for as long as you practice.</dd></div>
+    </dl>
+  </div>
+  <div class="credits__base wrap">
+    <nav class="credits__nav" aria-label="Footer">
+      <a href="#treatment">Treatment</a>
+      <a href="#results">Results</a>
+      <a href="#studio">Studio</a>
+      <a href="#live">Live</a>
+      <a href="#consult">Consultation</a>
+    </nav>
+    <p class="mono">© 2026 Ortho Marketing · Family-run since 2008</p>
+    <p class="mono credits__fine">Concept prototype for the creative direction “Light, Continuous Force.” Not the live site.</p>
+  </div>
+</footer>
+
+<!-- HUD ---------------------------------------------------------------- -->
+<div class="hud mono" aria-hidden="true">
+  <span class="hud__label">Treatment day</span>
+  <span class="hud__day" data-day>001</span>
+  <span class="hud__of">/ 540</span>
+  <span class="hud__bar"><i data-day-bar></i></span>
+</div>
+<button class="notes-toggle mono" type="button" aria-pressed="false" data-notes><span class="hide-sm">Director’s </span>notes</button>
+
+<script src="main.js" defer></script>
+</body>
+</html>
