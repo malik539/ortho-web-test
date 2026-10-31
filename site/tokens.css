@@ -37,7 +37,7 @@
   --f-mono: "Söhne Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
 
   /* Fluid type scale (min @ 375px → max @ 1600px) */
-  --t-hero: clamp(2.5rem, 0.9rem + 8.2vw, 10.5rem);
+  --t-hero: clamp(2.5rem, 0.6rem + 6.6vw, 8.5rem);   /* two centered lines on desktop, three on phones */
   --t-d1: clamp(2.6rem, 1.5rem + 4.9vw, 7rem);
   --t-d2: clamp(2.1rem, 1.4rem + 3vw, 4.75rem);
   --t-d3: clamp(1.6rem, 1.25rem + 1.5vw, 2.75rem);

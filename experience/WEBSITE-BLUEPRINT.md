@@ -274,30 +274,33 @@ Every spec card uses the same fields. Final copy is shown exactly as it ships.
 
 ### 01 · Cold open (Hero)
 
+> **Full specification: [HERO.md, "Shape Memory"](./HERO.md).** This card summarizes it.
+
 | | |
 |---|---|
 | **Job** | Establish positioning and a premium impression within five seconds, and offer the primary action. |
 | **Visitor question** | *Who are you?* |
-| **Meta row** | `EST. 2008 · FAMILY-RUN · ORTHODONTIC PRACTICES · ORTHO MARKETING LIVE · 170+ EPISODES` [verify] |
-| **Headline (H1)** | **We move markets / the way you move / *teeth.*** (line breaks set by hand) |
-| **Supporting copy** | Since 2008, we've applied the principle you practice every day — *light, continuous force* — to brands, websites and search. Steadily. Measurably. Until your practice is exactly where it should be. |
-| **CTA** | **Primary:** *Begin your consultation* (opens §5, `source=hero`) · **Secondary:** text link *See the results* (to §04) |
+| **Central visual** | **"Shape Memory":** a nickel-titanium archwire of light, drawn in true 3D perspective. It enters crowded and bent, then springs back to its ideal arch, anterior first. It sits low in the frame like the crescent in the logo's O, cradling the copy. |
+| **Kicker** | `EST. 2008 ── THE MARKETING STUDIO FOR ORTHODONTIC PRACTICES` |
+| **Headline (H1)** | **We move markets / the way you move *teeth.*** |
+| **Subheadline** | We build the brands, websites and search presence that bring orthodontic practices more new-patient starts — steadily, measurably, month after month. |
+| **CTA** | **Primary:** *Begin your consultation* (opens §5, `source=hero`) · **Secondary:** *See the results* · **Assurance:** `30-MINUTE STRATEGY CALL · YOUR PLAN IS YOURS TO KEEP` [verify] |
 
 **Layout**
 
 | Desktop | Tablet | Mobile |
 |---|---|---|
-| 100svh. Meta row at top. H1 vertically centered on columns 1–8, three lines up to 168px. Bottom row: lede on columns 1–6, CTA row on columns 8–12, right-aligned. The archwire runs full-bleed through the x-height of line 2. "Scroll to begin treatment" cue centered at the bottom. | Same rows. Lede on columns 1–8, CTA row left-aligned beneath it. | H1 40–48px, still three lines (each line sized to fit 375px). Meta wraps to two lines and drops the podcast fact. The button sits above the text link. Scroll cue hidden. |
+| Symmetric on the midline. The copy is centered (H1 in two lines, about 104px). The arch's apex sits at about 88% of the height, and its arms rise beside the headline: the cradle. | Landscape: the cradle. Portrait: a deep U beneath the CTA (the camera angle is solved so the arch never touches the copy). | Three-line H1 (40–46px), full-width CTA, the arch as a wide smile beneath the copy |
 
 | | |
 |---|---|
-| **Visual elements** | Operatory light (a cool white core with a Signal halo, at most 16% opacity) · Signal archwire · midline · grain |
-| **Interactions** | Desktop: the light follows the cursor (lerp 0.06). Touch: the light drifts on its own over about 30 seconds. CTA hover lengthens the button wire (1.75 → 3rem). The link underline tensions on hover. |
-| **Motion** | On hand-off from the loader: the light powers on (1.4s, with a dip) → each glyph moves from crowded (±8°, ±0.07em) into alignment over 2.4s, 18ms stagger → the wire relaxes from a damped wave to a straight line over 2.6s. The scroll cue loops on a 2.4s cycle. |
-| **Transition to 02** | Hard cut to the light scene. The nav switches to the full-color logo as section 02 crosses the probe line. |
-| **Accessibility** | The H1 carries an `aria-label` with the full sentence; the glyph spans are `aria-hidden`. The text is readable from the first frame. The meta row is a `<ul>`. |
-| **Analytics** | `cta_click{hero}`, `cta_click{hero-results}`, `scroll_act{top}` |
-| **CMS** | `hero.meta[]`, `hero.lines[3]`, `hero.emphasis`, `hero.lede`, `hero.primaryCta`, `hero.secondaryCta` |
+| **Motion** | The lamp powers on (1.4s), then shape memory runs (one tooth rank every 130ms, each settling over 1.7s), with a heat front traveling the wire and the H1 glyphs aligning in the same center-outward wave. The copy follows at 0.8 / 1.0 / 1.2s. Everything is at rest by about 2.9s, and rendering stops. |
+| **Hover** | The cursor is the key light (highlights travel the wire). Brackets near the cursor yield and spring back. Small camera parallax. **Hovering or focusing the CTA charges the arch:** a pulse runs from the midline to the molars. |
+| **Scroll** | No pinning. The camera cranes up and over to an occlusal (top-down) view while the copy lifts away. The HUD appears after 35% of a viewport. Hard cut to Act I. |
+| **Performance** | No images or video. The LCP element is the H1 text. Canvas 2D at about 5KB, rendering on demand (0 redraws at rest). |
+| **Accessibility** | The H1 carries the full sentence as its `aria-label`; the canvas and glyph spans are `aria-hidden`. Reduced motion shows the static final frame. |
+| **Analytics** | `cta_click{hero}`, `cta_click{hero-results}`, `consultation_open{source:hero}` |
+| **CMS** | `hero.kicker`, `hero.lines[]`, `hero.emphasis`, `hero.sub`, `hero.primaryCta`, `hero.secondaryCta`, `hero.assurance` |
 
 ---
 
@@ -533,7 +536,7 @@ Every spec card uses the same fields. Final copy is shown exactly as it ships.
 
 | Desktop | Tablet | Mobile |
 |---|---|---|
-| 115svh. The arch (a 1200×760 SVG) is centered behind the text, and the text is centered on the midline. This is the site's only symmetrical composition. | Same, with the arch at 120vw. | The arch becomes a standalone graphic above the text (max 420px) so it never sits behind body copy. |
+| 115svh. The arch (a 1200×760 SVG) is centered behind the text, and the text is centered on the midline. This symmetrical composition rhymes with the hero: the opening and closing images. | Same, with the arch at 120vw. | The arch becomes a standalone graphic above the text (max 420px) so it never sits behind body copy. |
 
 | | |
 |---|---|
@@ -701,9 +704,10 @@ Each one reuses homepage components; there's no new visual language. Sections ar
 | Loader | Orb 156px | Orb about 18vmin | Orb 88px+ |
 | Nav | Logo · 5 links · CTA | Logo · CTA · Menu | Logo (22px) · "Consult" · Menu |
 | Menu | — (inline links) | Full-screen circle reveal | Full-screen circle reveal |
-| Hero H1 | Up to 168px, columns 1–8 | Fluid, about 80–110px | 40–48px, three lines |
-| Hero CTAs | Right-aligned on columns 8–12 | Left-aligned under the lede | Button above link |
-| Operatory light | Follows the cursor | Drifts on its own | Drifts on its own |
+| Hero H1 | About 104px, centered, 2 lines | About 65–90px, centered, 2 lines | 40–46px, centered, 3 lines |
+| Hero CTAs | Centered row with assurance below | Centered row | Full-width button, then link, then assurance |
+| Hero arch | Cradle: arms beside the copy, apex at about 88% | Landscape: cradle. Portrait: deep U below the copy. | Wide smile below the copy |
+| Operatory light | Follows the cursor (also lights the arch) | Drifts on its own | Drifts on its own |
 | Diagnosis | Elliptical spread | Elliptical spread | Four tidy rows |
 | Treatment rail | Sticky numeral and wire | Retired; numeral inline per phase | Retired; numeral inline per phase |
 | Spec grid | 3 columns | 2 columns | 1 column |

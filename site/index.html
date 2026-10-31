@@ -94,41 +94,38 @@
        01 · COLD OPEN
        ==================================================================== -->
   <section class="hero" id="top" data-scene="dark" aria-labelledby="hero-title">
+    <!-- Lighting: overhead operatory lamp + cursor key + Ortho Blue floor bounce -->
     <div class="hero__light" aria-hidden="true"></div>
+    <!-- "Shape Memory": a NiTi archwire of light in true perspective (Canvas 2D, rendered on demand) -->
+    <canvas class="hero__arch" data-hero-arch aria-hidden="true"></canvas>
 
-    <ul class="hero__meta mono" aria-label="About Ortho Marketing">
-      <li>Est. 2008</li>
-      <li>Family-run</li>
-      <li>Orthodontic practices</li>
-      <li class="hide-sm">Ortho Marketing Live · 170+ episodes</li>
-    </ul>
+    <div class="hero__content" data-hero-content>
+      <p class="hero__kicker mono" data-hero-in style="--hd:0ms"><span>Est. 2008</span>The marketing studio for orthodontic practices</p>
 
-    <h1 class="hero__title" id="hero-title" data-crowd aria-label="We move markets the way you move teeth.">
-      <span class="line">We move markets</span>
-      <span class="line" data-wire-line>the way you move</span>
-      <span class="line"><em>teeth.</em></span>
-    </h1>
+      <h1 class="hero__title" id="hero-title" data-crowd aria-label="We move markets the way you move teeth.">
+        <span class="line">We move markets</span>
+        <span class="line"><span class="seg">the way you move</span> <span class="seg"><em>teeth.</em></span></span>
+      </h1>
 
-    <svg class="hero__wire" data-hero-wire viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 50 L1000 50" />
-    </svg>
-
-    <div class="hero__foot">
-      <p class="lede">
-        Since 2008, we’ve applied the principle you practice every day — <em>light, continuous force</em> — to brands,
-        websites and search. Steadily. Measurably. Until your practice is exactly where it should be.
+      <p class="hero__sub" data-hero-in style="--hd:650ms">
+        We build the brands, websites and search presence that bring orthodontic practices more new-patient
+        starts — steadily, measurably, month after month.
       </p>
-      <div class="cta-row">
-        <a class="btn btn--primary" href="#consultation" data-consult-open data-cta="hero"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
+
+      <div class="hero__actions" data-hero-in style="--hd:850ms">
+        <a class="btn btn--primary btn--lg" href="#consultation" data-consult-open data-cta="hero" data-hero-cta>
+          <span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span>
+        </a>
         <a class="link" href="#results" data-cta="hero-results">See the results</a>
       </div>
+      <p class="hero__assure mono" data-hero-in style="--hd:1050ms">30-minute strategy call · Your plan is yours to keep</p>
     </div>
 
-    <div class="hero__cue mono" aria-hidden="true"><span class="hero__cue-wire"></span>Scroll to begin treatment</div>
-
     <aside class="dnote" aria-label="Director's note">
-      <b>01 · Cold open — “Who are you?”</b> The loader’s Orb has just landed in the nav. The light powers on; glyphs arrive crowded
-      and align along the archwire. The H1 is real text from the first frame — LCP is never blocked by motion.
+      <b>01 · Hero — “Shape Memory”</b> A nickel-titanium archwire of light enters crowded and deformed, then springs back to its
+      ideal arch — anterior first — while the headline aligns in the same wave. The arch sits low like the crescent in the logo’s O,
+      cradling the message. Cursor = operatory light; brackets yield to it and spring back. Hover the CTA to send a pulse down the wire.
+      Scroll cranes the camera up and over. Canvas 2D, ~5KB gzipped, no images — the H1 is the LCP.
     </aside>
   </section>
 

@@ -139,7 +139,7 @@ Picture an orthodontic practice at 6:40 a.m., before anyone arrives. One lamp is
 
 ### References (for the quality bar, never for imitation)
 
-- **Cinematography:** Roger Deakins's single-source, motivated light. Kubrick's one-point symmetry, which is the midline (we save true symmetry for the finale). Denis Villeneuve's restraint and sense of scale.
+- **Cinematography:** Roger Deakins's single-source, motivated light. Kubrick's one-point symmetry, which is the midline (we save true symmetry for the opening and closing images). Denis Villeneuve's restraint and sense of scale.
 - **Photography:** Irving Penn's still lifes, where an object becomes a portrait. Hiroshi Sugimoto's seascapes, where the horizon reads as the occlusal plane. Fine-watch macro photography, with its steel, raking light and obsessive cleanliness.
 - **Graphic language:** Cephalometric tracings, Swiss typographic rationalism, Criterion Collection title cards, and scientific-instrument catalogues from the 1960s.
 
@@ -160,7 +160,7 @@ Picture an orthodontic practice at 6:40 a.m., before anyone arrives. One lamp is
 
 | Device | Definition | Rules |
 |---|---|---|
-| **The Midline** | A fixed vertical axis at 50% | Display type sits left of the midline. Supporting copy sits right of it, bottom-aligned to the headline's last baseline. True symmetry about the midline is saved for the finale (the "Kubrick moment"). |
+| **The Midline** | A fixed vertical axis at 50% | Display type sits left of the midline. Supporting copy sits right of it, bottom-aligned to the headline's last baseline. True symmetry about the midline is saved for the opening and closing images (the hero and the Debond finale), which bookend the film. |
 | **The Occlusal Plane** | A horizontal axis | The archwire runs on it in the hero. In photography, horizons and tabletops sit on it. In layouts, it's where tension resolves. |
 | **The Arch** | A parabolic curve | Used once per page at most (the finale on Home) and in the logo mark. Never as a decorative swoosh. |
 
