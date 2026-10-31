@@ -1,0 +1,12 @@
+---
+interface Props { items: { name: string; detail: string }[] }
+const { items } = Astro.props;
+---
+<dl class="spec-rows">
+  {items.map((d, i) => (
+    <div class="spec-row" data-reveal="rise">
+      <dt><span class="mono">{String(i + 1).padStart(2, '0')}</span><span class="d3">{d.name}</span></dt>
+      <dd>{d.detail}</dd>
+    </div>
+  ))}
+</dl>

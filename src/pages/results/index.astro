@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import SpecRows from '../../components/SpecRows.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { CASES } from '../../data/cases.js';
+import { MEASURES } from '../../data/content.js';
+import { crumbs, breadcrumbLd } from '../../data/seo.js';
+const trail = crumbs({ label: 'Results', href: '/results/' });
+---
+<BaseLayout
+  title="Results: case files from orthodontic practices"
+  description="How Ortho Marketing measures results for orthodontic practices — new-patient starts, consultation requests, map-pack position, cost per start and reputation — and the case files behind them."
+  jsonld={[breadcrumbLd(trail)]}
+>
+  <PageHero crumbs={trail} lead="Results" label="Case files" title={['Same practice.', 'Different market.']}
+    lede="Orthodontists trust a before-and-after more than any claim. So do we. Every case file states the practice’s starting point, what changed, and over what period." />
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="cases-title">
+    <div class="wrap">
+      <header class="page-sec__head">
+        <p class="eyebrow mono" data-reveal="wire"><span>01</span> Case files</p>
+        <h2 class="d2" id="cases-title" data-reveal="lines">Records, treatment, <em>result.</em></h2>
+      </header>
+      <div class="case-grid">
+        {CASES.map((c) => <CaseCard c={c} />)}
+      </div>
+      {CASES.some((c) => c.illustrative) && <p class="results__note mono">Cases marked “Illustrative” use a fictional practice and illustrative figures to show how we report results.</p>}
+    </div>
+  </section>
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="measure-title">
+    <div class="wrap">
+      <header class="page-sec__head">
+        <p class="eyebrow mono" data-reveal="wire"><span>02</span> What we measure</p>
+        <h2 class="d2" id="measure-title" data-reveal="lines">Numbers with <em>time periods.</em></h2>
+        <p class="lede" data-reveal="fade">Results are compared with your own baseline from Records — never with an industry average.</p>
+      </header>
+      <SpecRows items={MEASURES} />
+    </div>
+  </section>
+
+  <CtaBand cta="results-band" secondary={{ label: 'How treatment works', href: '/treatment/' }} />
+</BaseLayout>

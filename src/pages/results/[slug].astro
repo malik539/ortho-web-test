@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Notice from '../../components/Notice.astro';
+import Compare from '../../components/Compare.astro';
+import Metrics from '../../components/Metrics.astro';
+import Quote from '../../components/Quote.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { CASES } from '../../data/cases.js';
+import { phaseBySlug } from '../../data/phases.js';
+import { crumbs, breadcrumbLd } from '../../data/seo.js';
+
+export function getStaticPaths() {
+  return CASES.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+const { c } = Astro.props;
+const trail = crumbs({ label: 'Results', href: '/results/' }, { label: c.practice, href: `/results/${c.slug}/` });
+---
+<BaseLayout
+  title={`Case file: ${c.practice}`}
+  description={`${c.summary} ${c.insight}`}
+  noindex={c.illustrative}
+  jsonld={[breadcrumbLd(trail)]}
+>
+  <PageHero crumbs={trail} lead="Case file" label={c.illustrative ? `${c.challenge} · Illustrative` : c.challenge}
+    title={[c.practice]} lede={c.summary} meta={c.type} />
+  {c.illustrative && <Notice>Illustrative case file — a fictional practice with illustrative figures, published as a template for real client stories.</Notice>}
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="dx-title">
+    <div class="wrap case-file">
+      <div class="case-file__row">
+        <p class="eyebrow mono" data-reveal="wire"><span>01</span> Records</p>
+        <p class="lede" data-reveal="fade">{c.situation}</p>
+      </div>
+      <div class="case-file__row">
+        <p class="eyebrow mono" data-reveal="wire"><span>02</span> Diagnosis</p>
+        <h2 class="d2" id="dx-title" data-reveal="lines">{c.insight}</h2>
+      </div>
+      <div class="case-file__row">
+        <p class="eyebrow mono" data-reveal="wire"><span>03</span> Treatment plan</p>
+        <ul class="case-file__phases">
+          {c.phases.map((s) => { const p = phaseBySlug(s); return <li data-reveal="rise"><a href={`/treatment/${p.slug}/`}><span class="mono">{p.number}</span> {p.name}</a></li>; })}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="results" data-scene="light" aria-labelledby="ba-title">
+    <header class="results__head wrap">
+      <p class="eyebrow mono" data-reveal="wire"><span>04</span> Before / After</p>
+      <h2 class="d2" id="ba-title" data-reveal="lines">Same practice. <em>Different market.</em></h2>
+    </header>
+    <Compare />
+    <div class="results__proof wrap">
+      <Metrics items={c.metrics} />
+      <Quote text={c.quote.text} by={c.quote.by} />
+    </div>
+    <div class="wrap case-file__row case-file__row--last">
+      <p class="eyebrow mono" data-reveal="wire"><span>05</span> Retention</p>
+      <p class="lede" data-reveal="fade">{c.retention}</p>
+    </div>
+  </section>
+
+  <CtaBand cta={`case-${c.slug}`} secondary={{ label: 'All case files', href: '/results/' }} />
+</BaseLayout>

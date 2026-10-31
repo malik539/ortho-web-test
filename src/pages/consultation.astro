@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import ConsultForm from '../components/ConsultForm.astro';
+import { SITE } from '../data/site.js';
+import { STEPS, FAQS } from '../data/content.js';
+import { crumbs, breadcrumbLd, faqLd } from '../data/seo.js';
+const trail = crumbs({ label: 'First visit', href: '/consultation/' });
+---
+<BaseLayout
+  title="Book a consultation: your records appointment"
+  description={`A ${SITE.consultation.length.toLowerCase()} with an Ortho Marketing strategist. Tell us about your practice in four short steps; we review your market before we speak.`}
+  consultOverlay={false}
+  jsonld={[breadcrumbLd(trail), faqLd(FAQS)]}
+>
+  <PageHero crumbs={trail} lead="First visit" label="Records appointment" title={['What happens', 'when you reach out.']}
+    lede="No pitch deck. No pressure. A consultation built like a records appointment — so the first conversation is already useful." />
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="steps-title">
+    <div class="wrap"><h2 class="sr-only" id="steps-title">Three steps</h2></div>
+    <Steps items={STEPS} />
+  </section>
+
+  <section class="consult-page" id="records" data-scene="dark" data-consult-page aria-labelledby="records-title">
+    <div class="consult-page__inner">
+      <h2 class="consult-page__title mono" id="records-title">Records appointment</h2>
+      <ConsultForm mode="page" />
+    </div>
+  </section>
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="faq-title">
+    <Faq items={FAQS} level={2} />
+  </section>
+
+  <script>
+    import '../scripts/consult.js';
+  </script>
+</BaseLayout>

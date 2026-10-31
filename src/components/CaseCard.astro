@@ -1,0 +1,19 @@
+---
+interface Props { c: { slug: string; practice: string; type: string; challenge: string; illustrative?: boolean; metrics: { value: string; small?: string; label: string }[] } }
+const { c } = Astro.props;
+const lead = c.metrics[0];
+---
+<article class="case-card" data-reveal="rise">
+  <a href={`/results/${c.slug}/`} class="case-card__link">
+    <div class="case-card__plate" aria-hidden="true">
+      <span class="case-card__before">Before · template</span>
+      <span class="case-card__after">After · {c.practice.split(' ')[0]} {c.practice.split(' ')[1]}</span>
+    </div>
+    <div class="case-card__body">
+      <p class="mono">{c.challenge} · {c.type}{c.illustrative ? ' · Illustrative' : ''}</p>
+      <h3 class="d3">{c.practice}</h3>
+      <p class="case-card__metric"><span>{lead.value}{lead.small}</span> {lead.label}</p>
+      <span class="link">Read the case file <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>

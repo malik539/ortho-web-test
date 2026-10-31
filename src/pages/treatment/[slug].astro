@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SpecRows from '../../components/SpecRows.astro';
+import Milestones from '../../components/Milestones.astro';
+import MacroPlate from '../../components/MacroPlate.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { PHASES } from '../../data/phases.js';
+import { crumbs, breadcrumbLd, faqLd, serviceLd } from '../../data/seo.js';
+
+export function getStaticPaths() {
+  return PHASES.map((p, i) => ({ params: { slug: p.slug }, props: { p, next: PHASES[(i + 1) % PHASES.length] } }));
+}
+const { p, next } = Astro.props;
+const trail = crumbs({ label: 'Treatment', href: '/treatment/' }, { label: p.name, href: `/treatment/${p.slug}/` });
+---
+<BaseLayout
+  title={`${p.name}: ${p.summary} for orthodontists`}
+  description={p.copy}
+  jsonld={[breadcrumbLd(trail), serviceLd(p), faqLd(p.faqs)]}
+>
+  <PageHero
+    crumbs={trail} numeral={p.number} lead={`Phase ${p.number}`} label={p.name}
+    title={[p.headline[0], p.headline[1]]} lede={p.copy} meta={`Clinical parallel — ${p.parallel}`}
+  />
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="what-title">
+    <div class="wrap">
+      <header class="page-sec__head">
+        <p class="eyebrow mono" data-reveal="wire"><span>01</span> What it is</p>
+        <h2 class="d2" id="what-title" data-reveal="lines">{p.name}, <em>deliverable by deliverable.</em></h2>
+        <p class="lede" data-reveal="fade">{p.summary}. Timeline: {p.timeline.toLowerCase()}.</p>
+      </header>
+      <SpecRows items={p.deliverables} />
+    </div>
+  </section>
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="moves-title">
+    <div class="wrap">
+      <header class="page-sec__head">
+        <p class="eyebrow mono" data-reveal="wire"><span>02</span> How it moves</p>
+        <h2 class="d2" id="moves-title" data-reveal="lines">Milestones, <em>not mysteries.</em></h2>
+      </header>
+      <Milestones items={p.milestones} />
+    </div>
+  </section>
+
+  {p.slug === 'alignment' && (
+    <section class="page-sec craft" data-scene="dark" aria-labelledby="craft-title">
+      <MacroPlate />
+      <div class="craft__text wrap">
+        <p class="eyebrow mono" data-reveal="wire"><span>Craft</span> Photography direction</p>
+        <h2 class="d2" id="craft-title" data-reveal="lines">We light a bracket the way others light <em>a watch.</em></h2>
+        <p data-reveal="fade">Precision deserves to be seen. Every image we make for a practice is directed with the discipline of luxury still life — one light, deep shadow, nothing accidental. Move across the plate to see what’s underneath: the same rigor we apply to your data.</p>
+      </div>
+    </section>
+  )}
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="phase-faq">
+    <Faq items={p.faqs} title={`${p.name}: questions`} id="phase-faq" level={2} />
+    <div class="wrap phase-next">
+      <a class="phase-next__link" href={`/treatment/${next.slug}/`}>
+        <span class="mono">Next phase · {next.number}</span>
+        <span class="d2">{next.name} <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <CtaBand cta={`phase-${p.slug}`} secondary={{ label: 'All four phases', href: '/treatment/' }} />
+</BaseLayout>

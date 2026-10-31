@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Waveform from '../../components/Waveform.astro';
+import EpisodeList from '../../components/EpisodeList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Wire from '../../components/Wire.astro';
+import { SITE } from '../../data/site.js';
+import { EPISODES } from '../../data/episodes.js';
+import { crumbs, breadcrumbLd } from '../../data/seo.js';
+
+export function getStaticPaths() {
+  return EPISODES.map((e) => ({ params: { slug: e.slug }, props: { e } }));
+}
+const { e } = Astro.props;
+const trail = crumbs({ label: 'Live', href: '/live/' }, { label: `Ep. ${e.number}`, href: `/live/${e.slug}/` });
+const episodeLd = {
+  '@type': 'PodcastEpisode', name: e.title, episodeNumber: e.number, description: e.summary, url: `${SITE.url}/live/${e.slug}/`,
+  partOfSeries: { '@id': `${SITE.url}/live/#series`, '@type': 'PodcastSeries', name: SITE.podcast.name, url: `${SITE.url}/live/` },
+};
+const more = EPISODES.filter((x) => x.slug !== e.slug);
+---
+<BaseLayout title={`Ep. ${e.number}: ${e.title}`} description={e.summary} jsonld={[breadcrumbLd(trail), episodeLd]} ogType="article">
+  <PageHero crumbs={trail} lead={`Ep. ${e.number}`} label={SITE.podcast.name} title={[e.title]} lede={e.summary} meta={`${e.guest} · Hosted by ${SITE.podcast.host}`}>
+    <p class="cta-row page-hero__cta" data-reveal="rise">
+      <a class="btn btn--primary" href={SITE.podcast.appleUrl} rel="noopener" target="_blank"><span>Listen on Apple Podcasts</span><Wire /><span class="sr-only"> (opens in a new tab)</span></a>
+    </p>
+  </PageHero>
+
+  <section class="live" data-scene="dark" aria-labelledby="ep-topics">
+    <Waveform />
+    <div class="wrap episode-meta">
+      <h2 class="d3" id="ep-topics">Topics</h2>
+      <ul class="tags">{e.topics.map((t) => <li class="mono">{t}</li>)}</ul>
+    </div>
+    <div class="wrap"><h2 class="d3 episode-more">More conversations</h2></div>
+    <EpisodeList items={more} />
+  </section>
+
+  <CtaBand cta={`episode-${e.number}`} label="Rather talk to us directly?" title={['Bring your questions to', 'a strategist.']} />
+</BaseLayout>

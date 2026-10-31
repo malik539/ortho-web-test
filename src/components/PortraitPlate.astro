@@ -1,0 +1,30 @@
+---
+/* Portrait placeholder showing the lighting plan every portrait follows (replace with the real portrait). */
+interface Props { caption?: string }
+const { caption = 'Portrait, President · north window, 7:10 a.m. · 85mm f/1.8 · negative fill camera right' } = Astro.props;
+---
+<figure class="plate plate--portrait" data-reveal="exposure">
+  <svg class="lightplan" viewBox="0 0 400 500" aria-hidden="true">
+    <g fill="none" stroke="currentColor" stroke-width="1">
+      <circle cx="200" cy="270" r="34"/>
+      <path d="M166 300 Q200 330 234 300" />
+      <rect x="60" y="80" width="90" height="14" transform="rotate(-38 105 87)"/>
+      <path d="M118 112 L182 236" stroke-dasharray="3 5"/>
+      <path d="M118 112 L214 220" stroke-dasharray="3 5"/>
+      <rect x="300" y="250" width="10" height="110"/>
+      <path d="M200 440 V380" />
+      <rect x="186" y="440" width="28" height="18"/>
+    </g>
+    <g fill="currentColor" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.2">
+      <text x="44" y="60">KEY · NORTH WINDOW</text>
+      <text x="44" y="74">DIFFUSED · 45° HIGH</text>
+      <text x="318" y="306">NEG. FILL</text>
+      <text x="222" y="474">85MM · f/1.8</text>
+      <text x="150" y="222">SUBJECT</text>
+    </g>
+  </svg>
+  <figcaption class="plate__caption mono">
+    <span>Plate 07</span>
+    <span>{caption}</span>
+  </figcaption>
+</figure>

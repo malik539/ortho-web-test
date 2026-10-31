@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Notice from '../components/Notice.astro';
+import { SITE } from '../data/site.js';
+import { crumbs } from '../data/seo.js';
+const trail = crumbs({ label: 'Terms', href: '/terms/' });
+---
+<BaseLayout title="Website terms" description="Terms of use for the Ortho Marketing website." noindex>
+  <PageHero crumbs={trail} lead="Legal" label="Terms" title={['Website', 'terms.']} />
+  <Notice tone="draft">Draft for legal review — not yet in force.</Notice>
+  <section class="page-sec page-sec--light" data-scene="light" aria-label="Website terms">
+    <div class="wrap prose">
+      <h2>Use of this website</h2>
+      <p>This website describes the services of {SITE.name}. Content is provided for general information and does not create a client relationship. Engagements are governed by a separate written agreement.</p>
+      <h2>Case files and figures</h2>
+      <p>Case files marked “Illustrative” use fictional practices and figures to explain how results are reported. Real client results are published only with permission and state their time periods.</p>
+      <h2>Intellectual property</h2>
+      <p>The {SITE.name} name, logo, copy, imagery and code on this site belong to {SITE.name} or its licensors.</p>
+      <h2>Governing law</h2>
+      <p>[To be confirmed by counsel.]</p>
+    </div>
+  </section>
+</BaseLayout>

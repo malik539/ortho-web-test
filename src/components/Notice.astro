@@ -1,0 +1,6 @@
+---
+/* A clearly visible status note for illustrative or draft content. */
+interface Props { tone?: 'illustrative' | 'draft' }
+const { tone = 'illustrative' } = Astro.props;
+---
+<div class={`notice notice--${tone} wrap`} role="note"><p class="mono"><slot /></p></div>

@@ -1,0 +1,14 @@
+---
+interface Props { items: { slug: string; number: number; title: string; guest: string }[] }
+const { items } = Astro.props;
+---
+<ol class="episodes wrap">
+  {items.map((e) => (
+    <li><a href={`/live/${e.slug}/`} data-episode={e.number}>
+      <span class="ep__no mono">Ep. {e.number}</span>
+      <span class="ep__title">{e.title}</span>
+      <span class="ep__guest mono">{e.guest}</span>
+      <span class="ep__play" aria-hidden="true"></span>
+    </a></li>
+  ))}
+</ol>

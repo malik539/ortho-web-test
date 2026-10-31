@@ -1,0 +1,152 @@
+---
+/* Plate 04: a twin bracket on black velvet, with a radiograph scanner band (see CREATIVE-DIRECTION.md §9).
+   Metal is radiopaque (glows); the elastic is radiolucent (disappears). */
+---
+<figure class="plate plate--macro" data-radiograph>
+  <!-- Photographic layer -->
+  <svg class="macro macro--photo" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Macro still life: a steel orthodontic bracket with a blue elastic ligature, lit by a single raking light on black velvet.">
+    <defs>
+      <radialGradient id="mp-g-key" cx="28%" cy="18%" r="85%">
+        <stop offset="0" stop-color="#2b2723"/>
+        <stop offset=".45" stop-color="#14120f"/>
+        <stop offset="1" stop-color="#070606"/>
+      </radialGradient>
+      <linearGradient id="mp-g-steel" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f3f4f4"/>
+        <stop offset=".18" stop-color="#b9bdbf"/>
+        <stop offset=".42" stop-color="#5d6164"/>
+        <stop offset=".62" stop-color="#c9cdcf"/>
+        <stop offset=".85" stop-color="#4a4e51"/>
+        <stop offset="1" stop-color="#26292b"/>
+      </linearGradient>
+      <linearGradient id="mp-mp-g-steel-dark" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7d8285"/>
+        <stop offset=".5" stop-color="#34383a"/>
+        <stop offset="1" stop-color="#17191a"/>
+      </linearGradient>
+      <linearGradient id="mp-g-wire" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#5a5e61"/>
+        <stop offset=".28" stop-color="#f6f7f7"/>
+        <stop offset=".55" stop-color="#8c9194"/>
+        <stop offset="1" stop-color="#2a2d2f"/>
+      </linearGradient>
+      <linearGradient id="mp-g-elastic" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#9AA0FF"/>
+        <stop offset=".35" stop-color="#1F2AFF"/>
+        <stop offset="1" stop-color="#0B118F"/>
+      </linearGradient>
+      <linearGradient id="mp-g-spec" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+        <stop offset=".5" stop-color="#fff" stop-opacity=".85"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+      </linearGradient>
+      <pattern id="mp-p-mesh" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="9" height="9" fill="#2c2f31"/>
+        <rect width="4" height="9" fill="#3d4143"/>
+      </pattern>
+      <filter id="mp-f-shadow" x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="22" dy="30" stdDeviation="22" flood-color="#000" flood-opacity=".75"/>
+      </filter>
+      <filter id="mp-f-soft"><feGaussianBlur stdDeviation="1.2"/></filter>
+      <radialGradient id="mp-g-vignette" cx="50%" cy="50%" r="75%">
+        <stop offset=".55" stop-color="#000" stop-opacity="0"/>
+        <stop offset="1" stop-color="#000" stop-opacity=".8"/>
+      </radialGradient>
+    </defs>
+
+    <rect width="1600" height="900" fill="url(#mp-g-key)"/>
+
+    <!-- archwire runs edge to edge -->
+    <g filter="url(#mp-f-shadow)">
+      <rect x="-20" y="430" width="1640" height="40" rx="6" fill="url(#mp-g-wire)"/>
+    </g>
+
+    <g transform="translate(800 450) scale(1.35)" filter="url(#mp-f-shadow)">
+      <!-- mesh base pad -->
+      <rect x="-205" y="-185" width="410" height="370" rx="58" fill="url(#mp-p-mesh)"/>
+      <rect x="-205" y="-185" width="410" height="370" rx="58" fill="none" stroke="#61666a" stroke-width="3"/>
+      <!-- body -->
+      <rect x="-165" y="-150" width="330" height="300" rx="26" fill="url(#mp-mp-g-steel-dark)"/>
+      <!-- slot -->
+      <rect x="-185" y="-44" width="370" height="88" fill="#0b0c0c"/>
+      <rect x="-185" y="-44" width="370" height="6" fill="#000" opacity=".6"/>
+      <!-- archwire in slot -->
+      <rect x="-185" y="-20" width="370" height="40" fill="url(#mp-g-wire)"/>
+      <!-- elastic ligature -->
+      <rect x="-150" y="-128" width="300" height="256" rx="92" fill="none" stroke="url(#mp-g-elastic)" stroke-width="34"/>
+      <rect x="-150" y="-128" width="300" height="256" rx="92" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="6" transform="translate(-6 -8)" filter="url(#mp-f-soft)"/>
+      <!-- tie wings -->
+      <g>
+        <rect x="-160" y="-170" width="118" height="118" rx="30" fill="url(#mp-g-steel)"/>
+        <rect x="42" y="-170" width="118" height="118" rx="30" fill="url(#mp-g-steel)"/>
+        <rect x="-160" y="52" width="118" height="118" rx="30" fill="url(#mp-g-steel)"/>
+        <rect x="42" y="52" width="118" height="118" rx="30" fill="url(#mp-g-steel)"/>
+      </g>
+      <!-- specular strips -->
+      <g opacity=".75">
+        <rect x="-150" y="-160" width="70" height="10" rx="5" fill="url(#mp-g-spec)"/>
+        <rect x="52" y="-160" width="70" height="10" rx="5" fill="url(#mp-g-spec)"/>
+        <rect x="-150" y="62" width="70" height="8" rx="4" fill="url(#mp-g-spec)" opacity=".6"/>
+        <rect x="52" y="62" width="70" height="8" rx="4" fill="url(#mp-g-spec)" opacity=".6"/>
+      </g>
+      <!-- identification dot (distal-gingival) -->
+      <circle cx="-118" cy="-128" r="7" fill="#737BFF" opacity=".9"/>
+    </g>
+
+    <rect width="1600" height="900" fill="url(#mp-g-vignette)"/>
+  </svg>
+
+  <!-- Radiograph layer: metal is radiopaque (glows); the elastic is radiolucent (disappears) -->
+  <svg class="macro macro--xray" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <radialGradient id="mp-x-bg" cx="50%" cy="50%" r="80%">
+        <stop offset="0" stop-color="#16222b"/>
+        <stop offset="1" stop-color="#05090c"/>
+      </radialGradient>
+      <filter id="mp-x-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="6" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <rect width="1600" height="900" fill="url(#mp-x-bg)"/>
+    <g filter="url(#mp-x-glow)" fill="#cfe0ea">
+      <rect x="-20" y="430" width="1640" height="40" rx="6" opacity=".9"/>
+      <g transform="translate(800 450) scale(1.35)">
+        <rect x="-205" y="-185" width="410" height="370" rx="58" opacity=".22"/>
+        <rect x="-165" y="-150" width="330" height="300" rx="26" opacity=".45"/>
+        <rect x="-185" y="-44" width="370" height="88" fill="#0a1218" opacity=".9"/>
+        <rect x="-185" y="-20" width="370" height="40" opacity=".95"/>
+        <rect x="-160" y="-170" width="118" height="118" rx="30" opacity=".85"/>
+        <rect x="42" y="-170" width="118" height="118" rx="30" opacity=".85"/>
+        <rect x="-160" y="52" width="118" height="118" rx="30" opacity=".85"/>
+        <rect x="42" y="52" width="118" height="118" rx="30" opacity=".85"/>
+      </g>
+    </g>
+    <!-- measurement annotations -->
+    <g class="xray-annot" stroke="#A9B4E8" stroke-width="1.2" fill="none">
+      <path d="M1090 391 H1230 M1090 509 H1230 M1210 391 V509"/>
+      <path d="M600 236 L520 160 H300"/>
+      <path d="M330 472 V600 H120"/>
+      <path d="M556 450 A244 244 0 0 1 650 262" stroke-dasharray="4 6"/>
+    </g>
+    <g class="xray-annot" fill="#A9B4E8" font-family="IBM Plex Mono, monospace" font-size="22" letter-spacing="2">
+      <text x="1246" y="444">SLOT</text>
+      <text x="1246" y="474">.022 × .028″</text>
+      <text x="300" y="146">TIE WING · MESIAL</text>
+      <text x="120" y="632">.019 × .025″ SS ARCHWIRE</text>
+      <text x="400" y="330">TORQUE +17°</text>
+      <text x="1060" y="790" opacity=".75">ELASTIC LIGATURE: RADIOLUCENT</text>
+    </g>
+  </svg>
+
+  <span class="plate__scan" aria-hidden="true"></span>
+  <figcaption class="plate__caption mono">
+    <span>Plate 04</span>
+    <span>Twin bracket, elastic ligature · 100mm macro, f/11 · single strip light, camera left · black velvet</span>
+    <span class="plate__hint">Move across the plate · radiograph view</span>
+  </figcaption>
+</figure>
+
+<script>
+  import '../scripts/scenes/radiograph.js';
+</script>

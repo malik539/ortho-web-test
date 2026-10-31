@@ -1,0 +1,17 @@
+---
+/* Milestones hanging from one wire; brackets engage in sequence (reuses the steps scene). */
+interface Props { items: { at: string; label: string }[] }
+const { items } = Astro.props;
+---
+<ol class="milestones" data-steps style={`--count:${items.length}`}>
+  {items.map((m) => (
+    <li class="step" data-reveal="rise">
+      <span class="step__bracket" aria-hidden="true"></span>
+      <p class="step__no mono">{m.at}</p>
+      <p class="milestones__label">{m.label}</p>
+    </li>
+  ))}
+</ol>
+<script>
+  import '../scripts/scenes/steps.js';
+</script>

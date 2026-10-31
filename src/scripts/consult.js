@@ -37,6 +37,14 @@ function init() {
     let source = 'unknown';
     let submitted = false;
 
+    // Bring the top of the form (or the thank-you panel) back into view after it changes height.
+    const toTop = () => {
+      const behavior = M.reduced ? 'auto' : 'smooth';
+      if (!page) { $('.consult__inner', consult).scrollTo({ top: 0, behavior }); return; }
+      const top = consult.getBoundingClientRect().top + window.scrollY - 96;
+      if (window.scrollY > top) window.scrollTo({ top, behavior });
+    };
+
     const showStep = (n, focus = true) => {
       step = n;
       stepsEls.forEach((s) => s.classList.toggle('is-active', Number(s.dataset.step) === n));
@@ -49,12 +57,7 @@ function init() {
         const t = $('.cstep.is-active .cstep__title', consult);
         t.setAttribute('tabindex', '-1');
         t.focus({ preventScroll: true });
-        if (page) {
-          const top = consult.getBoundingClientRect().top + window.scrollY - 96;
-          if (window.scrollY > top) window.scrollTo({ top, behavior: M.reduced ? 'auto' : 'smooth' });
-        } else {
-          $('.consult__inner', consult).scrollTo({ top: 0, behavior: M.reduced ? 'auto' : 'smooth' });
-        }
+        toTop();
       }
       track('consultation_step', { step: n });
     };
@@ -144,9 +147,9 @@ function init() {
       bodyEl.hidden = true;
       done.hidden = false;
       done.focus({ preventScroll: true });
+      toTop();
       animateSmile($('[data-done-smile]', consult), 900, 500);
       track('consultation_submit', { source, locations: fd.get('locations'), goals: fd.getAll('goals').length });
-      if (page) source = 'page';
     });
     back.addEventListener('click', () => showStep(Math.max(1, step - 1)));
 

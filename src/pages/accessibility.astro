@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import MotionToggle from '../components/MotionToggle.astro';
+import { SITE } from '../data/site.js';
+import { crumbs, breadcrumbLd } from '../data/seo.js';
+const trail = crumbs({ label: 'Accessibility', href: '/accessibility/' });
+const contact = SITE.contact.email ? `email ${SITE.contact.email}` : SITE.contact.phone ? `call ${SITE.contact.phone}` : 'use the consultation form';
+---
+<BaseLayout title="Accessibility statement" description="Ortho Marketing’s commitment to an accessible website: WCAG 2.2 AA target, keyboard support, reduced motion and how to report a barrier." jsonld={[breadcrumbLd(trail)]}>
+  <PageHero crumbs={trail} lead="Commitment" label="Accessibility" title={['Accessible by', 'default.']}
+    lede="We want every orthodontist, practice manager and patient to be able to use this website — whatever device, assistive technology or motion sensitivity." />
+  <section class="page-sec page-sec--light" data-scene="light" aria-label="Accessibility statement">
+    <div class="wrap prose">
+      <h2>Our target</h2>
+      <p>This site aims to conform to the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.</p>
+      <h2>What we have built in</h2>
+      <ul>
+        <li>Every feature works with a keyboard, with visible focus and a skip link.</li>
+        <li>Text meets AA contrast; the brand blue is used for large shapes, never small text on dark backgrounds.</li>
+        <li>Motion respects your device’s “reduce motion” setting, and you can turn it off on this site at any time:</li>
+      </ul>
+      <p class="prose__toggle"><MotionToggle /></p>
+      <ul>
+        <li>Headings, landmarks and form labels are structured for screen readers; decorative animation is hidden from them.</li>
+        <li>The consultation form explains errors in text, moves focus to the first problem, and saves your answers as you go.</li>
+        <li>The before-and-after comparison can be operated with arrow keys as well as by dragging.</li>
+      </ul>
+      <h2>Known limitations</h2>
+      <p>Podcast episodes are hosted on third-party platforms; transcripts are being added. Case-file imagery is illustrative until replaced with client work.</p>
+      <h2>Report a barrier</h2>
+      <p>If anything on this site is hard to use, please {contact} and tell us the page and what happened. We’ll respond as quickly as we can and fix what we find.</p>
+      <p class="mono">Last reviewed: {new Date().toISOString().slice(0, 10)}</p>
+    </div>
+  </section>
+</BaseLayout>

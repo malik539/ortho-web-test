@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Milestones from '../../components/Milestones.astro';
+import Steps from '../../components/Steps.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { PHASES } from '../../data/phases.js';
+import { STEPS } from '../../data/content.js';
+import { crumbs, breadcrumbLd, serviceLd } from '../../data/seo.js';
+
+const trail = crumbs({ label: 'Treatment', href: '/treatment/' });
+const engagement = PHASES.map((p) => ({ at: p.timeline, label: `${p.number} · ${p.name}` }));
+---
+<BaseLayout
+  title="Treatment plan: marketing for orthodontic practices in four phases"
+  description="Records, Alignment, Force and Retention: how Ortho Marketing plans, builds and grows an orthodontic practice’s brand, website, search presence and reputation."
+  jsonld={[breadcrumbLd(trail), ...PHASES.map(serviceLd)]}
+>
+  <PageHero
+    crumbs={trail} lead="Treatment" label="Plan"
+    title={['Four phases.', 'One continuous force.']}
+    lede="Every engagement follows the arc of good treatment: thorough records, a precise plan, steady movement, and a retention phase that protects the result."
+  />
+
+  <section class="page-sec" data-scene="dark" aria-labelledby="phases-title">
+    <div class="wrap">
+      <header class="page-sec__head">
+        <p class="eyebrow mono" data-reveal="wire"><span>01</span> The phases</p>
+        <h2 class="d2" id="phases-title" data-reveal="lines">Start where your practice <em>needs it.</em></h2>
+      </header>
+      <ol class="phase-index">
+        {PHASES.map((p) => (
+          <li data-reveal="rise">
+            <a href={`/treatment/${p.slug}/`}>
+              <span class="phase-index__num" aria-hidden="true">{p.number}</span>
+              <span class="phase-index__name d2">{p.name}</span>
+              <span class="phase-index__sum">{p.summary}</span>
+              <span class="phase-index__time mono">{p.timeline}</span>
+              <span class="ep__play" aria-hidden="true"></span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="engage-title">
+    <div class="wrap">
+      <header class="page-sec__head">
+        <p class="eyebrow mono" data-reveal="wire"><span>02</span> How an engagement runs</p>
+        <h2 class="d2" id="engage-title" data-reveal="lines">Light, continuous force — <em>on a timeline.</em></h2>
+        <p class="lede" data-reveal="fade">Records takes about a month. Alignment launches within four. Force and Retention never stop: they are what keeps a practice where it belongs.</p>
+      </header>
+      <Milestones items={engagement} />
+    </div>
+  </section>
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="first-title">
+    <div class="wrap">
+      <header class="page-sec__head">
+        <p class="eyebrow mono" data-reveal="wire"><span>03</span> Your first visit</p>
+        <h2 class="d2" id="first-title" data-reveal="lines">What happens <em>when you reach out.</em></h2>
+      </header>
+    </div>
+    <Steps items={STEPS} />
+  </section>
+
+  <CtaBand cta="treatment-band" secondary={{ label: 'See the results', href: '/results/' }} />
+</BaseLayout>

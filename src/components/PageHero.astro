@@ -1,0 +1,22 @@
+---
+/* Secondary-page opening: breadcrumbs, eyebrow wire, H1 (never hidden — it is the LCP), lede.
+   An optional outlined numeral sits on the right like the treatment rail's. */
+import Breadcrumbs from './Breadcrumbs.astro';
+interface Props {
+  lead: string; label: string; title: [string, string?]; lede?: string; numeral?: string; meta?: string;
+  crumbs?: { label: string; href: string }[];
+}
+const { lead, label, title, lede, numeral, meta, crumbs } = Astro.props;
+---
+<section class="page-hero" data-scene="dark" aria-labelledby="page-title">
+  <div class="page-hero__light" aria-hidden="true"></div>
+  {numeral && <span class="page-hero__num" aria-hidden="true">{numeral}</span>}
+  <div class="page-hero__inner wrap">
+    {crumbs && <Breadcrumbs items={crumbs} />}
+    <p class="eyebrow mono" data-reveal="wire"><span>{lead}</span> {label}</p>
+    <h1 class="d1" id="page-title">{title[0]}{title[1] && <Fragment> <em>{title[1]}</em></Fragment>}</h1>
+    {lede && <p class="lede" data-reveal="fade">{lede}</p>}
+    {meta && <p class="page-hero__meta mono" data-reveal="fade">{meta}</p>}
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import PortraitPlate from '../components/PortraitPlate.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Wire from '../components/Wire.astro';
+import { SITE } from '../data/site.js';
+import { PRINCIPLES } from '../data/content.js';
+import { crumbs, breadcrumbLd } from '../data/seo.js';
+const trail = crumbs({ label: 'Studio', href: '/studio/' });
+---
+<BaseLayout
+  title="Studio: a family practice for family practices"
+  description={`Ortho Marketing has been family-run since ${SITE.founded}, led by ${SITE.president.title} ${SITE.president.name}. Meet the studio and how we work with orthodontic practices.`}
+  jsonld={[breadcrumbLd(trail), { '@type': 'AboutPage', name: 'Studio', url: `${SITE.url}/studio/`, about: { '@id': `${SITE.url}/#organization` } }]}
+>
+  <PageHero crumbs={trail} lead="Studio" label="The family" title={['A family practice,', 'for family practices.']}
+    lede={`Ortho Marketing has been family-run since ${SITE.founded}. So are many of the practices we serve — parents and children, partners of thirty years, associates who became owners.`} />
+
+  <section class="studio" data-scene="dark" aria-labelledby="people-title">
+    <div class="studio__grid wrap">
+      <PortraitPlate />
+      <div class="studio__text">
+        <p class="eyebrow mono" data-reveal="wire"><span>01</span> The people</p>
+        <h2 class="d2" id="people-title" data-reveal="lines">Built by a family, <em>for the long run.</em></h2>
+        <p class="lede" data-reveal="fade">We know what it means to build something with your name on it, and to protect it for the next generation. That’s the care we bring to your practice.</p>
+        <dl class="facts">
+          <div><dt class="mono">Founded</dt><dd>{SITE.founded}</dd></div>
+          <div><dt class="mono">Structure</dt><dd>{SITE.structure}</dd></div>
+          <div><dt class="mono">{SITE.president.title}</dt><dd>{SITE.president.name} — {SITE.president.experience}</dd></div>
+          <div><dt class="mono">Specialism</dt><dd>{SITE.specialism}</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-sec page-sec--light" data-scene="light" aria-labelledby="how-title">
+    <div class="wrap">
+      <header class="page-sec__head">
+        <p class="eyebrow mono" data-reveal="wire"><span>02</span> How we work</p>
+        <h2 class="d2" id="how-title" data-reveal="lines">Four principles, <em>kept.</em></h2>
+      </header>
+      <ol class="principles">
+        {PRINCIPLES.map((pr, i) => (
+          <li data-reveal="rise"><span class="mono">{String(i + 1).padStart(2, '0')}</span><h3 class="d3">{pr.title}</h3><p>{pr.copy}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="page-sec" data-scene="dark" aria-labelledby="live-teaser">
+    <div class="wrap teaser">
+      <p class="onair mono" data-loop><i aria-hidden="true"></i>On air</p>
+      <h2 class="d2" id="live-teaser" data-reveal="lines">{SITE.podcast.name}, <em>hosted by {SITE.podcast.host}.</em></h2>
+      <p class="lede" data-reveal="fade">Conversations with the orthodontists, operators and specialists redefining practice growth.</p>
+      <a class="btn btn--primary" href="/live/"><span>Listen to the podcast</span><Wire /></a>
+    </div>
+  </section>
+
+  <CtaBand cta="studio-band" />
+</BaseLayout>

@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Waveform from '../../components/Waveform.astro';
+import EpisodeList from '../../components/EpisodeList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Wire from '../../components/Wire.astro';
+import { SITE } from '../../data/site.js';
+import { EPISODES } from '../../data/episodes.js';
+import { crumbs, breadcrumbLd } from '../../data/seo.js';
+const trail = crumbs({ label: 'Live', href: '/live/' });
+const series = {
+  '@type': 'PodcastSeries', '@id': `${SITE.url}/live/#series`, name: SITE.podcast.name, url: `${SITE.url}/live/`,
+  author: { '@type': 'Person', name: SITE.podcast.host }, publisher: { '@id': `${SITE.url}/#organization` },
+  sameAs: [SITE.podcast.appleUrl],
+};
+---
+<BaseLayout
+  title={`${SITE.podcast.name}: the podcast for orthodontic practice growth`}
+  description={`${SITE.podcast.name}, hosted by ${SITE.podcast.host}: conversations with the orthodontists, operators and specialists redefining practice growth.`}
+  jsonld={[breadcrumbLd(trail), series]}
+>
+  <PageHero crumbs={trail} lead="Live" label="On air" title={['Ortho Marketing', 'Live.']}
+    lede={`Conversations with the orthodontists, operators and specialists redefining practice growth. Hosted by ${SITE.podcast.host}.`}>
+    <p class="cta-row page-hero__cta" data-reveal="rise">
+      <a class="btn btn--primary" href={SITE.podcast.appleUrl} rel="noopener" target="_blank"><span>Listen on Apple Podcasts</span><Wire /><span class="sr-only"> (opens in a new tab)</span></a>
+    </p>
+  </PageHero>
+
+  <section class="live" data-scene="dark" aria-labelledby="eps-title">
+    <div class="wrap"><h2 class="d3" id="eps-title">Recent conversations</h2></div>
+    <Waveform />
+    <EpisodeList items={EPISODES} />
+  </section>
+
+  <CtaBand cta="live-band" label="Rather talk to us directly?" title={['Bring your questions to', 'a strategist.']} />
+</BaseLayout>

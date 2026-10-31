@@ -7,6 +7,7 @@ export const CASES = [
     practice: 'Alder Lane Orthodontics',
     type: 'Specialist practice · two locations',
     challenge: 'Growth',
+    summary: 'How a two-location specialist practice moved through all four phases — from records to retention.',
     situation: 'A respected specialist practice with an outdated template website, a crowded local market and paid search that brought clicks but few consultations.',
     insight: 'Parents trusted the doctors in person — nothing online showed why.',
     phases: ['records', 'alignment', 'force', 'retention'],

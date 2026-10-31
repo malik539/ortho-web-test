@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Notice from '../components/Notice.astro';
+import { SITE } from '../data/site.js';
+import { crumbs } from '../data/seo.js';
+const trail = crumbs({ label: 'Privacy', href: '/privacy/' });
+const contact = SITE.contact.email || 'the contact details on this page';
+---
+<BaseLayout title="Privacy notice" description="How Ortho Marketing handles information submitted through this website." noindex>
+  <PageHero crumbs={trail} lead="Legal" label="Privacy" title={['Privacy', 'notice.']} />
+  <Notice tone="draft">Draft for legal review — not yet in force. Ortho Marketing must confirm every statement below before launch.</Notice>
+  <section class="page-sec page-sec--light" data-scene="light" aria-label="Privacy notice">
+    <div class="wrap prose">
+      <h2>What we collect</h2>
+      <p>When you request a consultation we collect the details you enter: practice name, website, city, number of locations, goals, current marketing, optional budget range and notes, your name, role, email, optional phone and preferred time. We also record which page and campaign brought you to the form.</p>
+      <h2>How we use it</h2>
+      <p>Only to prepare for, schedule and follow up on your consultation, and to improve how we respond to practices. We do not sell your information.</p>
+      <h2>Analytics and cookies</h2>
+      <p>Analytics cookies load only if you accept them in the cookie banner. You can change your choice at any time by clearing this site’s storage in your browser. Your motion preference and an unfinished consultation draft are kept in your own browser’s local storage and never sent to us.</p>
+      <h2>Retention and your rights</h2>
+      <p>[To be confirmed: retention period, processors (CRM, email, analytics), and how to request access, correction or deletion.]</p>
+      <h2>Contact</h2>
+      <p>Questions about this notice: {contact}.</p>
+    </div>
+  </section>
+</BaseLayout>

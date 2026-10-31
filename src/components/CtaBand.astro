@@ -1,0 +1,23 @@
+---
+/* The closing ask on secondary pages (the homepage has the full Debond finale). */
+import Wire from './Wire.astro';
+import { SITE } from '../data/site.js';
+interface Props { label?: string; title?: [string, string]; lede?: string; cta?: string; secondary?: { label: string; href: string } }
+const {
+  label = 'Your first visit', title = ['Let’s see where your practice', 'could be.'],
+  lede = 'Begin with a records appointment for your brand. We map your market, audit your search presence and walk you through a treatment plan.',
+  cta = 'band', secondary,
+} = Astro.props;
+---
+<section class="cta-band" data-scene="dark" aria-labelledby="cta-band-title">
+  <div class="cta-band__inner wrap">
+    <p class="eyebrow mono" data-reveal="wire"><span>Next</span> {label}</p>
+    <h2 class="d1" id="cta-band-title" data-reveal="lines">{title[0]} <em>{title[1]}</em></h2>
+    <p class="lede" data-reveal="fade">{lede}</p>
+    <div class="cta-row cta-row--center" data-reveal="rise">
+      <a class="btn btn--primary btn--lg" href="/consultation/" data-consult-open data-cta={cta}><span>Begin your consultation</span><Wire /></a>
+      {secondary && <a class="link" href={secondary.href}>{secondary.label}</a>}
+    </div>
+    <ul class="debond__assure mono" data-reveal="fade"><li>30 minutes</li><li>With a strategist</li><li>{SITE.consultation.keep}</li></ul>
+  </div>
+</section>
