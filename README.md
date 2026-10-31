@@ -30,6 +30,7 @@ npm test
 | [`src/`](src/) | **The production site** (Astro 7, static). 18 pages: home, treatment and four phases, results and case file, studio, podcast and episodes, consultation, legal, accessibility, 404. Content lives in `src/data/`. |
 | [`netlify/functions/`](netlify/functions/) | The consultation endpoint: validates leads and forwards them to your CRM webhook. |
 | [`tests/`](tests/) | Regression suites: routes and SEO, axe-core accessibility, motion system, the form function, and the production configuration (headers, CSP, consent, form → CRM). |
+| [`experience/PREMIUM-AUDIT.md`](experience/PREMIUM-AUDIT.md) | **Premium agency audit:** 17 issues ranked by severity, impact and priority, why each weakens the experience, the fix, and what was implemented. |
 | [`experience/MOTION-SYSTEM.md`](experience/MOTION-SYSTEM.md) | **The cinematic motion system:** principles, tokens, choreography, the full catalogue, performance budgets, mobile and reduced-motion tiers, accessibility and QA. |
 | [`experience/HERO.md`](experience/HERO.md) | **The cinematic hero, "Shape Memory":** concept, composition, copy, the 3D arch, lighting, entrance timeline, interactions, performance and QA. |
 | [`experience/WEBSITE-BLUEPRINT.md`](experience/WEBSITE-BLUEPRINT.md) | **The experience blueprint:** narrative, brand system, every section in order with copy, layout, motion, CTA and analytics, the conversion flow, secondary pages, responsive matrix, accessibility and performance specs. |

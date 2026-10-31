@@ -18,6 +18,8 @@ export const CASES = [
     ],
     quote: { text: 'They spoke to us like clinicians, not customers. Eighteen months later, our schedule looks like a different practice.', by: 'Practice owner · Alder Lane Orthodontics' },
     retention: 'Monthly force reports, review generation and a referring-doctor program continue.',
+    // Miniature before/after for the case card (mirrors the full comparison on the case file).
+    mock: { before: 'Welcome to Alder Lane Orthodontics!', eyebrow: 'Specialist orthodontists · Since 1994', after: ['Confidence,', 'quietly engineered.'] },
   },
 ];
 

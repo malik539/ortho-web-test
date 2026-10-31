@@ -2,24 +2,32 @@
 import Logo from './Logo.astro';
 import MotionToggle from './MotionToggle.astro';
 import { SITE, FOOTER_LINKS } from '../data/site.js';
-interface Props { consultHref: string; overlay: boolean }
-const { consultHref, overlay } = Astro.props;
+interface Props { consultHref: string; overlay: boolean; roll?: boolean }
+// The end-credits roll closes the homepage story; every other page signs off with a compact line.
+const { consultHref, overlay, roll = false } = Astro.props;
 const year = new Date().getFullYear();
 const { email, phone, address } = SITE.contact;
 const analytics = Boolean(import.meta.env.PUBLIC_GTM_ID);   // the consent bar exists only with GTM
 ---
-<footer class="credits" data-scene="dark">
-  <div class="credits__roll wrap">
-    <Logo variant="reversed" class="credits__logo" alt="Ortho Marketing" sizes="260px" />
-    <p class="mono">presents</p>
-    <p class="credits__title">Light, <em>Continuous</em> Force</p>
-    <dl>
-      <div><dt class="mono">Starring</dt><dd>Your practice</dd></div>
-      <div><dt class="mono">Treatment</dt><dd>Strategy · Identity · Websites · Search · Reputation</dd></div>
-      <div><dt class="mono">Filmed on location</dt><dd>In every zip code you serve</dd></div>
-      <div><dt class="mono">Running time</dt><dd>18 to 24 months. Then, for as long as you practice.</dd></div>
-    </dl>
-  </div>
+<footer class:list={['credits', { 'credits--compact': !roll }]} data-scene="dark">
+  {roll ? (
+    <div class="credits__roll wrap">
+      <Logo variant="reversed" class="credits__logo" alt="Ortho Marketing" sizes="260px" />
+      <p class="mono">presents</p>
+      <p class="credits__title">Light, <em>Continuous</em> Force</p>
+      <dl>
+        <div><dt class="mono">Starring</dt><dd>Your practice</dd></div>
+        <div><dt class="mono">Treatment</dt><dd>Strategy · Identity · Websites · Search · Reputation</dd></div>
+        <div><dt class="mono">Filmed on location</dt><dd>In every zip code you serve</dd></div>
+        <div><dt class="mono">Running time</dt><dd>18 to 24 months. Then, for as long as you practice.</dd></div>
+      </dl>
+    </div>
+  ) : (
+    <div class="credits__sign wrap">
+      <a href="/" class="credits__home"><Logo variant="reversed" class="credits__logo" alt="Ortho Marketing — home" sizes="200px" /></a>
+      <p class="credits__motto">We move markets the way <em>you move teeth.</em></p>
+    </div>
+  )}
   <div class="credits__base wrap">
     <nav class="credits__nav" aria-label="Footer">
       {FOOTER_LINKS.map((l) => <a href={l.href}>{l.label}</a>)}

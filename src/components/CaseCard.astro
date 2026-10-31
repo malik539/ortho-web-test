@@ -1,19 +1,49 @@
 ---
-interface Props { c: { slug: string; practice: string; type: string; challenge: string; illustrative?: boolean; metrics: { value: string; small?: string; label: string }[] } }
-const { c } = Astro.props;
+/* A case file in the index. `feature` lays it out full width with a miniature before/after and all
+   three results — used when a case leads the page (today: the only one). */
+interface Metric { value: string; small?: string; label: string }
+interface Props {
+  c: {
+    slug: string; practice: string; type: string; challenge: string; illustrative?: boolean; metrics: Metric[];
+    mock?: { before: string; eyebrow: string; after: [string, string] };
+  };
+  feature?: boolean;
+}
+const { c, feature = false } = Astro.props;
 const lead = c.metrics[0];
+const short = c.practice.split(' ').slice(0, 2).join(' ');
 ---
-<article class="case-card" data-reveal="rise">
+<article class:list={['case-card', { 'case-card--feature': feature }]} data-reveal="rise">
   <a href={`/results/${c.slug}/`} class="case-card__link">
     <div class="case-card__plate" aria-hidden="true">
+      {c.mock && (
+        <div class="cm">
+          <div class="cm__before">
+            <span class="cm__bar"><i></i>{c.practice}</span>
+            <b class="cm__hello">{c.mock.before}</b>
+            <span class="cm__btn">Schedule your free consultation!</span>
+            <span class="cm__cards"><i></i><i></i><i></i></span>
+          </div>
+          <div class="cm__after">
+            <span class="cm__eyebrow">{c.mock.eyebrow}</span>
+            <b class="cm__line">{c.mock.after[0]} <em>{c.mock.after[1]}</em></b>
+          </div>
+        </div>
+      )}
       <span class="case-card__before">Before · template</span>
-      <span class="case-card__after">After · {c.practice.split(' ')[0]} {c.practice.split(' ')[1]}</span>
+      <span class="case-card__after">After · {short}</span>
     </div>
     <div class="case-card__body">
       <p class="mono">{c.challenge} · {c.type}{c.illustrative ? ' · Illustrative' : ''}</p>
-      <h3 class="d3">{c.practice}</h3>
-      <p class="case-card__metric"><span>{lead.value}{lead.small}</span> {lead.label}</p>
-      <span class="link">Read the case file <span aria-hidden="true">→</span></span>
+      <h3 class:list={[feature ? 'd2' : 'd3']}>{c.practice}</h3>
+      {feature ? (
+        <ul class="case-card__metrics">
+          {c.metrics.map((m) => <li><span class="case-card__num">{m.value}{m.small && <small>{m.small}</small>}</span><span class="case-card__label">{m.label}</span></li>)}
+        </ul>
+      ) : (
+        <p class="case-card__metric"><span>{lead.value}{lead.small}</span> {lead.label}</p>
+      )}
+      <span class="link case-card__go">Read the case file <span aria-hidden="true">→</span></span>
     </div>
   </a>
 </article>

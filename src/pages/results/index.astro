@@ -26,7 +26,7 @@ const trail = crumbs({ label: 'Results', href: '/results/' });
         <h2 class="d2" id="cases-title" data-reveal="lines">Records, treatment, <em>result.</em></h2>
       </header>
       <div class="case-grid">
-        {CASES.map((c) => <CaseCard c={c} />)}
+        {CASES.map((c, i) => <CaseCard c={c} feature={i === 0} />)}
       </div>
       {CASES.some((c) => c.illustrative) && <p class="results__note mono">Cases marked “Illustrative” use a fictional practice and illustrative figures to show how we report results.</p>}
     </div>

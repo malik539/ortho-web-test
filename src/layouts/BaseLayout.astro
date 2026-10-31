@@ -27,11 +27,12 @@ interface Props {
   consultOverlay?: boolean;   // false on /consultation/ (the form is on the page)
   ogType?: string;
   canonical?: boolean;        // false on the 404 page: it has no URL of its own
+  credits?: boolean;          // the full end-credits footer (homepage only)
 }
 const {
   title, description, rawTitle = false, image = '/og/og-default.png',
   imageAlt = 'Ortho Marketing — We move markets the way you move teeth.', noindex = false,
-  jsonld = [], scene = 'dark', consultOverlay = true, ogType = 'website', canonical: hasCanonical = true,
+  jsonld = [], scene = 'dark', consultOverlay = true, ogType = 'website', canonical: hasCanonical = true, credits = false,
 } = Astro.props;
 
 // Brand suffix, unless the page sets its own full title or the result would run past ~70 characters
@@ -126,7 +127,7 @@ const graph = { '@context': 'https://schema.org', '@graph': [org, { '@type': 'We
     <slot />
   </main>
 
-  <Footer consultHref={consultHref} overlay={consultOverlay} />
+  <Footer consultHref={consultHref} overlay={consultOverlay} roll={credits} />
   {consultOverlay && <ConsultOverlay />}
   <slot name="after" />
   {gtmId && <ConsentBar gtmId={gtmId} />}

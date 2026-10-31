@@ -1,11 +1,12 @@
 ---
-/* Treatment-day HUD (homepage only). */
+/* Treatment-day instrument (homepage only): scroll position as an 18-month course of treatment,
+   drawn as a measuring ruler in the right margin. It lives where content never goes, so it is shown
+   only on screens wide enough to have that margin. */
 ---
 <div class="hud mono" aria-hidden="true">
   <span class="hud__label">Treatment day</span>
-  <span class="hud__day" data-day>001</span>
-  <span class="hud__of">/ 540</span>
-  <span class="hud__bar"><i data-day-bar></i></span>
+  <span class="hud__track"><i class="hud__fill" data-day-bar></i><b class="hud__mark"></b></span>
+  <span class="hud__readout"><span class="hud__day" data-day>001</span><span class="hud__of">540</span></span>
 </div>
 
 <script>

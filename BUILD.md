@@ -159,7 +159,7 @@ These can't be done from the codebase and need Ortho Marketing's input or accoun
 **Brand assets**
 - [ ] **Fonts:** license GT Sectra Display, Söhne and Söhne Mono for web. Self-host them under the same family names in `src/styles/fonts.css` (Fraunces, Hanken Grotesk and IBM Plex Mono are OFL stand-ins), then update the preloads in `BaseLayout.astro`.
 - [ ] **Logo vectors:** replace the logo WebPs in `public/assets/` (prepared from the supplied logo image) with exports from the master vector files, and re-run `npm run assets` for icons.
-- [ ] **Photography:** the studio portrait and macro plates are art-directed placeholders built in code. Commission the shoots described in the creative direction and drop the images into `PortraitPlate` / `MacroPlate`.
+- [ ] **Photography:** the studio plate is an interim lighting test (the Orb lit with the portrait's lighting plan) and the macro plate is drawn in code. Commission the shoots described in the creative direction and [`experience/PREMIUM-AUDIT.md`](experience/PREMIUM-AUDIT.md) §13, then drop the images into `PortraitPlate` / `MacroPlate`.
 
 **Final QA**
 - [ ] Cross-browser pass in Safari (macOS and iOS) and Firefox. The automated suites run in Chromium only.

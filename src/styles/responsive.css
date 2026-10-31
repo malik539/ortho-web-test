@@ -27,7 +27,7 @@
   .live__head .lede { max-width: 44ch; }
   .episodes a { grid-template-columns: 5rem 1fr 3rem; }
   .ep__guest { grid-column: 2; grid-row: 2; }
-  .ep__play { grid-column: 3; grid-row: 1 / span 2; }
+  .ep__go { grid-column: 3; grid-row: 1 / span 2; }
 
   .quote { grid-column: 1 / -1; }
   .faq__title, .faq__list { grid-column: 1 / -1; }
@@ -81,8 +81,7 @@
   .arch { position: relative; left: auto; top: auto; transform: none; width: 100%; max-width: 420px; }
 
   .credits__base { grid-template-columns: 1fr; }
-  .hud { bottom: var(--s-4); }
-  .hud__label { display: none; }
+  .credits__motto { text-align: left; }
 
   .consult__kicker { display: none; }
   .consult__head { justify-content: space-between; }

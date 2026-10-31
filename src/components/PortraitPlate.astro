@@ -1,30 +1,71 @@
 ---
-/* Portrait placeholder showing the lighting plan every portrait follows (replace with the real portrait). */
+/* Plate 07 — lighting test. Until the portrait session is shot, the plate shows the lighting plan
+   every portrait follows, with the Orb standing in as the subject: north-window key from the upper
+   left, negative fill camera right, an Ortho Blue bounce from the floor. On a fine pointer the cursor
+   becomes the key light. Replace with the real portrait (see BUILD.md → Photography). */
 interface Props { caption?: string }
-const { caption = 'Portrait, President · north window, 7:10 a.m. · 85mm f/1.8 · negative fill camera right' } = Astro.props;
+const { caption = 'North-window key, 45° high · negative fill camera right · 85mm f/1.8 — the plan for the President’s portrait' } = Astro.props;
 ---
-<figure class="plate plate--portrait" data-reveal="exposure">
-  <svg class="lightplan" viewBox="0 0 400 500" aria-hidden="true">
-    <g fill="none" stroke="currentColor" stroke-width="1">
-      <circle cx="200" cy="270" r="34"/>
-      <path d="M166 300 Q200 330 234 300" />
-      <rect x="60" y="80" width="90" height="14" transform="rotate(-38 105 87)"/>
-      <path d="M118 112 L182 236" stroke-dasharray="3 5"/>
-      <path d="M118 112 L214 220" stroke-dasharray="3 5"/>
-      <rect x="300" y="250" width="10" height="110"/>
-      <path d="M200 440 V380" />
-      <rect x="186" y="440" width="28" height="18"/>
-    </g>
-    <g fill="currentColor" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.2">
-      <text x="44" y="60">KEY · NORTH WINDOW</text>
-      <text x="44" y="74">DIFFUSED · 45° HIGH</text>
-      <text x="318" y="306">NEG. FILL</text>
-      <text x="222" y="474">85MM · f/1.8</text>
-      <text x="150" y="222">SUBJECT</text>
-    </g>
-  </svg>
+<figure class="plate plate--portrait" data-plate data-reveal="exposure">
+  <div class="plate__set" aria-hidden="true">
+    <svg class="lightplan" viewBox="0 0 400 500">
+      <g fill="none" stroke="currentColor" stroke-width="1">
+        <rect x="52" y="74" width="92" height="12" transform="rotate(-38 98 80)" />
+        <path d="M120 108 L158 170" stroke-dasharray="2 5" />
+        <path d="M128 100 L196 152" stroke-dasharray="2 5" />
+        <rect x="336" y="168" width="8" height="124" />
+        <path d="M200 324 V372" />
+        <rect x="187" y="372" width="26" height="17" />
+        <path d="M110 230 H96 M304 230 H290 M200 132 V118" />
+      </g>
+      <g fill="currentColor" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1.2">
+        <text x="40" y="44">KEY · NORTH WINDOW</text>
+        <text x="40" y="57">DIFFUSED · 45° HIGH</text>
+        <text x="296" y="312">NEG. FILL</text>
+        <text x="222" y="385">85MM · f/1.8</text>
+      </g>
+    </svg>
+    <div class="subject">
+      <span class="subject__shadow"></span>
+      <svg class="subject__orb" viewBox="0 0 124 124">
+        <defs>
+          <radialGradient id="pp-body" cx="36%" cy="30%" r="78%">
+            <stop offset="0" stop-color="#7C84FF" />
+            <stop offset=".3" stop-color="#2F3AFF" />
+            <stop offset=".6" stop-color="#161FC4" />
+            <stop offset=".84" stop-color="#070B5A" />
+            <stop offset="1" stop-color="#03051F" />
+          </radialGradient>
+          <linearGradient id="pp-smile" x1="0" y1="0" x2="1" y2=".2">
+            <stop offset="0" stop-color="#FFFFFF" />
+            <stop offset=".45" stop-color="#E6E3DC" />
+            <stop offset=".8" stop-color="#8E909E" />
+            <stop offset="1" stop-color="#3B3D4A" />
+          </linearGradient>
+          <linearGradient id="pp-fill" x1="0" y1="0" x2="1" y2="0">
+            <stop offset=".45" stop-color="#000" stop-opacity="0" />
+            <stop offset="1" stop-color="#000" stop-opacity=".55" />
+          </linearGradient>
+          <radialGradient id="pp-bounce" cx="50%" cy="104%" r="55%">
+            <stop offset="0" stop-color="#4F58FF" stop-opacity=".22" />
+            <stop offset="1" stop-color="#4F58FF" stop-opacity="0" />
+          </radialGradient>
+          <clipPath id="pp-clip"><circle cx="62" cy="62" r="62" /></clipPath>
+        </defs>
+        <circle cx="62" cy="62" r="62" fill="url(#pp-body)" />
+        <path clip-path="url(#pp-clip)" fill="url(#pp-smile)" d="M0 49.6A62 38.4 0 0 0 124 49.6L124 56.7A62 56.3 0 0 1 0 56.7Z" />
+        <circle cx="62" cy="62" r="62" fill="url(#pp-fill)" />
+        <circle cx="62" cy="62" r="62" fill="url(#pp-bounce)" />
+      </svg>
+      <span class="subject__key"></span>
+    </div>
+  </div>
   <figcaption class="plate__caption mono">
-    <span>Plate 07</span>
+    <span>Plate 07 · Lighting test</span>
     <span>{caption}</span>
   </figcaption>
 </figure>
+
+<script>
+  import '../scripts/scenes/plate.js';
+</script>

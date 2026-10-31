@@ -18,12 +18,29 @@ function init() {
     const narrow = vw < 768;
     const n = claims.length;
     const fieldCenterY = vh * 0.58;
+    // Start crowded, not illegible: each claim tries a few spots in the cluster and keeps the one it
+    // overlaps least, so the market reads as noise without words being cut in half.
+    const spanX = Math.min(vw * (narrow ? 0.62 : 0.5), 700), spanY = vh * (narrow ? 0.26 : 0.3);
+    const placed = [];
+    const overlap = (x, y, w, h) => placed.reduce((sum, q) => {
+      const ox = Math.max(0, Math.min(x + w / 2, q.x + q.w / 2) - Math.max(x - w / 2, q.x - q.w / 2));
+      const oy = Math.max(0, Math.min(y + h / 2, q.y + q.h / 2) - Math.max(y - h / 2, q.y - q.h / 2));
+      return sum + ox * oy;
+    }, 0);
     claims.forEach((c, i) => {
       const w = c.el.offsetWidth;
       const h = c.el.offsetHeight;
-      c.sx = (rand() - 0.5) * Math.min(vw * 0.46, 640);
-      c.sy = (rand() - 0.5) * vh * (narrow ? 0.22 : 0.26);
-      c.sr = (rand() - 0.5) * 34;
+      let best = null;
+      for (let k = 0; k < 24; k++) {
+        const x = (rand() - 0.5) * (spanX - w * 0.5), y = (rand() - 0.5) * spanY;
+        const o = overlap(x, y, w, h) / (w * h);
+        if (!best || o < best.o) best = { x, y, o };
+        if (o < 0.12) break;
+      }
+      placed.push({ x: best.x, y: best.y, w, h });
+      c.sx = best.x;
+      c.sy = best.y;
+      c.sr = (rand() - 0.5) * 22;
       let ex, ey;
       if (narrow) {
         const rows = [4, 3, 4, 3];

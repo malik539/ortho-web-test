@@ -23,7 +23,7 @@ const trail = crumbs({ label: 'Treatment', href: '/treatment/' }, { label: p.nam
   jsonld={[breadcrumbLd(trail), serviceLd(p), faqLd(p.faqs)]}
 >
   <PageHero
-    crumbs={trail} numeral={p.number} lead={`Phase ${p.number}`} label={p.name}
+    crumbs={trail} numeral={p.number} mark={Number(p.number)} lead={`Phase ${p.number}`} label={p.name}
     title={[p.headline[0], p.headline[1]]} lede={p.copy} meta={`Clinical parallel — ${p.parallel}`}
   />
 

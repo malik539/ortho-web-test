@@ -3,14 +3,39 @@
    whichever is larger is the LCP element, so both paint on the first frame.
    An optional outlined numeral sits on the right like the treatment rail's. */
 import Breadcrumbs from './Breadcrumbs.astro';
+import { archPath, brackets } from '../lib/bracket.js';
 interface Props {
   lead: string; label: string; title: [string, string?]; lede?: string; numeral?: string; meta?: string;
   crumbs?: { label: string; href: string }[];
+  mark?: number;     // phase pages: which bracket on the arch is lit (1–4)
 }
-const { lead, label, title, lede, numeral, meta, crumbs } = Astro.props;
+const { lead, label, title, lede, numeral, meta, crumbs, mark } = Astro.props;
+// Every page hero carries the same archwire: one continuous treatment across the site.
+const bks = brackets();
 ---
 <section class="page-hero" data-scene="dark" aria-labelledby="page-title">
   <div class="page-hero__light" aria-hidden="true"></div>
+  <svg class="page-arch" viewBox="0 0 660 600" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="bk-steel" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#FBFAF7" />
+        <stop offset=".5" stop-color="#C3C6D1" />
+        <stop offset="1" stop-color="#777B8C" />
+      </linearGradient>
+    </defs>
+    <path class="page-arch__wire" d={archPath} pathLength="1" />
+    {bks.map((b) => (
+      <g transform={`translate(${b.x} ${b.y})`}>
+        <g transform={`rotate(${b.angle})`}>
+          <g class:list={['bk', 'page-arch__bk', { 'is-lit': mark && b.i === mark }]} style={`--i:${b.i}`}>
+            <rect class="bk__pad" x={b.pad.x} y="-10" width={b.pad.w} height="20" rx="3" />
+            <rect class="bk__slot" x={b.pad.x} y="-0.9" width={b.pad.w} height="1.8" />
+            {b.wings.map((w) => <rect class="bk__wing" x={w.x} y={w.y} width={w.w} height="6.3" rx="1.2" />)}
+          </g>
+        </g>
+      </g>
+    ))}
+  </svg>
   {numeral && <span class="page-hero__num" aria-hidden="true">{numeral}</span>}
   <div class="page-hero__inner wrap">
     {crumbs && <Breadcrumbs items={crumbs} />}
