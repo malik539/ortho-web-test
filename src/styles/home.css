@@ -86,6 +86,9 @@
   transition-delay: var(--hd, 0ms);
 }
 .is-aligned .hero [data-hero-in] { opacity: 1; transform: none; }
+/* The subtitle is the largest text block on phones, so it is the LCP element there: it paints on the
+   first frame (even under the loader) and only rises into place. */
+.js .hero .hero__sub[data-hero-in] { opacity: 1; }
 
 /* ==========================================================================
    02 · ACT I — CROWDING
@@ -108,7 +111,7 @@
   transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) rotate(var(--tr, 0deg));
   opacity: var(--to, 1); will-change: transform, opacity; box-shadow: 0 10px 30px -18px rgba(10, 10, 12, .5);
 }
-.claim--cyan { background: #19B3C4; border-color: #19B3C4; color: #fff; }
+.claim--cyan { background: #19B3C4; border-color: #19B3C4; color: var(--c-occlusion); }
 .claim--serif { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; }
 .claim--bold { font-weight: 700; text-transform: uppercase; letter-spacing: .04em; background: var(--c-occlusion); color: #FFD84D; border-color: var(--c-occlusion); }
 .claim--stars { color: #E8A700; letter-spacing: .1em; }

@@ -7,11 +7,11 @@ import ConsultForm from './ConsultForm.astro';
 <div class="consult" id="consultation" role="dialog" aria-modal="true" aria-labelledby="consult-dialog-title" hidden data-consult>
   <div class="consult__flood" aria-hidden="true"></div>
   <div class="consult__inner">
-    <header class="consult__head">
+    <div class="consult__head">
       <Logo variant="white" class="consult__logo" alt="Ortho Marketing" sizes="150px" />
       <p class="mono consult__kicker">Records appointment</p>
       <button class="consult__close mono" type="button" data-consult-close>Close <span aria-hidden="true">✕</span></button>
-    </header>
+    </div>
     <ConsultForm mode="overlay" />
   </div>
 </div>

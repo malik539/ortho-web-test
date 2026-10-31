@@ -43,7 +43,13 @@ function init() {
         }
       });
     };
+    // Characters are aria-hidden once split, so the heading keeps one readable copy of its text.
+    const text = title.textContent.replace(/\s+/g, ' ').trim();
     title.querySelectorAll('.line').forEach(split);
+    const sr = document.createElement('span');
+    sr.className = 'sr-only';
+    sr.textContent = text;
+    title.appendChild(sr);
   }
 
   /* ======================================================================
@@ -61,7 +67,6 @@ function init() {
     if (!canvas || !canvas.getContext) return null;
     const ctx = canvas.getContext('2d');
     const DEG = Math.PI / 180;
-    const hasFilter = 'filter' in ctx;
     const v3 = (x, y, z) => ({ x, y, z });
     const norm = (a) => { const l = Math.hypot(a.x, a.y, a.z) || 1; return v3(a.x / l, a.y / l, a.z / l); };
     const cross = (a, b) => v3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
@@ -255,12 +260,11 @@ function init() {
       const key = Math.max(0, b.N.z * 0.7 + 0.3);
       const spec = Math.exp(-((Math.hypot(p.x - light.x * W, p.y - light.y * H) / 190) ** 2));
       const lum = facing > 0 ? clamp(0.24 + key * 0.3 + spec * 0.42 + charge * 0.12) : 0.12;
-      const f = fog(p.z);
+      // Depth of field as aerial perspective: far brackets fade a little further into the dark.
+      // (A canvas blur filter here cost ~2s of main-thread time per entrance on software raster.)
+      const depth = (p.z - zmin) / ((zmax - zmin) || 1);
+      const f = fog(p.z) * (depth > 0.55 ? 1 - (depth - 0.55) * 0.6 : 1);
       const tone = (l, a) => `rgba(${Math.round(l * 228)},${Math.round(l * 233)},${Math.round(Math.min(1, l * 1.05) * 250)},${a})`;
-      if (hasFilter) {
-        const depth = (p.z - zmin) / ((zmax - zmin) || 1);
-        ctx.filter = depth > 0.55 ? `blur(${((depth - 0.55) * 3.2).toFixed(2)}px)` : 'none';
-      }
       const quad = (pts, fill) => {
         ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
         for (let i = 1; i < 4; i++) ctx.lineTo(pts[i].x, pts[i].y);
@@ -269,7 +273,7 @@ function init() {
       const box = (x0, x1, y0, y1) => [corner(x0, y1), corner(x1, y1), corner(x1, y0), corner(x0, y0)];
       // base pad (mesh), slightly larger and darker
       quad(box(-hw * 1.08, hw * 1.08, -hh * 1.12, hh * 1.12), tone(lum * 0.42, f));
-      if (facing <= 0) { if (hasFilter) ctx.filter = 'none'; return; }
+      if (facing <= 0) return;
       // four tie-wings: vertical channel gx, archwire slot gy
       const gx = hw * 0.16, gy = hh * 0.2;
       const wings = [[-hw, -gx, gy, hh], [gx, hw, gy, hh], [-hw, -gx, -hh, -gy], [gx, hw, -hh, -gy]];
@@ -286,7 +290,6 @@ function init() {
       ctx.strokeStyle = `rgba(255,255,255,${((0.3 + spec * 0.55) * f).toFixed(3)})`;
       ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(e0.x, e0.y); ctx.lineTo(e1.x, e1.y); ctx.stroke();
-      if (hasFilter) ctx.filter = 'none';
     };
 
     const draw = (now) => {

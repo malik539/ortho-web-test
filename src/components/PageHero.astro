@@ -1,5 +1,6 @@
 ---
-/* Secondary-page opening: breadcrumbs, eyebrow wire, H1 (never hidden — it is the LCP), lede.
+/* Secondary-page opening: breadcrumbs, eyebrow wire, H1 and lede. The H1 and lede are never hidden:
+   whichever is larger is the LCP element, so both paint on the first frame.
    An optional outlined numeral sits on the right like the treatment rail's. */
 import Breadcrumbs from './Breadcrumbs.astro';
 interface Props {
@@ -15,8 +16,8 @@ const { lead, label, title, lede, numeral, meta, crumbs } = Astro.props;
     {crumbs && <Breadcrumbs items={crumbs} />}
     <p class="eyebrow mono" data-reveal="wire"><span>{lead}</span> {label}</p>
     <h1 class="d1" id="page-title">{title[0]}{title[1] && <Fragment> <em>{title[1]}</em></Fragment>}</h1>
-    {lede && <p class="lede" data-reveal="fade">{lede}</p>}
-    {meta && <p class="page-hero__meta mono" data-reveal="fade">{meta}</p>}
+    {lede && <p class="lede">{lede}</p>}
+    {meta && <p class="page-hero__meta mono">{meta}</p>}
     <slot />
   </div>
 </section>

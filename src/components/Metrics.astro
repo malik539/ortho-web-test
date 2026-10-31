@@ -3,12 +3,12 @@
 interface Props { items: { value: string; small?: string; label: string }[] }
 const { items } = Astro.props;
 ---
-<div class="metrics" role="list">
+<ul class="metrics">
   {items.map((m) => (
-    <figure class="metric" role="listitem" data-reveal="rise">
+    <li class="metric" data-reveal="rise"><figure>
       <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120" pathLength="1" data-draw/></svg>
       <span class="metric__num">{m.value}{m.small && <small>{m.small}</small>}</span>
       <figcaption class="mono">{m.label}</figcaption>
-    </figure>
+    </figure></li>
   ))}
-</div>
+</ul>

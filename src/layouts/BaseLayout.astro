@@ -33,7 +33,10 @@ const {
   jsonld = [], scene = 'dark', consultOverlay = true, ogType = 'website',
 } = Astro.props;
 
-const fullTitle = rawTitle ? title : `${title} — ${SITE.name}`;
+// Brand suffix, unless the page sets its own full title or the result would run past ~70 characters
+// (search results truncate there; og:site_name still carries the brand).
+const suffixed = `${title} — ${SITE.name}`;
+const fullTitle = rawTitle || suffixed.length > 70 ? title : suffixed;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const imageUrl = new URL(image, Astro.site).href;
 const path = Astro.url.pathname;

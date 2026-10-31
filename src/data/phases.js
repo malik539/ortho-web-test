@@ -3,6 +3,7 @@
 export const PHASES = [
   {
     slug: 'records',
+    seoTitle: 'Records: orthodontic marketing strategy and audit',
     number: '01',
     name: 'Records',
     headline: ['Before we move anything, we measure', 'everything.'],
@@ -30,6 +31,7 @@ export const PHASES = [
   },
   {
     slug: 'alignment',
+    seoTitle: 'Alignment: branding and websites for orthodontists',
     number: '02',
     name: 'Alignment',
     headline: ['An identity and website that feel like your', 'best appointment.'],
@@ -57,6 +59,7 @@ export const PHASES = [
   },
   {
     slug: 'force',
+    seoTitle: 'Force: local SEO and paid search for orthodontists',
     number: '03',
     name: 'Force',
     headline: ['Steady pressure.', 'Never a burst.'],
@@ -83,6 +86,7 @@ export const PHASES = [
   },
   {
     slug: 'retention',
+    seoTitle: 'Retention: reviews and reputation for orthodontists',
     number: '04',
     name: 'Retention',
     headline: ['The work doesn’t end', 'at debond.'],

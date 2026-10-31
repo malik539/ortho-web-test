@@ -18,7 +18,7 @@ const trail = crumbs({ label: 'Treatment', href: '/treatment/' }, { label: p.nam
 <BaseLayout
   image={`/og/og-${p.slug}.png`}
   imageAlt={`Phase ${p.number} · ${p.name} — ${p.headline.join(' ')}`}
-  title={`${p.name}: ${p.summary} for orthodontists`}
+  title={p.seoTitle}
   description={p.copy}
   jsonld={[breadcrumbLd(trail), serviceLd(p), faqLd(p.faqs)]}
 >
