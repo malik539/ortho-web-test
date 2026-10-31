@@ -1,0 +1,112 @@
+/* The four treatment phases (services). Copy approved in WEBSITE-BLUEPRINT.md §03.
+   Deliverable details and phase FAQs are service descriptions — confirm scope with the agency. */
+export const PHASES = [
+  {
+    slug: 'records',
+    number: '01',
+    name: 'Records',
+    headline: ['Before we move anything, we measure', 'everything.'],
+    summary: 'Strategy, audit and positioning',
+    copy: 'We start the way you do: with records. A full diagnostic of your market — competitors, search demand, referral patterns, reviews, and the real reasons patients choose one practice over another.',
+    parallel: 'Photos, scans and a lateral ceph before any appliance goes on.',
+    timeline: 'Weeks 1–4',
+    deliverables: [
+      { name: 'Market cephalometrics', detail: 'A competitive audit of every practice a parent compares you with: positioning, search visibility, reviews and offer.' },
+      { name: 'Search & demand analysis', detail: 'What people in your zip codes actually search for, how often, and who wins those searches today.' },
+      { name: 'Brand positioning', detail: 'The space in your market nobody else holds, written down and agreed before anything is designed.' },
+      { name: 'Analytics & call-tracking baseline', detail: 'Clean measurement of calls, forms and new-patient starts, so every later change can be proven.' },
+    ],
+    milestones: [
+      { at: 'Week 1', label: 'Kick-off and access' },
+      { at: 'Week 2', label: 'Market cephalometrics' },
+      { at: 'Week 3', label: 'Positioning workshop' },
+      { at: 'Week 4', label: 'Treatment plan agreed' },
+    ],
+    faqs: [
+      { q: 'What do you need from us to start?', a: 'Access to your website, Google Business Profile and analytics, plus an hour with the doctor and practice manager. We do the rest.' },
+      { q: 'Do we have to commit to the other phases?', a: 'No. Records ends with a written plan. You decide what moves next.' },
+      { q: 'How do you measure the baseline?', a: 'Calls, forms and booked consultations are tracked from the first week, so later results are compared with your own starting point, not an industry average.' },
+    ],
+  },
+  {
+    slug: 'alignment',
+    number: '02',
+    name: 'Alignment',
+    headline: ['An identity and website that feel like your', 'best appointment.'],
+    summary: 'Identity, websites, photography and film',
+    copy: 'Your brand and website are where a parent decides whether to trust you. We design both from the ground up — identity, photography, film, and a site engineered to turn attention into booked consultations.',
+    parallel: 'Brackets bonded, archwire engaged — the system that carries all future movement.',
+    timeline: 'Months 1–4',
+    deliverables: [
+      { name: 'Brand identity systems', detail: 'Name, mark, color, type and voice — a system your team can use without us in the room.' },
+      { name: 'Custom websites', detail: 'Designed and built for your practice, fast on phones, accessible, and measured from day one.' },
+      { name: 'Photography & film direction', detail: 'Real doctors, real rooms, one motivated light. No stock smiles.' },
+      { name: 'Conversion & booking architecture', detail: 'Every page leads somewhere: a call, a form, a booked first visit.' },
+    ],
+    milestones: [
+      { at: 'Month 1', label: 'Identity direction' },
+      { at: 'Month 2', label: 'Photography & site design' },
+      { at: 'Month 3', label: 'Build and content' },
+      { at: 'Month 4', label: 'Launch' },
+    ],
+    faqs: [
+      { q: 'Do we need a new website?', a: 'Not always. Records tell us whether your current site can be aligned or should be rebuilt. If it’s working, we’ll tell you.' },
+      { q: 'Can you work with our existing logo?', a: 'Yes. If your identity has equity, we refine it rather than replace it.' },
+      { q: 'Who owns the website when it’s done?', a: 'Ownership terms are set out in your agreement — ask us about them at your consultation.' },
+    ],
+  },
+  {
+    slug: 'force',
+    number: '03',
+    name: 'Force',
+    headline: ['Steady pressure.', 'Never a burst.'],
+    summary: 'Local SEO, paid search, paid social, content',
+    copy: 'Local SEO, Google Business Profile, paid search and paid social, tuned month by month. Not campaigns that spike and vanish — a continuous, measured force that moves your practice up the map and keeps it there.',
+    parallel: 'Light, continuous force — the biomechanical principle behind efficient tooth movement.',
+    timeline: 'Ongoing, adjusted monthly',
+    deliverables: [
+      { name: 'Local SEO & map pack', detail: 'Your Google Business Profile, local pages and citations, managed so you show up where parents look first.' },
+      { name: 'Paid search & paid social', detail: 'Campaigns built around new-patient starts, not clicks — with budgets you can see working.' },
+      { name: 'Content & video', detail: 'Pages, posts and short films that answer the questions patients actually ask.' },
+      { name: 'Monthly force reports', detail: 'One page, plain language: what moved, what it cost, and what we adjust next.' },
+    ],
+    milestones: [
+      { at: 'Month 1', label: 'Foundations and tracking' },
+      { at: 'Months 2–3', label: 'Local search and campaigns live' },
+      { at: 'Month 4+', label: 'Monthly force reports and adjustments' },
+    ],
+    faqs: [
+      { q: 'How soon will we see results?', a: 'Paid search can generate consultation requests within weeks. Organic search, reviews and reputation compound over months. Your treatment plan sets milestones for both.' },
+      { q: 'Do you lock budgets into long contracts?', a: 'Terms are agreed with you at the start — ask us at your consultation.' },
+      { q: 'What do monthly reports include?', a: 'Calls, forms, booked consultations, cost per start and search visibility — compared with your own baseline from Records.' },
+    ],
+  },
+  {
+    slug: 'retention',
+    number: '04',
+    name: 'Retention',
+    headline: ['The work doesn’t end', 'at debond.'],
+    summary: 'Reviews, reputation, social, referrals',
+    copy: 'Reviews, reputation, social storytelling and referring-doctor relationships — the retention phase that protects every result and turns finished patients into your most persuasive marketing.',
+    parallel: 'Retainers hold the result. Without them, everything drifts back.',
+    timeline: 'For the life of the practice',
+    deliverables: [
+      { name: 'Review generation & reputation', detail: 'A steady, compliant flow of reviews, with thoughtful replies to every one.' },
+      { name: 'Social storytelling', detail: 'Your team, your patients’ milestones and your community — told with the same care as your brand.' },
+      { name: 'Referring-doctor programs', detail: 'Keeping the general dentists who refer to you informed and appreciated.' },
+      { name: 'Patient reactivation', detail: 'Bringing back the consultations that didn’t start, and the families who have a second child coming of age.' },
+    ],
+    milestones: [
+      { at: 'Ongoing', label: 'Review requests and replies' },
+      { at: 'Monthly', label: 'Social calendar' },
+      { at: 'Quarterly', label: 'Referrer and reactivation programs' },
+    ],
+    faqs: [
+      { q: 'Are review requests compliant?', a: 'We follow platform rules and privacy requirements; nothing is incentivised or filtered.' },
+      { q: 'Can retention run on its own?', a: 'Yes. Some practices start here because their reputation needs protecting first.' },
+      { q: 'How do you approach patient privacy?', a: 'We never post patient images or stories without written consent, and we keep clinical information out of marketing.' },
+    ],
+  },
+];
+
+export const phaseBySlug = (slug) => PHASES.find((p) => p.slug === slug);

@@ -1,0 +1,32 @@
+/* ==========================================================================
+   ORTHO MARKETING — SECONDARY PAGES + SHARED PRODUCTION COMPONENTS
+   ========================================================================== */
+
+/* ---------- Form extras (production) ------------------------------------- */
+.hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.cform__privacy { font-size: var(--t-small); color: rgba(255,255,255,.82); }
+.cform__privacy a, .cform__error a { color: inherit; }
+.cform__error {
+  width: 100%; padding: var(--s-3) var(--s-4); border-left: 3px solid #FFD7D0;
+  background: rgba(10, 10, 12, .25); color: var(--c-crescent); font-size: var(--t-small); outline: none;
+}
+
+/* ---------- Footer contact ------------------------------------------------ */
+.credits__contact { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-6); font-style: normal; color: var(--c-porcelain); }
+.credits__contact a { text-decoration: none; }
+.credits__contact a:hover { color: var(--c-signal); }
+.credits__base .motion-toggle { justify-self: start; }
+
+/* ---------- Consent bar (only when analytics is configured) --------------- */
+.consent {
+  position: fixed; left: var(--margin); bottom: var(--s-5); z-index: calc(var(--z-hud) + 5);
+  width: min(380px, calc(100% - 2 * var(--margin)));
+  display: grid; gap: var(--s-4); padding: var(--s-5);
+  background: var(--c-graphite); color: var(--c-porcelain); border: 1px solid var(--c-smoke);
+  font-size: var(--t-small); box-shadow: 0 24px 60px -30px rgba(0,0,0,.8);
+}
+.consent[hidden] { display: none; }
+.consent a { color: var(--c-signal); }
+.consent__actions { display: flex; gap: var(--s-3); justify-content: flex-end; }
+.cbtn-sm { min-height: 40px; padding: 0 1rem; border-radius: 2px; cursor: pointer; font-weight: 600; font-size: var(--t-small); background: transparent; color: var(--c-porcelain); border: 1px solid var(--c-nitinol-dim); }
+.cbtn-sm--solid { background: var(--c-ortho-blue); border-color: var(--c-signal); color: var(--c-crescent); }

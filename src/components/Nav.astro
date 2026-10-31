@@ -1,0 +1,25 @@
+---
+import Logo from './Logo.astro';
+import Wire from './Wire.astro';
+import { NAV } from '../data/site.js';
+interface Props { current: string; consultHref: string; overlay: boolean }
+const { current, consultHref, overlay } = Astro.props;
+const isCurrent = (href: string) => current === href || (href !== '/' && current.startsWith(href));
+---
+<header class="nav" data-nav>
+  <a class="brand" href="/" aria-label="Ortho Marketing — home" data-brand>
+    <Logo variant="reversed" class="brand__logo brand__logo--dark" sizes="(max-width: 767px) 127px, 161px" priority />
+    <Logo variant="color" class="brand__logo brand__logo--light" sizes="(max-width: 767px) 127px, 161px" />
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    {NAV.map((l) => <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>)}
+  </nav>
+  <div class="nav__actions">
+    <a class="btn btn--primary btn--sm" href={consultHref} data-consult-open={overlay ? '' : undefined} data-cta="nav">
+      <span class="hide-sm">Book a consultation</span><span class="show-sm">Consult</span><Wire />
+    </a>
+    <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+      <span>Menu</span><i aria-hidden="true"></i>
+    </button>
+  </div>
+</header>

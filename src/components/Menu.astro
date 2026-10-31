@@ -1,0 +1,22 @@
+---
+import Wire from './Wire.astro';
+import MotionToggle from './MotionToggle.astro';
+import { NAV, SITE } from '../data/site.js';
+interface Props { current: string; consultHref: string; overlay: boolean }
+const { current, consultHref, overlay } = Astro.props;
+---
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Site menu" hidden data-menu>
+  <div class="menu__inner">
+    <ol class="menu__links">
+      {NAV.map((l, i) => (
+        <li><a href={l.href} aria-current={current.startsWith(l.href) ? 'page' : undefined}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{l.label}</a></li>
+      ))}
+    </ol>
+    <div class="menu__foot">
+      <a class="btn btn--primary" href={consultHref} data-consult-open={overlay ? '' : undefined} data-cta="menu"><span>Begin your consultation</span><Wire /></a>
+      <p class="mono">Est. {SITE.founded} · {SITE.structure} · {SITE.specialism}</p>
+      <MotionToggle />
+    </div>
+  </div>
+  <button class="menu__close mono" type="button" data-menu-close>Close</button>
+</div>

@@ -1,0 +1,122 @@
+/* ==========================================================================
+   ORTHO MARKETING — "LIGHT, CONTINUOUS FORCE"
+   Design tokens. Source of truth mirrored in /creative-direction/tokens.json
+   ========================================================================== */
+
+:root {
+  /* ---------- Color: matched to the Ortho Marketing logo ---------------- */
+  /* Logo: Ortho Blue #1F2AFF · near-black #000201 · white crescent.        */
+  --c-ortho-blue: #1F2AFF;  /* Logo blue. Fills, CTAs, the Orb. On light: text OK (6.57:1). On dark: fills only (2.67:1). */
+  --c-ortho-blue-deep: #1820D9; /* Pressed / hover on light grounds (8.29:1 on Porcelain). */
+  --c-signal: #737BFF;      /* Ortho Blue lifted for lines + text on dark. 5.66:1 on Occlusion, 5.16:1 on Graphite. */
+  --c-crescent: #FFFFFF;    /* The logo's smile crescent. Text on Ortho Blue (7.41:1). */
+
+  --c-occlusion: #0A0A0C;   /* Primary dark ground — tuned to the logo black. */
+  --c-graphite: #16161A;    /* Raised dark surface. */
+  --c-smoke: #2E2E35;       /* Hairlines on dark. Decorative only. */
+  --c-nitinol: #A4A7AE;     /* Secondary text on dark. 8.21:1 on Occlusion. */
+  --c-nitinol-dim: #85888F; /* Tertiary/meta on dark. 5.57:1 on Occlusion, 5.08:1 on Graphite. */
+
+  --c-porcelain: #F4F1EB;   /* BL1 — primary light ground + text on dark. */
+  --c-enamel: #EAE3D5;      /* A1 — secondary light ground. */
+  --c-dentin: #CFC3AC;      /* B2 — hairlines on light. Decorative only. */
+  --c-umber: #5E5750;       /* Secondary text on light. 6.30:1 on Porcelain. */
+
+  --c-radiograph: #A9B4E8;  /* Radiograph (x-ray) annotations only. */
+  --c-alert: #C2321F;       /* Form errors on light grounds only (4.94:1). */
+
+  /* Contextual aliases — the archwire is Ortho Blue on light, Signal on dark */
+  --c-wire: var(--c-signal);
+  --c-accent-text: var(--c-signal);
+
+  /* ---------- Typography ------------------------------------------------- */
+  /* Production: GT Sectra Display / Söhne / Söhne Mono (licensed).
+     Prototype fallbacks: Fraunces / Hanken Grotesk / IBM Plex Mono. */
+  --f-display: "GT Sectra Display", "Fraunces", "Times New Roman", serif;
+  --f-text: "Söhne", "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "Söhne Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  /* Fluid type scale (min @ 375px → max @ 1600px) */
+  --t-hero: clamp(2.5rem, 0.6rem + 6.6vw, 8.5rem);   /* two centered lines on desktop, three on phones */
+  --t-d1: clamp(2.6rem, 1.5rem + 4.9vw, 7rem);
+  --t-d2: clamp(2.1rem, 1.4rem + 3vw, 4.75rem);
+  --t-d3: clamp(1.6rem, 1.25rem + 1.5vw, 2.75rem);
+  --t-lede: clamp(1.15rem, 1.05rem + 0.45vw, 1.5rem);
+  --t-body: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
+  --t-small: 0.875rem;
+  --t-mono: 0.75rem;
+
+  /* Breakpoints (reference — use in media queries):
+     mobile ≤ 767 · tablet 768–1199 · desktop 1200–1599 · wide ≥ 1600 */
+
+  --lh-display: 0.94;
+  --lh-tight: 1.15;
+  --lh-body: 1.6;
+
+  --tr-display: -0.032em;
+  --tr-mono: 0.09em;
+
+  /* ---------- Space: 4px base, "millimetre" steps -------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+  --s-11: 12rem;
+  --s-section: clamp(6rem, 4rem + 9vw, 14rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+  --margin: clamp(1rem, -0.2rem + 5vw, 5rem);
+  --max: 1600px;
+
+  /* ---------- Lines ------------------------------------------------------ */
+  --hair: 1px;
+  --wire: 1.5px;  /* The archwire. Always this weight; Signal on dark, Ortho Blue on light. */
+
+  /* ---------- Motion: "light, continuous force" ---------------------------- */
+  --ease-force: cubic-bezier(0.16, 1, 0.3, 1);     /* long, inevitable settle */
+  --ease-settle: cubic-bezier(0.65, 0, 0.35, 1);   /* symmetric, for repositioning */
+  --ease-release: cubic-bezier(0.3, 0, 0.8, 0.15); /* exits only */
+  --ease-debond: cubic-bezier(0.34, 1.56, 0.64, 1); /* the one overshoot: debond day */
+
+  --d-instant: 120ms;  /* state feedback (press, toggle) */
+  --d-quick: 240ms;    /* hover, focus */
+  --d-measured: 600ms; /* UI transitions, menus */
+  --d-force: 1400ms;   /* alignment reveals */
+  --d-treatment: 2400ms; /* signature moments: cold open, debond */
+  --stagger-glyph: 18ms;  /* headline glyphs (hero only) */
+  --stagger-list: 60ms;   /* menu links, chips, rows */
+  --stagger-line: 90ms;   /* lines inside one heading */
+  --stagger-block: 110ms; /* siblings in a group: wire → heading → copy → CTA */
+
+  /* Amplitudes — how far things travel. Small, always. */
+  --m-align-x: -14px;     /* crowded → aligned: offset … */
+  --m-align-y: 18px;
+  --m-align-r: -2.2deg;   /* … and rotation (alternates with +1.4deg) */
+  --m-rise: 16px;         /* interactive blocks rise, never rotate */
+  --m-exposure-scale: 1.035;
+
+  /* Lite tier (touch, low-power, Save-Data) trims the long durations — see [data-motion="lite"] below. */
+
+  /* ---------- Depth ------------------------------------------------------ */
+  --z-loader: 120;
+  --z-cut: 115;
+  --z-consult: 110;
+  --z-menu: 100;
+  --z-grain: 90;
+  --z-midline: 80;
+  --z-nav: 70;
+  --z-hud: 60;
+}
+
+/* Motion tiers — set on <html data-motion> before first paint (see index.html <head>) */
+html[data-motion="lite"] {
+  --d-force: 1100ms;
+  --d-treatment: 1800ms;
+  --m-align-x: -10px;
+  --m-align-y: 14px;
+}

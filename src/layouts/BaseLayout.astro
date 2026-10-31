@@ -1,0 +1,132 @@
+---
+/* The page shell for every route: SEO head, motion tier before first paint, global chrome
+   (skip link, midline, grain, nav, menu, footer), the consultation overlay and site scripts. */
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/home.css';
+import '../styles/pages.css';
+import '../styles/consult.css';
+import '../styles/responsive.css';
+import Nav from '../components/Nav.astro';
+import Menu from '../components/Menu.astro';
+import Footer from '../components/Footer.astro';
+import ConsultOverlay from '../components/ConsultOverlay.astro';
+import ConsentBar from '../components/ConsentBar.astro';
+import { SITE } from '../data/site.js';
+
+interface Props {
+  title: string;              // page title; " — Ortho Marketing" is appended unless `rawTitle`
+  description: string;
+  rawTitle?: boolean;
+  image?: string;             // social card, path under /public
+  imageAlt?: string;
+  noindex?: boolean;          // drafts and illustrative pages stay out of search
+  jsonld?: object[];          // structured data blocks
+  scene?: 'dark' | 'light';   // scene of the first section (nav colours)
+  consultOverlay?: boolean;   // false on /consultation/ (the form is on the page)
+  ogType?: string;
+}
+const {
+  title, description, rawTitle = false, image = '/og/og-default.png',
+  imageAlt = 'Ortho Marketing — We move markets the way you move teeth.', noindex = false,
+  jsonld = [], scene = 'dark', consultOverlay = true, ogType = 'website',
+} = Astro.props;
+
+const fullTitle = rawTitle ? title : `${title} — ${SITE.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
+const path = Astro.url.pathname;
+const consultHref = consultOverlay ? '/consultation/' : '#records';
+const gtmId = import.meta.env.PUBLIC_GTM_ID || '';
+const org = {
+  '@type': 'Organization', '@id': `${SITE.url}/#organization`, name: SITE.name, url: `${SITE.url}/`,
+  logo: `${SITE.url}/icon-512.png`, foundingDate: String(SITE.founded), description: SITE.description,
+  ...(SITE.contact.email ? { email: SITE.contact.email } : {}),
+  ...(SITE.contact.phone ? { telephone: SITE.contact.phone } : {}),
+  ...(SITE.social.length ? { sameAs: SITE.social.map((s) => s.url) } : {}),
+};
+const graph = { '@context': 'https://schema.org', '@graph': [org, { '@type': 'WebSite', '@id': `${SITE.url}/#website`, name: SITE.name, url: `${SITE.url}/`, publisher: { '@id': `${SITE.url}/#organization` } }, ...jsonld] };
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{fullTitle}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  {noindex && <meta name="robots" content="noindex, follow">}
+  <meta name="theme-color" content="#0A0A0C">
+  <meta name="color-scheme" content="dark light">
+  <meta name="format-detection" content="telephone=no">
+
+  <meta property="og:type" content={ogType}>
+  <meta property="og:site_name" content={SITE.name}>
+  <meta property="og:locale" content={SITE.locale}>
+  <meta property="og:title" content={fullTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:image" content={imageUrl}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content={imageAlt}>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={fullTitle}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={imageUrl}>
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="sitemap" href="/sitemap-index.xml">
+
+  <link rel="preload" href="/fonts/fraunces-opsz-latin.v5.3.0.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/fraunces-opsz-italic-latin.v5.3.0.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/hanken-grotesk-wght-latin.v5.3.0.woff2" as="font" type="font/woff2" crossorigin>
+
+  <script is:inline>
+    // Before first paint: JS flag, motion tier (full · lite · reduced), loader skip, and a failsafe.
+    // Mirrors computeTier() in src/scripts/motion/kernel.js — keep the two in sync.
+    (function (d, w) {
+      var el = d.documentElement, c = el.classList, pref = null, seen = false;
+      c.add('js');
+      try { pref = localStorage.getItem('om-motion'); } catch (e) {}
+      try { seen = sessionStorage.getItem('om-loaded') === '1'; } catch (e) {}
+      var n = w.navigator, rm = w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var low = (n.hardwareConcurrency || 8) <= 2 || (n.deviceMemory || 8) <= 2 || !!(n.connection && n.connection.saveData);
+      var tier = (pref === 'reduced' || (pref !== 'full' && rm)) ? 'reduced'
+        : (w.matchMedia('(pointer: coarse)').matches || low) ? 'lite' : 'full';
+      el.setAttribute('data-motion', tier);
+      if (seen || tier === 'reduced') c.add('no-loader');
+      // Failsafe: if scripts never boot (blocked or failed), never strand content invisible.
+      w.setTimeout(function () { if (!c.contains('motion-ready') || !c.contains('scenes-ready')) c.add('motion-failed'); }, 4000);
+    })(document, window);
+  </script>
+  <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+  <slot name="head" />
+</head>
+<body data-scene={scene}>
+  <a class="skip" href="#main">Skip to content</a>
+  <slot name="before" />
+  <div class="midline" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true" data-loop></div>
+
+  <Nav current={path} consultHref={consultHref} overlay={consultOverlay} />
+  <Menu current={path} consultHref={consultHref} overlay={consultOverlay} />
+
+  <main id="main" tabindex="-1">
+    <slot />
+  </main>
+
+  <Footer consultHref={consultHref} overlay={consultOverlay} />
+  {consultOverlay && <ConsultOverlay />}
+  <slot name="after" />
+  {gtmId && <ConsentBar gtmId={gtmId} />}
+
+  <script>
+    import '../scripts/site.js';
+  </script>
+</body>
+</html>

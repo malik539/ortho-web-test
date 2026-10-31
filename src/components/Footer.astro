@@ -1,0 +1,38 @@
+---
+import Logo from './Logo.astro';
+import MotionToggle from './MotionToggle.astro';
+import { SITE, FOOTER_LINKS } from '../data/site.js';
+interface Props { consultHref: string; overlay: boolean }
+const { consultHref, overlay } = Astro.props;
+const year = new Date().getFullYear();
+const { email, phone, address } = SITE.contact;
+---
+<footer class="credits" data-scene="dark">
+  <div class="credits__roll wrap">
+    <Logo variant="reversed" class="credits__logo" alt="Ortho Marketing" sizes="260px" />
+    <p class="mono">presents</p>
+    <p class="credits__title">Light, <em>Continuous</em> Force</p>
+    <dl>
+      <div><dt class="mono">Starring</dt><dd>Your practice</dd></div>
+      <div><dt class="mono">Treatment</dt><dd>Strategy · Identity · Websites · Search · Reputation</dd></div>
+      <div><dt class="mono">Filmed on location</dt><dd>In every zip code you serve</dd></div>
+      <div><dt class="mono">Running time</dt><dd>18 to 24 months. Then, for as long as you practice.</dd></div>
+    </dl>
+  </div>
+  <div class="credits__base wrap">
+    <nav class="credits__nav" aria-label="Footer">
+      {FOOTER_LINKS.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a href={consultHref} data-consult-open={overlay ? '' : undefined} data-cta="footer">Consultation</a>
+      <a href={SITE.podcast.appleUrl} rel="noopener" target="_blank">{SITE.podcast.name}<span class="sr-only"> (opens Apple Podcasts in a new tab)</span></a>
+    </nav>
+    {(email || phone || address) && (
+      <address class="credits__contact">
+        {email && <a href={`mailto:${email}`}>{email}</a>}
+        {phone && <a href={`tel:${phone.replace(/[^+\d]/g, '')}`}>{phone}</a>}
+        {address && <span>{address}</span>}
+      </address>
+    )}
+    <p class="mono">© {year} {SITE.name} · {SITE.structure} since {SITE.founded}</p>
+    <MotionToggle />
+  </div>
+</footer>

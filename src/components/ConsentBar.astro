@@ -1,0 +1,15 @@
+---
+/* Analytics consent (only rendered when PUBLIC_GTM_ID is set). GTM loads only after "Accept". */
+interface Props { gtmId: string }
+const { gtmId } = Astro.props;
+---
+<div class="consent" role="region" aria-label="Cookie preferences" data-consent data-gtm={gtmId} hidden>
+  <p>We use analytics cookies to understand which pages help practices — only with your consent. <a href="/privacy/">Privacy</a></p>
+  <div class="consent__actions">
+    <button class="cbtn-sm" type="button" data-consent-decline>Decline</button>
+    <button class="cbtn-sm cbtn-sm--solid" type="button" data-consent-accept>Accept</button>
+  </div>
+</div>
+<script>
+  import '../scripts/consent.js';
+</script>

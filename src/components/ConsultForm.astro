@@ -1,0 +1,169 @@
+---
+/* The records appointment: 4 steps, one form. Used by the global overlay and the /consultation/ page.
+   Behaviour lives in src/scripts/consult.js; submission in src/scripts/lib/submit.js. */
+import Wire from './Wire.astro';
+import { SITE } from '../data/site.js';
+interface Props { mode: 'overlay' | 'page' }
+const { mode } = Astro.props;
+const id = (s: string) => `${mode === 'page' ? 'p' : 'o'}-${s}`;   // unique ids when both could exist
+const contact = SITE.contact.email ? ` or email ${SITE.contact.email}` : SITE.contact.phone ? ` or call ${SITE.contact.phone}` : '';
+---
+<div class="consult__body" data-consult-body>
+  <div class="cprog" aria-hidden="true">
+    <span class="cprog__fill" data-cprog-fill></span>
+    <span class="cprog__b is-on" style="--at:0%"><i>Practice</i></span>
+    <span class="cprog__b" style="--at:33.333%"><i>Goals</i></span>
+    <span class="cprog__b" style="--at:66.666%"><i>Today</i></span>
+    <span class="cprog__b" style="--at:100%"><i>Contact</i></span>
+  </div>
+  <p class="sr-only" aria-live="polite" data-cstatus>Step 1 of 4</p>
+
+  <form class="cform" novalidate data-consult-form action={import.meta.env.PUBLIC_CONSULT_ENDPOINT || undefined} method="post">
+    <div class="hp" aria-hidden="true">
+      <label for={id('company-website')}>Company website</label>
+      <input id={id('company-website')} name="company_website" type="text" tabindex="-1" autocomplete="off">
+    </div>
+
+    <fieldset class="cstep is-active" data-step="1">
+      <legend><span class="mono">Step 01 of 04</span><span class="cstep__title" id={mode === 'overlay' ? 'consult-dialog-title' : id('step1')}>Tell us about your practice.</span></legend>
+      <div class="field">
+        <label for={id('practice')}>Practice name</label>
+        <input id={id('practice')} name="practice" type="text" autocomplete="organization" required aria-describedby={id('e-practice')}>
+        <p class="field__err" id={id('e-practice')} data-err>We need your practice name to prepare your records.</p>
+      </div>
+      <div class="field">
+        <label for={id('website')}>Website <span>(optional)</span></label>
+        <input id={id('website')} name="website" type="text" inputmode="url" autocomplete="url" placeholder="yourpractice.com">
+      </div>
+      <div class="field field--row">
+        <div class="field">
+          <label for={id('city')}>City &amp; state</label>
+          <input id={id('city')} name="city" type="text" autocomplete="address-level2" required aria-describedby={id('e-city')}>
+          <p class="field__err" id={id('e-city')} data-err>Add your city so we can map your market.</p>
+        </div>
+        <fieldset class="field chips" aria-describedby={id('e-locations')}>
+          <legend>Locations</legend>
+          <label><input type="radio" name="locations" value="1" required><span>1</span></label>
+          <label><input type="radio" name="locations" value="2-3"><span>2–3</span></label>
+          <label><input type="radio" name="locations" value="4+"><span>4+</span></label>
+          <p class="field__err" id={id('e-locations')} data-err>Choose how many locations you have.</p>
+        </fieldset>
+      </div>
+    </fieldset>
+
+    <fieldset class="cstep" data-step="2">
+      <legend><span class="mono">Step 02 of 04</span><span class="cstep__title">What should move first?</span></legend>
+      <p class="cstep__hint">Choose all that apply.</p>
+      <fieldset class="field chips chips--wrap" aria-describedby={id('e-goals')}>
+        <legend class="sr-only">Goals</legend>
+        <label><input type="checkbox" name="goals" value="starts" data-min-group="goals"><span>More new-patient starts</span></label>
+        <label><input type="checkbox" name="goals" value="adults"><span>More adult patients</span></label>
+        <label><input type="checkbox" name="goals" value="website"><span>A new website</span></label>
+        <label><input type="checkbox" name="goals" value="rebrand"><span>A rebrand</span></label>
+        <label><input type="checkbox" name="goals" value="reputation"><span>Reviews &amp; reputation</span></label>
+        <label><input type="checkbox" name="goals" value="location"><span>A new location</span></label>
+        <label><input type="checkbox" name="goals" value="recovery"><span>Recover from a slow year</span></label>
+        <p class="field__err" id={id('e-goals')} data-err>Choose at least one goal.</p>
+      </fieldset>
+    </fieldset>
+
+    <fieldset class="cstep" data-step="3">
+      <legend><span class="mono">Step 03 of 04</span><span class="cstep__title">Where are you today?</span></legend>
+      <fieldset class="field chips" aria-describedby={id('e-current')}>
+        <legend>Your marketing today</legend>
+        <label><input type="radio" name="current" value="in-house" required><span>In-house</span></label>
+        <label><input type="radio" name="current" value="agency"><span>Another agency</span></label>
+        <label><input type="radio" name="current" value="little"><span>Not much yet</span></label>
+        <p class="field__err" id={id('e-current')} data-err>Tell us how your marketing runs today.</p>
+      </fieldset>
+      <div class="field">
+        <label for={id('budget')}>Monthly marketing investment</label>
+        <select id={id('budget')} name="budget">
+          <option value="">Prefer not to say</option>
+          <option>Under $3,000</option>
+          <option>$3,000–$6,000</option>
+          <option>$6,000–$12,000</option>
+          <option>$12,000+</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for={id('notes')}>Anything we should know? <span>(optional)</span></label>
+        <textarea id={id('notes')} name="notes" rows="3" placeholder="A new competitor, a partner retiring, a second location opening…"></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset class="cstep" data-step="4">
+      <legend><span class="mono">Step 04 of 04</span><span class="cstep__title">Where should we send your plan?</span></legend>
+      <div class="field field--row">
+        <div class="field">
+          <label for={id('name')}>Your name</label>
+          <input id={id('name')} name="name" type="text" autocomplete="name" required aria-describedby={id('e-name')}>
+          <p class="field__err" id={id('e-name')} data-err>Please add your name.</p>
+        </div>
+        <div class="field">
+          <label for={id('role')}>Your role</label>
+          <select id={id('role')} name="role">
+            <option>Orthodontist / owner</option>
+            <option>Practice manager</option>
+            <option>Marketing lead</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field field--row">
+        <div class="field">
+          <label for={id('email')}>Email</label>
+          <input id={id('email')} name="email" type="email" autocomplete="email" required aria-describedby={id('e-email')}>
+          <p class="field__err" id={id('e-email')} data-err>We need a working email to send your treatment plan.</p>
+        </div>
+        <div class="field">
+          <label for={id('phone')}>Phone <span>(optional)</span></label>
+          <input id={id('phone')} name="phone" type="tel" autocomplete="tel">
+        </div>
+      </div>
+      <fieldset class="field chips">
+        <legend>Best time to talk</legend>
+        <label><input type="radio" name="time" value="morning"><span>Morning</span></label>
+        <label><input type="radio" name="time" value="midday"><span>Midday</span></label>
+        <label><input type="radio" name="time" value="afternoon"><span>Afternoon</span></label>
+      </fieldset>
+      <p class="cform__privacy">We use these details only to prepare and schedule your consultation. <a href="/privacy/">Privacy</a></p>
+    </fieldset>
+
+    <div class="cform__nav">
+      <button class="cbtn cbtn--ghost" type="button" data-cback hidden>Back</button>
+      <button class="cbtn cbtn--solid" type="submit" data-cnext><span data-cnext-label>Continue</span><Wire /></button>
+      <p class="cform__saved mono" data-csaved>Saved as you go</p>
+      <p class="cform__error" role="alert" tabindex="-1" hidden data-csend-error>We couldn’t send your records just now. Your answers are saved — please try again in a moment{contact}.</p>
+    </div>
+  </form>
+</div>
+
+<div class="cdone" data-consult-done hidden tabindex="-1">
+  <svg class="orb cdone__orb" viewBox="0 0 124 124" aria-hidden="true">
+    <defs><clipPath id={id('orb-clip')}><circle cx="62" cy="62" r="62"/></clipPath></defs>
+    <circle class="orb__body orb__body--white" cx="62" cy="62" r="62"/>
+    <path class="orb__smile orb__smile--blue" data-done-smile clip-path={`url(#${id('orb-clip')})`} d="M0 49.6A62 38.4 0 0 0 124 49.6L124 49.6A62 38.4 0 0 1 0 49.6Z"/>
+  </svg>
+  <p class="mono">Records received</p>
+  <h2 class="cdone__title">Thank you<span data-done-name></span>.</h2>
+  <p class="cdone__copy">A strategist will review <span data-done-practice>your practice</span>’s market before your consultation, then email you to confirm a time.</p>
+  <ol class="cdone__next">
+    <li><span class="mono">01</span>We review your records — search, reviews, competitors.</li>
+    <li><span class="mono">02</span>We email you to schedule thirty minutes.</li>
+    <li><span class="mono">03</span>You receive your treatment plan.</li>
+  </ol>
+  <div class="cdone__cta">
+    {mode === 'overlay' ? (
+      <>
+        <a class="cbtn cbtn--solid" href="/live/" data-cta="done-listen"><span>Listen while you wait</span><Wire /></a>
+        <button class="cbtn cbtn--ghost" type="button" data-consult-close>Back to the site</button>
+      </>
+    ) : (
+      <>
+        <a class="cbtn cbtn--solid" href="/live/" data-cta="done-listen"><span>Listen while you wait</span><Wire /></a>
+        <a class="cbtn cbtn--ghost" href="/">Back to the homepage</a>
+      </>
+    )}
+  </div>
+</div>

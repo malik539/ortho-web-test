@@ -1,0 +1,8 @@
+---
+/* The Ortho Marketing logo. Variants: reversed (dark grounds), color (light grounds), white (on Ortho Blue). */
+interface Props { variant?: 'reversed' | 'color' | 'white'; class?: string; alt?: string; sizes?: string; priority?: boolean }
+const { variant = 'reversed', class: cls = '', alt = '', sizes = '161px', priority = false } = Astro.props;
+const file = { reversed: 'ortho-marketing-logo-reversed', color: 'ortho-marketing-logo', white: 'ortho-marketing-logo-white' }[variant];
+---
+<img class={cls} src={`/assets/${file}-330.webp`} srcset={`/assets/${file}-330.webp 330w, /assets/${file}-660.webp 660w`}
+  sizes={sizes} width="330" height="57" alt={alt} decoding="async" fetchpriority={priority ? 'high' : undefined} loading={priority ? 'eager' : 'lazy'} />

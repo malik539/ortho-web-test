@@ -1,0 +1,14 @@
+{
+  "name": "Ortho Marketing",
+  "short_name": "Ortho Marketing",
+  "description": "The brand, web and growth studio for orthodontic practices.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0A0A0C",
+  "theme_color": "#0A0A0C",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
