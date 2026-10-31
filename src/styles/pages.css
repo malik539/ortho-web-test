@@ -63,7 +63,7 @@
 .page-hero .lede { color: var(--c-nitinol); max-width: 46ch; }
 .page-hero__meta { color: var(--c-nitinol-dim); max-width: 60ch; }
 .page-hero__cta { margin-top: var(--s-3); }
-.page-hero--404 { min-height: 100svh; display: grid; align-items: center; }
+.page-hero--404 { min-height: 100vh; min-height: 100svh; display: grid; align-items: center; }
 .notfound-links { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6); }
 
 /* ---------- Breadcrumbs --------------------------------------------------- */
@@ -120,7 +120,7 @@
 
 /* ---------- Craft plate (alignment page) ---------------------------------- */
 .craft { padding-block: var(--s-section); }
-.plate--macro { height: min(92svh, 62vw); min-height: 460px; margin-inline: var(--margin); cursor: crosshair; --rx: 72%; --band: 14%; }
+.plate--macro { height: min(92vh, 62vw); height: min(92svh, 62vw); min-height: 460px; margin-inline: var(--margin); cursor: crosshair; --rx: 72%; --band: 14%; }
 .macro { position: absolute; inset: 0; width: 100%; height: 100%; }
 .macro--xray { clip-path: inset(0 calc(100% - var(--rx) - var(--band)) 0 calc(var(--rx) - var(--band))); }
 .plate__scan { position: absolute; top: 0; bottom: 0; left: calc(var(--rx) - var(--band)); width: calc(var(--band) * 2); border-left: 1px solid rgba(169, 180, 232, .6); border-right: 1px solid rgba(169, 180, 232, .6); pointer-events: none; }

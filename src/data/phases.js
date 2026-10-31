@@ -4,6 +4,7 @@ export const PHASES = [
   {
     slug: 'records',
     seoTitle: 'Records: orthodontic marketing strategy and audit',
+    seoDescription: 'A full diagnostic of your market — competitors, search demand, reviews and why patients choose a practice — before anything is designed or spent.',
     number: '01',
     name: 'Records',
     headline: ['Before we move anything, we measure', 'everything.'],
@@ -32,6 +33,7 @@ export const PHASES = [
   {
     slug: 'alignment',
     seoTitle: 'Alignment: branding and websites for orthodontists',
+    seoDescription: 'Brand identity, custom websites, photography and film for orthodontic practices — designed to turn attention into booked consultations.',
     number: '02',
     name: 'Alignment',
     headline: ['An identity and website that feel like your', 'best appointment.'],
@@ -60,6 +62,7 @@ export const PHASES = [
   {
     slug: 'force',
     seoTitle: 'Force: local SEO and paid search for orthodontists',
+    seoDescription: 'Local SEO, Google Business Profile, paid search and paid social for orthodontists, tuned month by month and reported in plain language.',
     number: '03',
     name: 'Force',
     headline: ['Steady pressure.', 'Never a burst.'],
@@ -87,6 +90,7 @@ export const PHASES = [
   {
     slug: 'retention',
     seoTitle: 'Retention: reviews and reputation for orthodontists',
+    seoDescription: 'Review generation, reputation, social storytelling, referring-doctor programs and patient reactivation for orthodontic practices.',
     number: '04',
     name: 'Retention',
     headline: ['The work doesn’t end', 'at debond.'],

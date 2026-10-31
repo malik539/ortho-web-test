@@ -16,7 +16,10 @@
     "assets": "python3 scripts/assets.py",
     "og": "node scripts/og.mjs",
     "headers": "node scripts/headers.mjs",
-    "test:deploy": "PUBLIC_CONSULT_ENDPOINT=/api/consultation PUBLIC_GTM_ID=GTM-TEST000 npm run build && node tests/deploy-check.cjs"
+    "test:deploy": "PUBLIC_CONSULT_ENDPOINT=/api/consultation PUBLIC_GTM_ID=GTM-TEST000 npm run build && node tests/deploy-check.cjs",
+    "validate": "html-validate \"dist/**/*.html\"",
+    "test": "npm run lint && npm run build && npm run validate && node tests/run.cjs",
+    "test:unit": "node tests/consultation-function.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",

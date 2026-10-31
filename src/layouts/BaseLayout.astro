@@ -26,11 +26,12 @@ interface Props {
   scene?: 'dark' | 'light';   // scene of the first section (nav colours)
   consultOverlay?: boolean;   // false on /consultation/ (the form is on the page)
   ogType?: string;
+  canonical?: boolean;        // false on the 404 page: it has no URL of its own
 }
 const {
   title, description, rawTitle = false, image = '/og/og-default.png',
   imageAlt = 'Ortho Marketing — We move markets the way you move teeth.', noindex = false,
-  jsonld = [], scene = 'dark', consultOverlay = true, ogType = 'website',
+  jsonld = [], scene = 'dark', consultOverlay = true, ogType = 'website', canonical: hasCanonical = true,
 } = Astro.props;
 
 // Brand suffix, unless the page sets its own full title or the result would run past ~70 characters
@@ -58,7 +59,7 @@ const graph = { '@context': 'https://schema.org', '@graph': [org, { '@type': 'We
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{fullTitle}</title>
   <meta name="description" content={description}>
-  <link rel="canonical" href={canonical}>
+  {hasCanonical && <link rel="canonical" href={canonical}>}
   {noindex && <meta name="robots" content="noindex, follow">}
   <meta name="theme-color" content="#0A0A0C">
   <meta name="color-scheme" content="dark light">
@@ -69,7 +70,7 @@ const graph = { '@context': 'https://schema.org', '@graph': [org, { '@type': 'We
   <meta property="og:locale" content={SITE.locale}>
   <meta property="og:title" content={fullTitle}>
   <meta property="og:description" content={description}>
-  <meta property="og:url" content={canonical}>
+  {hasCanonical && <meta property="og:url" content={canonical}>}
   <meta property="og:image" content={imageUrl}>
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">

@@ -19,7 +19,7 @@ const trail = crumbs({ label: 'Treatment', href: '/treatment/' }, { label: p.nam
   image={`/og/og-${p.slug}.png`}
   imageAlt={`Phase ${p.number} · ${p.name} — ${p.headline.join(' ')}`}
   title={p.seoTitle}
-  description={p.copy}
+  description={p.seoDescription}
   jsonld={[breadcrumbLd(trail), serviceLd(p), faqLd(p.faqs)]}
 >
   <PageHero
