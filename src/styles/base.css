@@ -313,6 +313,8 @@ html.motion-failed [data-reveal]::after { opacity: 0 !important; }
 .credits__nav { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--s-6); font-size: var(--t-small); margin-bottom: var(--s-6); }
 .credits__nav a { text-decoration: none; color: var(--c-porcelain); padding-block: var(--s-2); }
 .credits__nav a:hover { color: var(--c-signal); }
+.credits__nav button { padding: var(--s-2) 0; background: none; border: 0; font: inherit; color: var(--c-porcelain); cursor: pointer; }
+.credits__nav button:hover { color: var(--c-signal); }
 .credits__fine { color: var(--c-nitinol-dim); }
 
 

@@ -7,7 +7,7 @@ export default [
     rules: { 'no-undef': 'error', 'no-unused-vars': ['warn', { args: 'none', caughtErrors: 'none' }], 'no-redeclare': 'error', 'no-dupe-keys': 'error', 'no-unreachable': 'error' },
   },
   {
-    files: ['scripts/**/*.mjs', 'netlify/**/*.mjs'],
+    files: ['scripts/**/*.mjs', 'netlify/**/*.mjs', 'tests/**/*.mjs'],
     languageOptions: { ecmaVersion: 2023, sourceType: 'module', globals: { ...globals.node } },
     rules: { 'no-undef': 'error' },
   },

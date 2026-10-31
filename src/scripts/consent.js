@@ -22,5 +22,14 @@ if (bar) {
   if (choice === 'granted') loadGtm(id);
   else if (choice !== 'denied') bar.hidden = false;
   bar.querySelector('[data-consent-accept]').addEventListener('click', () => { set('granted'); bar.hidden = true; loadGtm(id); });
-  bar.querySelector('[data-consent-decline]').addEventListener('click', () => { set('denied'); bar.hidden = true; });
+  bar.querySelector('[data-consent-decline]').addEventListener('click', () => {
+    const wasLoaded = window.__omGtm;
+    set('denied'); bar.hidden = true;
+    if (wasLoaded) location.reload();   // a loaded tag manager can't be unloaded: start clean
+  });
+  // "Cookie preferences" in the footer reopens the choice at any time.
+  document.querySelectorAll('[data-consent-open]').forEach((btn) => btn.addEventListener('click', () => {
+    bar.hidden = false;
+    bar.querySelector(get() === 'granted' ? '[data-consent-decline]' : '[data-consent-accept]').focus();
+  }));
 }

@@ -1,0 +1,12 @@
+# Netlify: build, publish and the consultation function. Security and cache headers are written
+# to dist/_headers by scripts/headers.mjs during the build (Cloudflare Pages reads the same file).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

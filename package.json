@@ -5,16 +5,18 @@
   "type": "module",
   "description": "Ortho Marketing — production website (Astro, static output).",
   "engines": {
-    "node": ">=22.23.4"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/headers.mjs",
     "preview": "astro preview --port 4321",
-    "lint": "eslint --max-warnings 0 src/scripts tests scripts",
+    "lint": "eslint --max-warnings 0 src/scripts tests scripts netlify",
     "fonts": "node scripts/copy-fonts.mjs",
     "assets": "python3 scripts/assets.py",
-    "og": "node scripts/og.mjs"
+    "og": "node scripts/og.mjs",
+    "headers": "node scripts/headers.mjs",
+    "test:deploy": "PUBLIC_CONSULT_ENDPOINT=/api/consultation PUBLIC_GTM_ID=GTM-TEST000 npm run build && node tests/deploy-check.cjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",

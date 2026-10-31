@@ -6,6 +6,7 @@ interface Props { consultHref: string; overlay: boolean }
 const { consultHref, overlay } = Astro.props;
 const year = new Date().getFullYear();
 const { email, phone, address } = SITE.contact;
+const analytics = Boolean(import.meta.env.PUBLIC_GTM_ID);   // the consent bar exists only with GTM
 ---
 <footer class="credits" data-scene="dark">
   <div class="credits__roll wrap">
@@ -24,6 +25,7 @@ const { email, phone, address } = SITE.contact;
       {FOOTER_LINKS.map((l) => <a href={l.href}>{l.label}</a>)}
       <a href={consultHref} data-consult-open={overlay ? '' : undefined} data-cta="footer">Consultation</a>
       <a href={SITE.podcast.appleUrl} rel="noopener" target="_blank">{SITE.podcast.name}<span class="sr-only"> (opens Apple Podcasts in a new tab)</span></a>
+      {analytics && <button type="button" data-consent-open>Cookie preferences</button>}
     </nav>
     {(email || phone || address) && (
       <address class="credits__contact">
