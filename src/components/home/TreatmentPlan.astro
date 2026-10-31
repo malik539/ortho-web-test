@@ -1,0 +1,52 @@
+---
+import { PHASES } from '../../data/phases.js';
+---
+<section class="plan" id="treatment" data-scene="dark" aria-labelledby="plan-title">
+  <header class="plan__intro wrap">
+    <p class="eyebrow mono" data-reveal="wire"><span>Act II</span> Treatment plan</p>
+    <h2 class="d1" id="plan-title" data-reveal="lines">Four phases.<br> <em>One continuous force.</em></h2>
+    <p class="lede" data-reveal="fade">
+      Every engagement follows the arc of good treatment: thorough records, a precise plan,
+      steady movement, and a retention phase that protects the result.
+    </p>
+  </header>
+
+  <div class="plan__body wrap">
+    <div class="plan__rail" aria-hidden="true">
+      <div class="plan__nums">
+        <span class="plan__num is-active">01</span>
+        <span class="plan__num">02</span>
+        <span class="plan__num">03</span>
+        <span class="plan__num">04</span>
+      </div>
+      <div class="plan__track">
+        <span class="plan__fill" data-plan-fill></span>
+        <span class="plan__bracket is-active" style="--at:0%"><i>Records</i></span>
+        <span class="plan__bracket" style="--at:33.333%"><i>Alignment</i></span>
+        <span class="plan__bracket" style="--at:66.666%"><i>Force</i></span>
+        <span class="plan__bracket" style="--at:100%"><i>Retention</i></span>
+      </div>
+    </div>
+
+    <div class="plan__phases">
+      {PHASES.map((p, i) => (
+        <article class="phase" data-phase={i}>
+          <span class="phase__num" aria-hidden="true">{p.number}</span>
+          <p class="phase__label mono">Phase {p.number} — {p.name}</p>
+          <h3 class="d2" data-reveal="lines">{p.headline[0]} <em>{p.headline[1]}</em></h3>
+          <p class="phase__copy">{p.copy}</p>
+          <dl class="spec">
+            <div><dt>Deliverables</dt><dd><ul>{p.deliverables.map((d) => <li>{d.name}</li>)}</ul></dd></div>
+            <div><dt>Clinical parallel</dt><dd>{p.parallel}</dd></div>
+            <div><dt>Timeline</dt><dd>{p.timeline}</dd></div>
+          </dl>
+          <p><a class="link" href={`/treatment/${p.slug}/`}>How {p.name} works <span aria-hidden="true">→</span></a></p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/scenes/rail.js';
+</script>

@@ -1,0 +1,17 @@
+---
+/* First visit per session: the Orb calibrates, then flies into the nav logo (see MOTION-SYSTEM.md §4.1). */
+---
+<div class="loader" data-loader aria-hidden="true">
+  <span class="loader__panel loader__panel--l"></span>
+  <span class="loader__panel loader__panel--r"></span>
+  <svg class="orb loader__orb" data-loader-orb viewBox="0 0 124 124">
+    <defs><clipPath id="orb-clip-loader"><circle cx="62" cy="62" r="62"/></clipPath></defs>
+    <circle class="orb__body" cx="62" cy="62" r="62"/>
+    <path class="orb__smile" data-orb-smile clip-path="url(#orb-clip-loader)" d="M0 49.6A62 38.4 0 0 0 124 49.6L124 49.6A62 38.4 0 0 1 0 49.6Z"/>
+  </svg>
+  <p class="loader__line mono"><span>Ortho Marketing</span><span>Est. 2008</span></p>
+</div>
+
+<script>
+  import '../../scripts/scenes/loader.js';
+</script>

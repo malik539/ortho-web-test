@@ -1,0 +1,17 @@
+---
+/* Native disclosures: keyboard and screen-reader support built in; height animates where supported. */
+interface Props { items: { q: string; a: string }[]; title?: string; id?: string; level?: 2 | 3 }
+const { items, title = 'Before you book', id = 'faq-title', level = 3 } = Astro.props;
+const H = level === 2 ? 'h2' : 'h3';
+---
+<div class="faq wrap">
+  <H class="faq__title d3" id={id}>{title}</H>
+  <div class="faq__list" role="group" aria-labelledby={id}>
+    {items.map((f) => (
+      <details>
+        <summary>{f.q}<span class="faq__icon" aria-hidden="true"></span></summary>
+        <p>{f.a}</p>
+      </details>
+    ))}
+  </div>
+</div>

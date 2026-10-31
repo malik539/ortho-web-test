@@ -1,0 +1,31 @@
+---
+import { CLAIMS } from '../../data/content.js';
+---
+<section class="crowd" id="crowding" data-scene="light" aria-labelledby="crowd-title">
+  <div class="crowd__sticky">
+    <header class="crowd__head wrap">
+      <p class="eyebrow mono" data-reveal="wire"><span>Act I</span> Diagnosis</p>
+      <h2 class="d1" id="crowd-title" data-reveal="lines">Your market is <em>crowded.</em></h2>
+      <p class="crowd__copy">
+        Every practice in your zip code promises a free consult, flexible financing and the latest technology.
+        To a parent comparing options at 11:48&nbsp;p.m., you all look the same.
+      </p>
+    </header>
+
+    <div class="crowd__field" data-crowd-field aria-hidden="true">
+      {CLAIMS.map(([text, kind]) => <span class={kind ? `claim claim--${kind}` : "claim"}>{text}</span>)}
+    </div>
+
+    <div class="crowd__resolve">
+      <h3 class="d2">We don’t push harder.<br><em>We create space.</em></h3>
+      <p>
+        You never force a tooth into a crowded arch — you make room first. Marketing works the same way.
+        We find the space in your market no one else occupies, then move your practice into it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/scenes/crowd.js';
+</script>

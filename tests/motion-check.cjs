@@ -1,12 +1,12 @@
 /* ==========================================================================
    Motion system checks (Playwright, Chromium).
-   Run:  cd site && python3 -m http.server 8000      (in one terminal)
-         BASE=http://localhost:8000 node tests/motion-check.js
+   Run:  npm run build && npm run serve        (serves dist/ on :4321)
+         npm run test:motion                    (or BASE=… node tests/motion-check.cjs)
    Verifies the guarantees in experience/MOTION-SYSTEM.md §6, §8 and §11.
    ========================================================================== */
 const { chromium } = require('playwright');
 
-const BASE = process.env.BASE || 'http://localhost:8000';
+const BASE = process.env.BASE || 'http://localhost:4321';
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? '  — ' + detail : ''}`); };
 
@@ -116,24 +116,12 @@ const skipLoader = (ctx) => ctx.addInitScript(() => { try { sessionStorage.setIt
     await ctx.close();
   }
 
-  // 6 · Motion lab renders and idles
-  {
-    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-    const page = await ctx.newPage();
-    const errors = [];
-    page.on('pageerror', (e) => errors.push(e.message));
-    await page.goto(BASE + '/motion.html');
-    await page.waitForTimeout(3000);
-    check('Motion lab loads without errors', errors.length === 0, errors.join(' | '));
-    await ctx.close();
-  }
-
   // 7 · Failsafe: if the motion scripts are blocked, content is never stranded invisible
   {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     await skipLoader(ctx);
     const page = await ctx.newPage();
-    await page.route('**/motion.js', (route) => route.abort());
+    await page.route('**/_astro/kernel.*.js', (route) => route.abort());
     await page.goto(BASE + '/');
     await page.waitForTimeout(4600);
     const fs = await page.evaluate(() => ({

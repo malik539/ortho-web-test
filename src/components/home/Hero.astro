@@ -1,0 +1,36 @@
+---
+import Wire from '../Wire.astro';
+import { SITE } from '../../data/site.js';
+---
+<section class="hero" id="top" data-scene="dark" aria-labelledby="hero-title">
+  <!-- Lighting: overhead operatory lamp + cursor key + Ortho Blue floor bounce -->
+  <div class="hero__light" aria-hidden="true"></div>
+  <!-- "Shape Memory": a NiTi archwire of light in true perspective (Canvas 2D, rendered on demand) -->
+  <canvas class="hero__arch" data-hero-arch aria-hidden="true"></canvas>
+
+  <div class="hero__content" data-hero-content>
+    <p class="hero__kicker mono" data-hero-in style="--hd:0ms"><span>Est. {SITE.founded}</span>The marketing studio for orthodontic practices</p>
+
+    <h1 class="hero__title" id="hero-title" data-crowd aria-label="We move markets the way you move teeth.">
+      <span class="line">We move markets</span>
+      <span class="line"><span class="seg">the way you move</span> <span class="seg"><em>teeth.</em></span></span>
+    </h1>
+
+    <p class="hero__sub" data-hero-in style="--hd:650ms">
+      We build the brands, websites and search presence that bring orthodontic practices more new-patient
+      starts — steadily, measurably, month after month.
+    </p>
+
+    <div class="hero__actions" data-hero-in style="--hd:850ms">
+      <a class="btn btn--primary btn--lg" href="/consultation/" data-consult-open data-cta="hero" data-hero-cta>
+        <span>Begin your consultation</span><Wire />
+      </a>
+      <a class="link" href="#results" data-cta="hero-results">See the results</a>
+    </div>
+    <p class="hero__assure mono" data-hero-in style="--hd:1050ms">{SITE.consultation.length} · {SITE.consultation.keep}</p>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/scenes/hero.js';
+</script>

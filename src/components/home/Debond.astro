@@ -1,0 +1,30 @@
+---
+import Wire from '../Wire.astro';
+import { SITE } from '../../data/site.js';
+---
+<section class="debond" id="consult" data-scene="dark" aria-labelledby="consult-title">
+  <svg class="arch" data-arch viewBox="0 0 1200 760" aria-hidden="true">
+    <path class="arch__wire" d="M120 740 C 120 120, 360 40, 600 40 C 840 40, 1080 120, 1080 740" />
+    <g class="arch__brackets"></g>
+  </svg>
+
+  <div class="debond__text">
+    <p class="eyebrow mono" data-reveal="wire"><span>Finale</span> Debond</p>
+    <h2 class="d1" id="consult-title" data-reveal="lines">Let’s see where your practice <em>could be.</em></h2>
+    <p class="lede" data-reveal="fade">
+      Begin with a records appointment for your brand. We map your market, audit your search presence and walk
+      you through a treatment plan.
+    </p>
+    <div class="cta-row cta-row--center" data-reveal="rise">
+      <a class="btn btn--primary btn--lg" href="/consultation/" data-consult-open data-cta="finale"><span>Begin your consultation</span><Wire /></a>
+      <a class="link" href="#live" data-cta="finale-listen">Or listen first</a>
+    </div>
+    <ul class="debond__assure mono" data-reveal="fade">
+      <li>30 minutes</li><li>With a strategist</li><li>{SITE.consultation.keep}</li>
+    </ul>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/scenes/arch.js';
+</script>

@@ -1,0 +1,114 @@
+---
+import { CASES } from '../../data/cases.js';
+const c = CASES[0];
+---
+<section class="results" id="results" data-scene="light" aria-labelledby="results-title">
+  <header class="results__head wrap">
+    <p class="eyebrow mono" data-reveal="wire"><span>Act III</span> Before / After</p>
+    <h2 class="d1" id="results-title" data-reveal="lines">Same practice.<br> <em>Different market.</em></h2>
+    <p class="lede" data-reveal="fade">Orthodontists trust a before-and-after more than any claim. So do we. Drag the wire — then take the radiograph.</p>
+  </header>
+
+  <div class="compare wrap">
+    <div class="compare__frame" data-compare style="--pos:50%">
+      <div class="compare__chrome mono">
+        <span class="compare__url" aria-hidden="true"><i></i>alderlaneortho.com</span>
+        <button class="xray-toggle mono" type="button" aria-pressed="false" data-xray>
+          <span class="xray-toggle__dot" aria-hidden="true"></span>Radiograph view
+        </button>
+      </div>
+
+      <div class="compare__stage">
+        <!-- BEFORE: the category template -->
+        <div class="mock mock--before" aria-hidden="true">
+          <div class="mb-top">
+            <span class="mb-logo"><i></i>SmileCare Orthodontics</span>
+            <span class="mb-nav">Home · About · Services · Contact</span>
+            <span class="mb-call">Call Today!</span>
+          </div>
+          <div class="mb-hero">
+            <div class="mb-copy">
+              <b>Welcome to SmileCare Orthodontics!</b>
+              <p>We are dedicated to providing the highest quality orthodontic care in a fun and friendly environment!</p>
+              <span class="mb-btn">Schedule Your Free Consultation!</span>
+            </div>
+            <div class="mb-photo"><span>stock photo<br>smiling teen</span></div>
+          </div>
+          <div class="mb-cards">
+            <span><i></i>Braces</span><span><i></i>Clear Aligners</span><span><i></i>Payment Plans</span>
+          </div>
+        </div>
+
+        <!-- AFTER: a practice brand, built on its own palette -->
+        <div class="mock mock--after" aria-hidden="true">
+          <div class="ma-top">
+            <span class="ma-logo">Alder Lane <i>Orthodontics</i></span>
+            <span class="ma-nav">Treatment &nbsp; Doctors &nbsp; First visit</span>
+            <span class="ma-cta">Book a first visit</span>
+          </div>
+          <div class="ma-hero">
+            <div class="ma-copy">
+              <span class="ma-eyebrow">Specialist orthodontists · Since 1994</span>
+              <b>Confidence, <i>quietly engineered.</i></b>
+              <p>Braces and clear aligners for children, teens and adults — planned to the tenth of a millimeter.</p>
+            </div>
+            <div class="ma-plate"><span>Portrait · north window · 85mm</span></div>
+          </div>
+          <div class="ma-strip"><span>4.9 · 640 Google reviews</span><span>Evening &amp; Saturday visits</span><span>Most insurance accepted</span></div>
+
+          <!-- Radiograph layer: the site's skeleton + the data underneath -->
+          <div class="xray" aria-hidden="true">
+            <span class="xray__scan"></span>
+            <span class="xray__bone xray__bone--nav"></span>
+            <span class="xray__bone xray__bone--plate"></span>
+            <span class="xray__bone xray__bone--copy"></span>
+            <span class="xray__bone xray__bone--strip"></span>
+            <span class="xray__tag xray__tag--cta">Map pack #1 · 9 of 11 target zips</span>
+            <span class="xray__tag xray__tag--copy">Organic consult requests +212%</span>
+            <span class="xray__tag xray__tag--plate">LCP 0.9s · real photography</span>
+            <span class="xray__tag xray__tag--strip">Reviews 4.9 · 640 · reply time &lt; 24h</span>
+          </div>
+        </div>
+
+        <div class="compare__wire" aria-hidden="true"><span class="compare__bracket"></span></div>
+        <span class="compare__tag compare__tag--before mono" aria-hidden="true">Before · Template</span>
+        <span class="compare__tag compare__tag--after mono" aria-hidden="true">After · Ortho Marketing</span>
+      </div>
+
+      <label class="sr-only" for="compare-range">Reveal the redesigned website: drag or use arrow keys to compare before and after</label>
+      <input class="compare__range" id="compare-range" type="range" min="0" max="100" value="50" step="1">
+    </div>
+  </div>
+
+  <div class="results__proof wrap">
+    <div class="metrics" role="list">
+      <figure class="metric" role="listitem" data-reveal="rise">
+        <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120" pathLength="1" data-draw/></svg>
+        <span class="metric__num">+212%</span>
+        <figcaption class="mono">Organic consultation requests, 12 months</figcaption>
+      </figure>
+      <figure class="metric" role="listitem" data-reveal="rise">
+        <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120" pathLength="1" data-draw/></svg>
+        <span class="metric__num">9<small>/11</small></span>
+        <figcaption class="mono">Target zip codes where the practice holds #1 in the map pack</figcaption>
+      </figure>
+      <figure class="metric" role="listitem" data-reveal="rise">
+        <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120" pathLength="1" data-draw/></svg>
+        <span class="metric__num">−38%</span>
+        <figcaption class="mono">Cost per new-patient start</figcaption>
+      </figure>
+    </div>
+
+    <figure class="quote">
+      <blockquote>
+        <p data-reveal="lines">“{c.quote.text}”</p>
+      </blockquote>
+      <figcaption class="mono" data-reveal="fade" data-reveal-delay="500">{c.quote.by}</figcaption>
+    </figure>
+  </div>
+  {c.illustrative && <p class="results__note mono wrap">Illustrative case: a fictional practice with illustrative figures, shown to explain how we report results. <a href={`/results/${c.slug}/`}>Read the case file</a></p>}
+</section>
+
+<script>
+  import '../../scripts/scenes/compare.js';
+</script>

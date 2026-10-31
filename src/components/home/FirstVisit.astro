@@ -1,0 +1,17 @@
+---
+import Steps from '../Steps.astro';
+import Faq from '../Faq.astro';
+import { STEPS, FAQS } from '../../data/content.js';
+---
+<section class="visit" id="first-visit" data-scene="light" aria-labelledby="visit-title">
+  <header class="visit__head wrap">
+    <p class="eyebrow mono" data-reveal="wire"><span>Act VI</span> Your first visit</p>
+    <h2 class="d1" id="visit-title" data-reveal="lines">What happens <em>when you reach out.</em></h2>
+    <p class="lede" data-reveal="fade">No pitch deck. No pressure. A consultation built like a records appointment — so the first conversation is already useful.</p>
+  </header>
+
+  <Steps items={STEPS} />
+
+  <Faq items={FAQS} />
+</section>
+

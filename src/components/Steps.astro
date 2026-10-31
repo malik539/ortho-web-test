@@ -1,0 +1,19 @@
+---
+/* Three steps hanging from one wire (first visit). The wire draws; brackets engage in sequence. */
+interface Props { items: { meta: string; title: string; copy: string }[]; level?: 2 | 3 }
+const { items, level = 3 } = Astro.props;
+const H = level === 2 ? 'h2' : 'h3';
+---
+<ol class="steps wrap" data-steps>
+  {items.map((s, i) => (
+    <li class="step" data-reveal="rise">
+      <span class="step__bracket" aria-hidden="true"></span>
+      <p class="step__no mono">Step {String(i + 1).padStart(2, '0')} · {s.meta}</p>
+      <H class="d3">{s.title}</H>
+      <p>{s.copy}</p>
+    </li>
+  ))}
+</ol>
+<script>
+  import '../scripts/scenes/steps.js';
+</script>

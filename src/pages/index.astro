@@ -1,6 +1,45 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Loader from '../components/home/Loader.astro';
+import Hero from '../components/home/Hero.astro';
+import Diagnosis from '../components/home/Diagnosis.astro';
+import TreatmentPlan from '../components/home/TreatmentPlan.astro';
+import Results from '../components/home/Results.astro';
+import Family from '../components/home/Family.astro';
+import Live from '../components/home/Live.astro';
+import FirstVisit from '../components/home/FirstVisit.astro';
+import Debond from '../components/home/Debond.astro';
+import Hud from '../components/home/Hud.astro';
+import { SITE } from '../data/site.js';
+import { PHASES } from '../data/phases.js';
+import { FAQS } from '../data/content.js';
+
+const jsonld = [
+  {
+    '@type': 'ProfessionalService', '@id': `${SITE.url}/#service`, name: SITE.name, url: `${SITE.url}/`,
+    description: SITE.description, provider: { '@id': `${SITE.url}/#organization` }, areaServed: 'US',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog', name: 'Marketing for orthodontic practices',
+      itemListElement: PHASES.map((p) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: `${p.name}: ${p.summary}`, url: `${SITE.url}/treatment/${p.slug}/` } })),
+    },
+  },
+  { '@type': 'FAQPage', mainEntity: FAQS.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
 ---
-<BaseLayout title="Ortho Marketing — We move markets the way you move teeth" rawTitle description="Stage 1 scaffold">
-  <section class="hero" id="top" data-scene="dark"><h1 class="d1">Scaffold</h1></section>
+<BaseLayout
+  title="Ortho Marketing — We move markets the way you move teeth"
+  rawTitle
+  description={SITE.description}
+  jsonld={jsonld}
+>
+  <Loader slot="before" />
+  <Hero />
+  <Diagnosis />
+  <TreatmentPlan />
+  <Results />
+  <Family />
+  <Live />
+  <FirstVisit />
+  <Debond />
+  <Hud slot="after" />
 </BaseLayout>

@@ -1,0 +1,34 @@
+---
+import { EPISODES } from '../../data/episodes.js';
+import { SITE } from '../../data/site.js';
+---
+<section class="live" id="live" data-scene="dark" aria-labelledby="live-title">
+  <div class="live__head wrap">
+    <div>
+      <p class="onair mono" data-loop><i aria-hidden="true"></i>On air</p>
+      <h2 class="d1" id="live-title" data-reveal="lines">Ortho Marketing <em>Live.</em></h2>
+    </div>
+    <p class="lede" data-reveal="fade">
+      Conversations with the orthodontists, operators and specialists redefining practice growth.
+      Hosted by {SITE.podcast.host}.
+    </p>
+  </div>
+
+  <div class="wave wrap" data-wave data-loop aria-hidden="true"></div>
+
+  <ol class="episodes wrap">
+    {EPISODES.map((e) => (
+      <li><a href={`/live/${e.slug}/`} data-episode={e.number}>
+        <span class="ep__no mono">Ep. {e.number}</span>
+        <span class="ep__title">{e.title}</span>
+        <span class="ep__guest mono">{e.guest}</span>
+        <span class="ep__play" aria-hidden="true"></span>
+      </a></li>
+    ))}
+  </ol>
+  <p class="wrap live__all"><a class="link" href="/live/" data-cta="live-all">Listen to every episode</a></p>
+</section>
+
+<script>
+  import '../../scripts/scenes/waveform.js';
+</script>
