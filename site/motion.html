@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motion Lab — Ortho Marketing</title>
+  <meta name="description" content="The Ortho Marketing motion system, live: curves, durations, reveal primitives, signature moments, hover states and tiers — every value read from the same tokens the site uses.">
+  <link rel="icon" href="assets/orb.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function (d, w) {
+      var el = d.documentElement, pref = null; el.classList.add('js');
+      try { pref = localStorage.getItem('om-motion'); } catch (e) {}
+      var n = w.navigator, rm = w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var low = (n.hardwareConcurrency || 8) <= 2 || (n.deviceMemory || 8) <= 2 || !!(n.connection && n.connection.saveData);
+      el.setAttribute('data-motion', (pref === 'reduced' || (pref !== 'full' && rm)) ? 'reduced' : (w.matchMedia('(pointer: coarse)').matches || low) ? 'lite' : 'full');
+      w.setTimeout(function () { if (!el.classList.contains('motion-ready')) el.classList.add('motion-failed'); }, 4000);
+    })(document, window);
+  </script>
+  <style>
+    .lab { padding-block: var(--s-9) var(--s-10); }
+    .nav { position: absolute; }
+    .lab-head { display: grid; gap: var(--s-5); padding-top: var(--s-9); }
+    .lab-head__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4) var(--s-7); color: var(--c-nitinol); }
+    .lab-tier b { color: var(--c-signal); font-weight: 500; }
+    .lab-sec { padding-block: var(--s-9) 0; border-top: 1px solid var(--c-smoke); margin-top: var(--s-9); }
+    .lab-sec > header { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-4); margin-bottom: var(--s-7); }
+    .lab-sec > header .eyebrow { grid-column: 1 / -1; margin-bottom: 0; }
+    .lab-sec > header h2 { grid-column: 1 / span 7; }
+    .lab-sec > header p { grid-column: 8 / -1; color: var(--c-nitinol); align-self: end; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--gutter); }
+    .card { position: relative; display: grid; gap: var(--s-4); align-content: start; padding: var(--s-5); background: var(--c-graphite); border: 1px solid var(--c-smoke); }
+    .card h3 { font-family: var(--f-display); font-weight: 300; font-size: 1.6rem; letter-spacing: -0.02em; line-height: 1.1; }
+    .card .mono { color: var(--c-nitinol); }
+    .card p { font-size: var(--t-small); color: var(--c-nitinol); }
+    .replay { justify-self: start; min-height: 36px; padding: 0 0.8rem; background: transparent; color: var(--c-porcelain); border: 1px solid var(--c-nitinol-dim); border-radius: 2px; cursor: pointer; font-family: var(--f-mono); font-size: var(--t-mono); letter-spacing: var(--tr-mono); text-transform: uppercase; }
+    .replay:hover { border-color: var(--c-signal); color: var(--c-signal); }
+    /* curves */
+    .plot { width: 100%; aspect-ratio: 1.25; overflow: visible; }
+    .plot .grid-l { stroke: var(--c-smoke); stroke-width: 1; }
+    .plot .curve { fill: none; stroke: var(--c-signal); stroke-width: 2; vector-effect: non-scaling-stroke; }
+    .plot .dot { fill: var(--c-crescent); }
+    .track { position: relative; height: 18px; border-bottom: 1px solid var(--c-smoke); }
+    .track i { position: absolute; left: 0; bottom: -5px; width: 10px; height: 10px; background: var(--c-ortho-blue); box-shadow: inset 0 0 0 1px var(--c-signal); transition: left 0s; }
+    .track.go i { left: calc(100% - 10px); transition: left var(--d-treatment) var(--curve); }
+    /* durations */
+    .dur { display: grid; grid-template-columns: 9rem 5rem 1fr; gap: var(--gutter); align-items: center; padding-block: var(--s-4); border-bottom: 1px solid var(--c-smoke); }
+    .dur__bar { position: relative; height: 6px; background: var(--c-smoke); }
+    .dur__bar i { position: absolute; inset: 0; background: var(--c-signal); transform-origin: left; transform: scaleX(0); }
+    .dur.go .dur__bar i { transform: scaleX(1); transition: transform var(--dd) var(--ease-force); }
+    .dur span:last-child { grid-column: 1 / -1; color: var(--c-nitinol); font-size: var(--t-small); }
+    /* demos */
+    .demo { min-height: 160px; display: grid; align-content: center; padding: var(--s-5); background: var(--c-occlusion); border: 1px solid var(--c-smoke); overflow: hidden; }
+    .demo .d2 { font-size: 2.2rem; }
+    .demo .btn { white-space: nowrap; justify-self: start; }
+    .demo .eyebrow { white-space: nowrap; }
+    .demo-plate { position: relative; height: 150px; background: radial-gradient(70% 70% at 25% 20%, rgba(214,220,255,.22), transparent 70%), linear-gradient(160deg, #1d1d24, #09090b); }
+    .demo-plate span { position: absolute; left: 12px; bottom: 10px; }
+    .brk { display: flex; justify-content: space-between; align-items: center; height: 60px; background: linear-gradient(var(--c-signal), var(--c-signal)) 0 50% / 100% 1.5px no-repeat; }
+    .brk i { width: 22px; height: 14px; background: var(--c-porcelain); border-radius: 2px; transform: rotate(var(--r)) translateY(var(--y)) scale(.5); opacity: .3; }
+    .brk.go i { transform: none; opacity: 1; transition: transform var(--d-force) var(--ease-debond), opacity var(--d-measured) var(--ease-force); transition-delay: calc(var(--i) * 70ms); }
+    .charge { display: grid; gap: var(--s-5); }
+    .charge svg { width: 100%; height: 40px; overflow: visible; }
+    .charge path { fill: none; stroke: var(--c-signal); stroke-width: 1.5; vector-effect: non-scaling-stroke; transition: stroke var(--d-measured) var(--ease-force); }
+    .charge .pulse { stroke: var(--c-crescent); stroke-width: 3; stroke-dasharray: 0.08 1; stroke-dashoffset: 0.08; opacity: 0; }
+    .charge.is-charged .pulse { animation: pulse 1s var(--ease-force) forwards; }
+    @keyframes pulse { 0% { stroke-dashoffset: 0.08; opacity: 1; } 100% { stroke-dashoffset: -1; opacity: 1; } }
+    .orb-demo svg { width: 96px; height: 96px; }
+    /* micro lab */
+    .lab-blue { padding: var(--s-6); background: var(--c-ortho-blue); color: var(--c-crescent); --c-wire: var(--c-crescent); display: grid; gap: var(--s-6); }
+    .lab-faq { color: var(--c-porcelain); }
+    .lab-faq.faq { display: grid; grid-template-columns: 1fr; margin-top: 0; column-gap: 0; }
+    .lab-faq summary { font-size: var(--t-body); }
+    .lab-faq details { border-bottom: 1px solid var(--c-smoke); }
+    .lab-faq summary:hover { color: var(--c-signal); }
+    .lab-faq details p { color: var(--c-nitinol); }
+    .tiers { width: 100%; border-collapse: collapse; font-size: var(--t-small); }
+    .tiers th, .tiers td { text-align: left; vertical-align: top; padding: var(--s-3) var(--s-3) var(--s-3) 0; border-bottom: 1px solid var(--c-smoke); }
+    .tiers th { font-family: var(--f-mono); font-size: var(--t-mono); letter-spacing: var(--tr-mono); text-transform: uppercase; color: var(--c-nitinol-dim); font-weight: 400; }
+    .tiers td:first-child { color: var(--c-porcelain); white-space: nowrap; }
+    .tiers td { color: var(--c-nitinol); }
+    .table-scroll { overflow-x: auto; }
+    .lab-end { min-height: 60vh; display: grid; place-items: center; text-align: center; }
+    @media (max-width: 767px) {
+      .lab-sec > header h2, .lab-sec > header p { grid-column: 1 / -1; }
+      .dur { grid-template-columns: 7rem 4rem 1fr; }
+    }
+  </style>
+</head>
+<body data-scene="dark">
+<a class="skip" href="#lab">Skip to content</a>
+<div class="midline" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true" data-loop></div>
+
+<header class="nav" data-nav>
+  <a class="brand" href="index.html" aria-label="Ortho Marketing — back to the site">
+    <img class="brand__logo brand__logo--dark" src="assets/ortho-marketing-logo-reversed.png" alt="" width="816" height="142">
+  </a>
+  <a class="link" href="index.html">← Back to the site</a>
+</header>
+
+<main id="lab" class="lab wrap">
+  <section class="lab-head" aria-labelledby="lab-title">
+    <p class="eyebrow mono" data-reveal="wire"><span>System</span> Motion lab</p>
+    <h1 class="d1" id="lab-title" data-reveal="lines">Light, continuous <em>force.</em></h1>
+    <p class="lede" data-reveal="fade">Every curve, duration and primitive on this page is read live from <code>tokens.css</code> through the motion kernel (<code>motion.js</code>), the same values the site uses.</p>
+    <div class="lab-head__row mono">
+      <span class="lab-tier">Tier: <b data-tier>—</b></span>
+      <span>Clock: <b data-clock>idle</b></span>
+      <button class="motion-toggle mono" type="button" aria-pressed="false" data-motion-toggle>Reduce motion<i aria-hidden="true"></i></button>
+    </div>
+  </section>
+
+  <!-- 1 · CURVES -->
+  <section class="lab-sec" aria-labelledby="curves-title">
+    <header>
+      <p class="eyebrow mono" data-reveal="wire"><span>01</span> Curves</p>
+      <h2 class="d2" id="curves-title" data-reveal="lines">Four curves. <em>No springs</em> except one.</h2>
+      <p data-reveal="fade">The dot traces the curve; the block travels with the same curve over 2.4s so the feel is visible. Replay any card.</p>
+    </header>
+    <div class="grid" data-curves></div>
+  </section>
+
+  <!-- 2 · DURATIONS -->
+  <section class="lab-sec" aria-labelledby="dur-title">
+    <header>
+      <p class="eyebrow mono" data-reveal="wire"><span>02</span> Durations</p>
+      <h2 class="d2" id="dur-title" data-reveal="lines">Five steps. <em>Nothing longer.</em></h2>
+      <p data-reveal="fade">Bars fill on the force curve. Lite tier shortens the two long steps; reduced makes everything instant.</p>
+    </header>
+    <div data-durs></div>
+    <p style="margin-top: var(--s-5)"><button class="replay" type="button" data-replay-durs>Replay durations</button></p>
+  </section>
+
+  <!-- 3 · REVEALS -->
+  <section class="lab-sec" aria-labelledby="rev-title">
+    <header>
+      <p class="eyebrow mono" data-reveal="wire"><span>03</span> Reveals</p>
+      <h2 class="d2" id="rev-title" data-reveal="lines">Seven primitives, <em>one vocabulary.</em></h2>
+      <p data-reveal="fade">Bound by <code>[data-reveal]</code>. Each fires once when 15% visible. Siblings stagger 110ms: structure → heading → copy → action.</p>
+    </header>
+    <div class="grid">
+      <div class="card"><p class="mono">align · rare</p><div class="demo"><p class="d2" data-reveal="align" data-demo>Crowded, then aligned.</p></div><button class="replay" type="button" data-replay>Replay</button></div>
+      <div class="card"><p class="mono">lines · headings</p><div class="demo"><p class="d2" data-reveal="lines" data-demo>Each line settles <em>in sequence.</em></p></div><button class="replay" type="button" data-replay>Replay</button></div>
+      <div class="card"><p class="mono">rise · interactive blocks</p><div class="demo"><a class="btn btn--primary btn--sm" href="#lab-end" data-reveal="rise" data-demo><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a></div><button class="replay" type="button" data-replay>Replay</button></div>
+      <div class="card"><p class="mono">fade · body copy</p><div class="demo"><p data-reveal="fade" data-demo>Body copy never moves. It only arrives, so reading never chases the text.</p></div><button class="replay" type="button" data-replay>Replay</button></div>
+      <div class="card"><p class="mono">wire · section labels</p><div class="demo"><p class="eyebrow mono" data-reveal="wire" data-demo style="margin:0"><span>Act II</span> Treatment plan</p></div><button class="replay" type="button" data-replay>Replay</button></div>
+      <div class="card"><p class="mono">exposure · images</p><div class="demo" style="padding:0"><div class="demo-plate" data-reveal="exposure" data-demo><span class="mono">Plate 07 · north window</span></div></div><button class="replay" type="button" data-replay>Replay</button></div>
+      <div class="card"><p class="mono">draw · SVG strokes</p><div class="demo"><div data-reveal="fade" data-demo><svg viewBox="0 0 240 60" style="width:100%;height:60px;overflow:visible" aria-hidden="true"><circle cx="6" cy="52" r="5" fill="var(--c-signal)"/><path d="M6 52 L70 8 H240" fill="none" stroke="var(--c-porcelain)" stroke-width="1.2" pathLength="1" data-draw/></svg></div></div><button class="replay" type="button" data-replay>Replay</button></div>
+    </div>
+  </section>
+
+  <!-- 4 · SIGNATURE MOMENTS -->
+  <section class="lab-sec" aria-labelledby="sig-title">
+    <header>
+      <p class="eyebrow mono" data-reveal="wire"><span>04</span> Signature moments</p>
+      <h2 class="d2" id="sig-title" data-reveal="lines">One per viewport. <em>Each means something.</em></h2>
+      <p data-reveal="fade">Full versions live on the site: the Orb loader, Shape Memory hero, Crowding scene, Debond arch and the consultation flood.</p>
+    </header>
+    <div class="grid">
+      <div class="card"><p class="mono">debond · the only overshoot</p><div class="demo"><div class="brk" data-brk></div></div><button class="replay" type="button" data-replay-brk>Replay</button></div>
+      <div class="card"><p class="mono">charge · intent → pulse</p><div class="demo charge" data-charge><svg viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 H300" pathLength="1"/><path class="pulse" d="M0 20 H300" pathLength="1"/></svg><a class="btn btn--primary btn--sm" href="#lab-end" data-no-cut><span>Hover to charge</span><span class="btn__wire" aria-hidden="true"></span></a></div><p>Hover or focus the button.</p></div>
+      <div class="card"><p class="mono">orb · the logo smiles</p><div class="demo orb-demo" style="place-items:center"><svg viewBox="0 0 124 124" aria-hidden="true"><defs><clipPath id="lab-orb"><circle cx="62" cy="62" r="62"/></clipPath></defs><circle class="orb__body" cx="62" cy="62" r="62"/><path class="orb__smile" data-lab-smile clip-path="url(#lab-orb)" d="M0 49.6A62 38.4 0 0 0 124 49.6L124 49.6A62 38.4 0 0 1 0 49.6Z"/></svg></div><button class="replay" type="button" data-replay-orb>Replay</button></div>
+      <div class="card"><p class="mono">cut · midline wipe</p><div class="demo"><p>Long jumps cut instead of scrolling through pinned scenes. Short jumps glide on the settle curve.</p></div><a class="replay" href="#lab-end" style="display:inline-flex;align-items:center;text-decoration:none">Cut to the end ↓</a></div>
+    </div>
+  </section>
+
+  <!-- 5 · HOVER + MICRO -->
+  <section class="lab-sec" aria-labelledby="micro-title">
+    <header>
+      <p class="eyebrow mono" data-reveal="wire"><span>05</span> Hover &amp; micro-interactions</p>
+      <h2 class="d2" id="micro-title" data-reveal="lines">Feedback in 120–240ms. <em>Release on the same curve.</em></h2>
+      <p data-reveal="fade">Hover states answer within a quarter-second and always release on the curve they arrived on.</p>
+    </header>
+    <div class="grid">
+      <div class="card"><p class="mono">primary button</p><div class="demo"><a class="btn btn--primary btn--sm" href="#lab" data-no-cut><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a></div><p>Wire lengthens 1.75 → 3rem (600ms, force) · fill inverts (240ms) · press −1px (120ms).</p></div>
+      <div class="card"><p class="mono">text link · nav link</p><div class="demo" style="gap:var(--s-5)"><a class="link" href="#lab" data-no-cut>See the results</a><nav class="nav__links" aria-label="Demo" style="display:flex"><a href="#lab" data-no-cut>Treatment</a><a href="#lab" data-no-cut>Results</a></nav></div><p>Underline tension 0.35 → 0.6em · nav wire draws left → right, retracts right.</p></div>
+      <div class="card"><p class="mono">form · on Ortho Blue</p><div class="lab-blue"><div class="field"><label for="lab-name">Practice name</label><input id="lab-name" type="text" placeholder="Focus me"></div><fieldset class="field chips"><legend>Locations</legend><label><input type="radio" name="lab-loc"><span>1</span></label><label><input type="radio" name="lab-loc"><span>2–3</span></label><label><input type="radio" name="lab-loc"><span>4+</span></label></fieldset></div><p>Underline grows from the left on focus (600ms) · chips press to 0.97 · errors align in (240ms), never shake.</p></div>
+      <div class="card lab-faq faq"><p class="mono">disclosure</p><details><summary>How soon will we see results?<span class="faq__icon" aria-hidden="true"></span></summary><p>Height animates with the measured duration where supported; elsewhere it opens instantly.</p></details><details><summary>Do we need a new website?<span class="faq__icon" aria-hidden="true"></span></summary><p>Not always.</p></details></div>
+    </div>
+  </section>
+
+  <!-- 6 · TIERS -->
+  <section class="lab-sec" aria-labelledby="tier-title">
+    <header>
+      <p class="eyebrow mono" data-reveal="wire"><span>06</span> Tiers</p>
+      <h2 class="d2" id="tier-title" data-reveal="lines">Same story. <em>Three machines.</em></h2>
+      <p data-reveal="fade">Chosen before first paint from the OS setting, pointer type, device memory/cores and Save-Data, and the visitor's own switch, which always wins.</p>
+    </header>
+    <div class="table-scroll">
+      <table class="tiers">
+        <thead><tr><th>Primitive</th><th>Full (desktop)</th><th>Lite (touch · low-power)</th><th>Reduced</th></tr></thead>
+        <tbody>
+          <tr><td>Durations</td><td>120 / 240 / 600 / 1400 / 2400ms</td><td>120 / 240 / 600 / 1100 / 1800ms</td><td>Instant (1ms)</td></tr>
+          <tr><td>Reveals</td><td>All seven</td><td>All seven, shorter travel (10px / 14px)</td><td>Content present immediately</td></tr>
+          <tr><td>Hero arch</td><td>Shape memory, cursor light, bracket force, parallax, crane · DPR 2</td><td>Shape memory, crane · DPR 1.5 · no pointer effects</td><td>Static final frame</td></tr>
+          <tr><td>Pinned scenes</td><td>Crowding 300vh (smoothed 0.16) · sticky rail</td><td>Crowding 220vh · rail retired (&lt;1200px)</td><td>No pins: static layouts</td></tr>
+          <tr><td>Ambient loops</td><td>Grain, waveform, on-air lamp (paused off-screen)</td><td>Grain static · waveform slowed</td><td>None</td></tr>
+          <tr><td>Navigation</td><td>Glide ≤1.5 viewports · cut beyond</td><td>Same</td><td>Instant jump · focus moves</td></tr>
+          <tr><td>Overlays</td><td>Orb flood 900ms · menu iris 800ms</td><td>Same (short distance on small screens)</td><td>Appear instantly</td></tr>
+          <tr><td>Loader</td><td>Orb ≤2.5s, skippable by any input</td><td>Same</td><td>Skipped</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="lab-end" id="lab-end" aria-labelledby="end-title">
+    <div>
+      <p class="eyebrow mono" data-reveal="wire" style="justify-content:center"><span>End</span> Cut landed</p>
+      <h2 class="d1" id="end-title" data-reveal="lines">Everything at rest. <em>Clock idle.</em></h2>
+      <p style="margin-top: var(--s-6)"><a class="link" href="#lab">Back to the top</a></p>
+    </div>
+  </section>
+</main>
+
+<script src="motion.js" defer></script>
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    const M = window.OMMotion;
+    const $ = (s, el = document) => el.querySelector(s);
+    const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+    const replayClass = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
+
+    // Tier + clock readouts (the clock readout polls cheaply; the kernel itself sleeps when idle)
+    const tierEl = $('[data-tier]'), clockEl = $('[data-clock]');
+    const showTier = () => { tierEl.textContent = M.tier; };
+    showTier(); M.onTier(showTier);
+    let frames = 0;
+    const origRaf = window.requestAnimationFrame.bind(window);
+    window.requestAnimationFrame = (cb) => { frames++; return origRaf(cb); };
+    setInterval(() => { clockEl.textContent = frames ? `${frames} frames/s` : 'idle'; frames = 0; }, 1000);
+
+    // 1 · Curves — drawn from the live token values
+    const USE = {
+      force: ['Default. Entrances, reveals, settles.', 'Long, inevitable settle — light continuous force.'],
+      settle: ['Repositioning, glides, scrubbed scenes.', 'Symmetric: things already on screen moving to a new place.'],
+      release: ['Exits only.', 'Accelerates away; never used to bring anything in.'],
+      debond: ['The finale brackets. Nothing else.', 'The single overshoot on the site: debond day is a celebration.'],
+    };
+    const curves = $('[data-curves]');
+    Object.keys(USE).forEach((name) => {
+      const p = M.tokens.curve[name];
+      const pts = [];
+      const B = (t) => { // parametric bezier point (x(t), y(t))
+        const u = 1 - t;
+        return [3 * u * u * t * p[0] + 3 * u * t * t * p[2] + t * t * t, 3 * u * u * t * p[1] + 3 * u * t * t * p[3] + t * t * t];
+      };
+      for (let i = 0; i <= 60; i++) { const [x, y] = B(i / 60); pts.push(`${(x * 200).toFixed(1)},${(150 - y * 120).toFixed(1)}`); }
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <p class="mono">--ease-${name}</p>
+        <h3>${name}</h3>
+        <svg class="plot" viewBox="-6 -10 212 182" aria-hidden="true">
+          <line class="grid-l" x1="0" y1="150" x2="200" y2="150"/><line class="grid-l" x1="0" y1="30" x2="200" y2="30"/>
+          <line class="grid-l" x1="0" y1="30" x2="0" y2="150"/><line class="grid-l" x1="200" y1="30" x2="200" y2="150"/>
+          <polyline class="curve" points="${pts.join(' ')}"/><circle class="dot" r="4" cx="0" cy="150"/>
+        </svg>
+        <div class="track" style="--curve: var(--ease-${name})"><i></i></div>
+        <p class="mono">cubic-bezier(${p.join(', ')})</p>
+        <p><strong style="color:var(--c-porcelain);font-weight:500">${USE[name][0]}</strong> ${USE[name][1]}</p>
+        <button class="replay" type="button">Replay</button>`;
+      curves.appendChild(card);
+      const dot = $('.dot', card), track = $('.track', card);
+      const play = () => {
+        replayClass(track, 'go');
+        M.tween({ duration: 2400, ease: 'linear', onUpdate: (t) => { const e = M.ease[name](t); dot.setAttribute('cx', (t * 200).toFixed(1)); dot.setAttribute('cy', (150 - e * 120).toFixed(1)); } });
+      };
+      $('.replay', card).addEventListener('click', play);
+      new IntersectionObserver(([e], io) => { if (e.isIntersecting) { play(); io.disconnect(); } }, { threshold: 0.6 }).observe(card);
+    });
+
+    // 2 · Durations
+    const USE_D = {
+      instant: 'Press, toggle, chip state — feedback that must feel physical.',
+      quick: 'Hover and focus. Color, borders, icon swaps.',
+      measured: 'Menus, overlays, opacity, the cut. The workhorse.',
+      force: 'Reveals and settles — the alignment move.',
+      treatment: 'Signature moments only: cold open, glyph alignment, exposure.',
+    };
+    const durs = $('[data-durs]');
+    const renderDurs = () => {
+      durs.innerHTML = Object.keys(USE_D).map((n) => `<div class="dur" style="--dd:${M.tokens.d[n]}ms"><span class="mono">--d-${n}</span><span class="mono">${M.tokens.d[n]}ms</span><span class="dur__bar"><i></i></span><span>${USE_D[n]}</span></div>`).join('');
+    };
+    const playDurs = () => $$('.dur', durs).forEach((d) => replayClass(d, 'go'));
+    renderDurs();
+    M.onTier(() => { renderDurs(); playDurs(); });
+    $('[data-replay-durs]').addEventListener('click', playDurs);
+    new IntersectionObserver(([e], io) => { if (e.isIntersecting) { playDurs(); io.disconnect(); } }, { threshold: 0.5 }).observe(durs);
+
+    // 3 · Reveal replays
+    $$('[data-replay]').forEach((btn) => btn.addEventListener('click', () => {
+      const el = $('[data-demo]', btn.closest('.card'));
+      el.classList.remove('is-in'); void el.offsetWidth;
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('is-in')));
+    }));
+
+    // 4 · Debond row, charge, orb
+    const brk = $('[data-brk]');
+    brk.innerHTML = Array.from({ length: 7 }, (_, i) => `<i style="--i:${i};--r:${((i * 37) % 50) - 25}deg;--y:${((i * 13) % 14) - 7}px"></i>`).join('');
+    $('[data-replay-brk]').addEventListener('click', () => replayClass(brk, 'go'));
+    new IntersectionObserver(([e], io) => { if (e.isIntersecting) { brk.classList.add('go'); io.disconnect(); } }, { threshold: 0.6 }).observe(brk);
+    const charge = $('[data-charge]');
+    ['pointerenter', 'focusin'].forEach((ev) => charge.querySelector('.btn').addEventListener(ev, () => replayClass(charge, 'is-charged')));
+    const smile = $('[data-lab-smile]');
+    const smileD = (t) => { const cy = (49.6 + 7.1 * t).toFixed(2), ry = (38.4 + 17.9 * t).toFixed(2); return `M0 49.6A62 38.4 0 0 0 124 49.6L124 ${cy}A62 ${ry} 0 0 1 0 ${cy}Z`; };
+    const playOrb = () => M.tween({ from: 0, to: 1, duration: 900, ease: 'force', onUpdate: (v) => smile.setAttribute('d', smileD(v)) });
+    $('[data-replay-orb]').addEventListener('click', () => { smile.setAttribute('d', smileD(0)); playOrb(); });
+    new IntersectionObserver(([e], io) => { if (e.isIntersecting) { playOrb(); io.disconnect(); } }, { threshold: 0.6 }).observe(smile.closest('.card'));
+  });
+</script>
+</body>
+</html>

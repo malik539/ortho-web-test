@@ -14,13 +14,22 @@
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="styles.css">
   <script>
-    // Progressive enhancement flags, set before first paint.
-    (function (d) {
-      var c = d.documentElement.classList; c.add('js');
-      var seen = false, rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Before first paint: JS flag, motion tier (full · lite · reduced) and loader skip.
+    // Mirrors computeTier() in motion.js so there is never a flash of the wrong motion.
+    (function (d, w) {
+      var el = d.documentElement, c = el.classList, pref = null, seen = false;
+      c.add('js');
+      try { pref = localStorage.getItem('om-motion'); } catch (e) {}
       try { seen = sessionStorage.getItem('om-loaded') === '1'; } catch (e) {}
-      if (seen || rm) c.add('no-loader');
-    })(document);
+      var n = w.navigator, rm = w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var low = (n.hardwareConcurrency || 8) <= 2 || (n.deviceMemory || 8) <= 2 || !!(n.connection && n.connection.saveData);
+      var tier = (pref === 'reduced' || (pref !== 'full' && rm)) ? 'reduced'
+        : (w.matchMedia('(pointer: coarse)').matches || low) ? 'lite' : 'full';
+      el.setAttribute('data-motion', tier);
+      if (seen || tier === 'reduced') c.add('no-loader');
+      // Failsafe: if the motion scripts never boot (blocked, failed), never strand content invisible.
+      w.setTimeout(function () { if (!c.contains('motion-ready') || !c.contains('scenes-ready')) c.add('motion-failed'); }, 4000);
+    })(document, window);
   </script>
 </head>
 <body data-scene="dark">
@@ -43,7 +52,7 @@
 
 <!-- Persistent layers -->
 <div class="midline" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true" data-loop></div>
 
 <!-- ======================================================================
      GLOBAL NAV
@@ -83,6 +92,7 @@
     <div class="menu__foot">
       <a class="btn btn--primary" href="#consultation" data-consult-open data-cta="menu"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
       <p class="mono">Est. 2008 · Family-run · Orthodontic practices</p>
+      <button class="motion-toggle mono" type="button" aria-pressed="false" data-motion-toggle>Reduce motion<i aria-hidden="true"></i></button>
     </div>
   </div>
   <button class="menu__close mono" type="button" data-menu-close>Close</button>
@@ -135,8 +145,8 @@
   <section class="crowd" id="crowding" data-scene="light" aria-labelledby="crowd-title">
     <div class="crowd__sticky">
       <header class="crowd__head wrap">
-        <p class="eyebrow mono"><span>Act I</span> Diagnosis</p>
-        <h2 class="d1" id="crowd-title">Your market is <em>crowded.</em></h2>
+        <p class="eyebrow mono" data-reveal="wire"><span>Act I</span> Diagnosis</p>
+        <h2 class="d1" id="crowd-title" data-reveal="lines">Your market is <em>crowded.</em></h2>
         <p class="crowd__copy">
           Every practice in your zip code promises a free consult, flexible financing and the latest technology.
           To a parent comparing options at 11:48&nbsp;p.m., you all look the same.
@@ -180,9 +190,9 @@
        ==================================================================== -->
   <section class="plan" id="treatment" data-scene="dark" aria-labelledby="plan-title">
     <header class="plan__intro wrap">
-      <p class="eyebrow mono"><span>Act II</span> Treatment plan</p>
-      <h2 class="d1" id="plan-title" data-align>Four phases.<br> <em>One continuous force.</em></h2>
-      <p class="lede" data-align>
+      <p class="eyebrow mono" data-reveal="wire"><span>Act II</span> Treatment plan</p>
+      <h2 class="d1" id="plan-title" data-reveal="lines">Four phases.<br> <em>One continuous force.</em></h2>
+      <p class="lede" data-reveal="fade">
         Every engagement follows the arc of good treatment: thorough records, a precise plan,
         steady movement, and a retention phase that protects the result.
       </p>
@@ -209,7 +219,7 @@
         <article class="phase" data-phase="0">
           <span class="phase__num" aria-hidden="true">01</span>
           <p class="phase__label mono">Phase 01 — Records</p>
-          <h3 class="d2" data-align>Before we move anything, we measure <em>everything.</em></h3>
+          <h3 class="d2" data-reveal="lines">Before we move anything, we measure <em>everything.</em></h3>
           <p class="phase__copy">
             We start the way you do: with records. A full diagnostic of your market — competitors, search demand,
             referral patterns, reviews, and the real reasons patients choose one practice over another.
@@ -224,7 +234,7 @@
         <article class="phase" data-phase="1">
           <span class="phase__num" aria-hidden="true">02</span>
           <p class="phase__label mono">Phase 02 — Alignment</p>
-          <h3 class="d2" data-align>An identity and website that feel like your <em>best appointment.</em></h3>
+          <h3 class="d2" data-reveal="lines">An identity and website that feel like your <em>best appointment.</em></h3>
           <p class="phase__copy">
             Your brand and website are where a parent decides whether to trust you. We design both from the ground up —
             identity, photography, film, and a site engineered to turn attention into booked consultations.
@@ -239,7 +249,7 @@
         <article class="phase" data-phase="2">
           <span class="phase__num" aria-hidden="true">03</span>
           <p class="phase__label mono">Phase 03 — Force</p>
-          <h3 class="d2" data-align>Steady pressure. <em>Never a burst.</em></h3>
+          <h3 class="d2" data-reveal="lines">Steady pressure. <em>Never a burst.</em></h3>
           <p class="phase__copy">
             Local SEO, Google Business Profile, paid search and paid social, tuned month by month. Not campaigns that
             spike and vanish — a continuous, measured force that moves your practice up the map and keeps it there.
@@ -254,7 +264,7 @@
         <article class="phase" data-phase="3">
           <span class="phase__num" aria-hidden="true">04</span>
           <p class="phase__label mono">Phase 04 — Retention</p>
-          <h3 class="d2" data-align>The work doesn’t end <em>at debond.</em></h3>
+          <h3 class="d2" data-reveal="lines">The work doesn’t end <em>at debond.</em></h3>
           <p class="phase__copy">
             Reviews, reputation, social storytelling and referring-doctor relationships — the retention phase that
             protects every result and turns finished patients into your most persuasive marketing.
@@ -279,9 +289,9 @@
        ==================================================================== -->
   <section class="results" id="results" data-scene="light" aria-labelledby="results-title">
     <header class="results__head wrap">
-      <p class="eyebrow mono"><span>Act III</span> Before / After</p>
-      <h2 class="d1" id="results-title" data-align>Same practice.<br> <em>Different market.</em></h2>
-      <p class="lede" data-align>Orthodontists trust a before-and-after more than any claim. So do we. Drag the wire — then take the radiograph.</p>
+      <p class="eyebrow mono" data-reveal="wire"><span>Act III</span> Before / After</p>
+      <h2 class="d1" id="results-title" data-reveal="lines">Same practice.<br> <em>Different market.</em></h2>
+      <p class="lede" data-reveal="fade">Orthodontists trust a before-and-after more than any claim. So do we. Drag the wire — then take the radiograph.</p>
     </header>
 
     <div class="compare wrap">
@@ -357,28 +367,28 @@
 
     <div class="results__proof wrap">
       <div class="metrics" role="list">
-        <figure class="metric" role="listitem" data-align>
-          <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
+        <figure class="metric" role="listitem" data-reveal="rise">
+          <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120" pathLength="1" data-draw/></svg>
           <span class="metric__num">+212%</span>
           <figcaption class="mono">Organic consultation requests, 12 months</figcaption>
         </figure>
-        <figure class="metric" role="listitem" data-align>
-          <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
+        <figure class="metric" role="listitem" data-reveal="rise">
+          <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120" pathLength="1" data-draw/></svg>
           <span class="metric__num">9<small>/11</small></span>
           <figcaption class="mono">Target zip codes where the practice holds #1 in the map pack</figcaption>
         </figure>
-        <figure class="metric" role="listitem" data-align>
-          <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
+        <figure class="metric" role="listitem" data-reveal="rise">
+          <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120" pathLength="1" data-draw/></svg>
           <span class="metric__num">−38%</span>
           <figcaption class="mono">Cost per new-patient start</figcaption>
         </figure>
       </div>
 
-      <figure class="quote" data-align>
+      <figure class="quote">
         <blockquote>
-          <p>“They spoke to us like clinicians, not customers. Eighteen months later, our schedule looks like a different practice.”</p>
+          <p data-reveal="lines">“They spoke to us like clinicians, not customers. Eighteen months later, our schedule looks like a different practice.”</p>
         </blockquote>
-        <figcaption class="mono">Practice owner · Alder Lane Orthodontics</figcaption>
+        <figcaption class="mono" data-reveal="fade" data-reveal-delay="500">Practice owner · Alder Lane Orthodontics</figcaption>
       </figure>
     </div>
     <p class="results__note mono wrap">Illustrative case, figures and quote for concept presentation — replace with verified client results before launch.</p>
@@ -394,7 +404,7 @@
        ==================================================================== -->
   <section class="studio" id="studio" data-scene="dark" aria-labelledby="studio-title">
     <div class="studio__grid wrap">
-      <figure class="plate plate--portrait" data-align>
+      <figure class="plate plate--portrait" data-reveal="exposure">
         <svg class="lightplan" viewBox="0 0 400 500" aria-hidden="true">
           <g fill="none" stroke="currentColor" stroke-width="1">
             <circle cx="200" cy="270" r="34"/>
@@ -421,9 +431,9 @@
       </figure>
 
       <div class="studio__text">
-        <p class="eyebrow mono"><span>Act IV</span> The family</p>
-        <h2 class="d1" id="studio-title" data-align>A family practice, <em>for family practices.</em></h2>
-        <p class="lede">
+        <p class="eyebrow mono" data-reveal="wire"><span>Act IV</span> The family</p>
+        <h2 class="d1" id="studio-title" data-reveal="lines">A family practice, <em>for family practices.</em></h2>
+        <p class="lede" data-reveal="fade">
           Ortho Marketing has been family-run since 2008. So are many of the practices we serve — parents and children,
           partners of thirty years, associates who became owners. We know what it means to build something with your
           name on it, and to protect it for the next generation.
@@ -449,16 +459,16 @@
   <section class="live" id="live" data-scene="dark" aria-labelledby="live-title">
     <div class="live__head wrap">
       <div>
-        <p class="onair mono"><i aria-hidden="true"></i>On air</p>
-        <h2 class="d1" id="live-title" data-align>Ortho Marketing <em>Live.</em></h2>
+        <p class="onair mono" data-loop><i aria-hidden="true"></i>On air</p>
+        <h2 class="d1" id="live-title" data-reveal="lines">Ortho Marketing <em>Live.</em></h2>
       </div>
-      <p class="lede">
+      <p class="lede" data-reveal="fade">
         Conversations with the orthodontists, operators and specialists redefining practice growth.
         Hosted by Dean Steinman.
       </p>
     </div>
 
-    <div class="wave wrap" data-wave aria-hidden="true"></div>
+    <div class="wave wrap" data-wave data-loop aria-hidden="true"></div>
 
     <ol class="episodes wrap">
       <li><a href="#live" data-episode="172">
@@ -493,25 +503,25 @@
        ==================================================================== -->
   <section class="visit" id="first-visit" data-scene="light" aria-labelledby="visit-title">
     <header class="visit__head wrap">
-      <p class="eyebrow mono"><span>Act VI</span> Your first visit</p>
-      <h2 class="d1" id="visit-title" data-align>What happens <em>when you reach out.</em></h2>
-      <p class="lede" data-align>No pitch deck. No pressure. A consultation built like a records appointment — so the first conversation is already useful.</p>
+      <p class="eyebrow mono" data-reveal="wire"><span>Act VI</span> Your first visit</p>
+      <h2 class="d1" id="visit-title" data-reveal="lines">What happens <em>when you reach out.</em></h2>
+      <p class="lede" data-reveal="fade">No pitch deck. No pressure. A consultation built like a records appointment — so the first conversation is already useful.</p>
     </header>
 
     <ol class="steps wrap" data-steps>
-      <li class="step" data-align>
+      <li class="step" data-reveal="rise">
         <span class="step__bracket" aria-hidden="true"></span>
         <p class="step__no mono">Step 01 · About 3 minutes</p>
         <h3 class="d3">Records</h3>
         <p>Tell us about your practice in four short steps. Before we speak, a strategist reviews your market, your search presence and your reviews.</p>
       </li>
-      <li class="step" data-align>
+      <li class="step" data-reveal="rise">
         <span class="step__bracket" aria-hidden="true"></span>
         <p class="step__no mono">Step 02 · 30 minutes</p>
         <h3 class="d3">Consultation</h3>
         <p>A video or phone call with a strategist — not a salesperson. We walk you through what we found, including what you’re already doing well.</p>
       </li>
-      <li class="step" data-align>
+      <li class="step" data-reveal="rise">
         <span class="step__bracket" aria-hidden="true"></span>
         <p class="step__no mono">Step 03 · Yours to keep</p>
         <h3 class="d3">Treatment plan</h3>
@@ -561,17 +571,17 @@
     </svg>
 
     <div class="debond__text">
-      <p class="eyebrow mono"><span>Finale</span> Debond</p>
-      <h2 class="d1" id="consult-title">Let’s see where your practice <em>could be.</em></h2>
-      <p class="lede">
+      <p class="eyebrow mono" data-reveal="wire"><span>Finale</span> Debond</p>
+      <h2 class="d1" id="consult-title" data-reveal="lines">Let’s see where your practice <em>could be.</em></h2>
+      <p class="lede" data-reveal="fade">
         Begin with a records appointment for your brand. We map your market, audit your search presence and walk
         you through a treatment plan.
       </p>
-      <div class="cta-row cta-row--center">
+      <div class="cta-row cta-row--center" data-reveal="rise">
         <a class="btn btn--primary btn--lg" href="#consultation" data-consult-open data-cta="finale"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
         <a class="link" href="#live" data-cta="finale-listen">Or listen first</a>
       </div>
-      <ul class="debond__assure mono">
+      <ul class="debond__assure mono" data-reveal="fade">
         <li>30 minutes</li><li>With a strategist</li><li>Plan is yours to keep</li>
       </ul>
     </div>
@@ -608,6 +618,7 @@
       <a href="#consultation" data-consult-open data-cta="footer">Consultation</a>
     </nav>
     <p class="mono">© 2026 Ortho Marketing · Family-run since 2008</p>
+    <button class="motion-toggle mono" type="button" aria-pressed="false" data-motion-toggle>Reduce motion<i aria-hidden="true"></i></button>
     <p class="mono credits__fine">Concept prototype — “Light, Continuous Force.” Not the live site.</p>
   </div>
 </footer>
@@ -784,6 +795,7 @@
 </div>
 <button class="notes-toggle mono" type="button" aria-pressed="false" data-notes><span class="hide-sm">Director’s </span>notes</button>
 
+<script src="motion.js" defer></script>
 <script src="main.js" defer></script>
 </body>
 </html>

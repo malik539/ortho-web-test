@@ -81,20 +81,42 @@
   --ease-force: cubic-bezier(0.16, 1, 0.3, 1);     /* long, inevitable settle */
   --ease-settle: cubic-bezier(0.65, 0, 0.35, 1);   /* symmetric, for repositioning */
   --ease-release: cubic-bezier(0.3, 0, 0.8, 0.15); /* exits only */
+  --ease-debond: cubic-bezier(0.34, 1.56, 0.64, 1); /* the one overshoot: debond day */
 
   --d-instant: 120ms;  /* state feedback (press, toggle) */
   --d-quick: 240ms;    /* hover, focus */
   --d-measured: 600ms; /* UI transitions, menus */
   --d-force: 1400ms;   /* alignment reveals */
   --d-treatment: 2400ms; /* signature moments: cold open, debond */
-  --stagger: 55ms;
+  --stagger-glyph: 18ms;  /* headline glyphs (hero only) */
+  --stagger-list: 60ms;   /* menu links, chips, rows */
+  --stagger-line: 90ms;   /* lines inside one heading */
+  --stagger-block: 110ms; /* siblings in a group: wire → heading → copy → CTA */
+
+  /* Amplitudes — how far things travel. Small, always. */
+  --m-align-x: -14px;     /* crowded → aligned: offset … */
+  --m-align-y: 18px;
+  --m-align-r: -2.2deg;   /* … and rotation (alternates with +1.4deg) */
+  --m-rise: 16px;         /* interactive blocks rise, never rotate */
+  --m-exposure-scale: 1.035;
+
+  /* Lite tier (touch, low-power, Save-Data) trims the long durations — see [data-motion="lite"] below. */
 
   /* ---------- Depth ------------------------------------------------------ */
   --z-loader: 120;
+  --z-cut: 115;
   --z-consult: 110;
   --z-menu: 100;
   --z-grain: 90;
   --z-midline: 80;
   --z-nav: 70;
   --z-hud: 60;
+}
+
+/* Motion tiers — set on <html data-motion> before first paint (see index.html <head>) */
+html[data-motion="lite"] {
+  --d-force: 1100ms;
+  --d-treatment: 1800ms;
+  --m-align-x: -10px;
+  --m-align-y: 14px;
 }

@@ -165,6 +165,7 @@ em { font-style: italic; font-weight: 300; }
 }
 body[data-scene="light"] .nav { --nav-fg: var(--c-occlusion); }
 .nav.is-hidden { transform: translateY(-110%); }
+.nav:focus-within { transform: none; }
 
 .brand { position: relative; display: block; height: 28px; aspect-ratio: 816 / 142; }
 .brand__logo { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity var(--d-measured) var(--ease-settle); }
@@ -190,7 +191,8 @@ body[data-scene="light"] .nav__links a::after { background: var(--c-ortho-blue);
   border: 1px solid color-mix(in srgb, currentColor 45%, transparent); border-radius: 2px;
   font-family: var(--f-mono); font-size: var(--t-mono); letter-spacing: var(--tr-mono); text-transform: uppercase;
 }
-.nav__menu i { width: 14px; height: 7px; border-block: 1.5px solid currentColor; }
+.nav__menu i { width: 14px; height: 7px; border-block: 1.5px solid currentColor; transition: height var(--d-quick) var(--ease-force); }
+.nav__menu:hover i { height: 10px; }
 
 .menu {
   position: fixed; inset: 0; z-index: var(--z-menu);
@@ -256,15 +258,88 @@ body[data-scene="light"] .nav__links a::after { background: var(--c-ortho-blue);
 .dnote b { display: block; margin-bottom: var(--s-1); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
 .notes-on .dnote { display: block; }
 
-/* ---------- Alignment reveal (the signature transition) ------------------ */
-.js [data-align] {
-  opacity: 0;
-  transform: translate3d(var(--ax, -14px), var(--ay, 18px), 0) rotate(var(--ar, -2.2deg));
+/* ==========================================================================
+   MOTION PRIMITIVES — bound by motion.js §7 ([data-reveal])
+   align    whole block arrives crowded (offset + rotation) and settles      — rare
+   lines    each line of a heading settles in sequence                       — headings
+   rise     a short vertical rise; for anything interactive (never rotates)  — blocks, CTAs
+   fade     opacity only; body copy never moves                              — paragraphs
+   wire     the eyebrow's wire draws, then its label fades                   — section labels
+   exposure a dark veil lifts off an image while it eases from 1.035 → 1     — plates, photos
+   draw     SVG strokes draw on ([data-draw] with pathLength="1")             — leader lines
+   ========================================================================== */
+.js [data-reveal] { transition-delay: var(--reveal-delay, 0ms); }
+.js [data-reveal="align"] {
   transform-origin: 0% 100%;
-  transition: opacity var(--d-measured) var(--ease-force), transform var(--d-force) var(--ease-force);
-  transition-delay: var(--delay, 0ms);
+  transition: opacity var(--d-measured) var(--ease-force) var(--reveal-delay, 0ms), transform var(--d-force) var(--ease-force) var(--reveal-delay, 0ms);
 }
-.js [data-align].is-in { opacity: 1; transform: none; }
+.js [data-reveal="align"]:not(.is-in) { opacity: 0; transform: translate3d(var(--m-align-x), var(--m-align-y), 0) rotate(var(--ar, var(--m-align-r))); }
+
+.js [data-reveal="lines"] .rw {
+  display: inline-block; transform-origin: 0% 100%;
+  transition:
+    opacity var(--d-measured) var(--ease-force) calc(var(--reveal-delay, 0ms) + var(--li, 0) * var(--stagger-line)),
+    transform var(--d-force) var(--ease-force) calc(var(--reveal-delay, 0ms) + var(--li, 0) * var(--stagger-line));
+}
+.js [data-reveal="lines"]:not(.is-in) .rw { opacity: 0; transform: translate3d(var(--m-align-x), calc(var(--m-align-y) * .8), 0) rotate(var(--ar, var(--m-align-r))); }
+
+.js [data-reveal="rise"] { transition: opacity var(--d-measured) var(--ease-force) var(--reveal-delay, 0ms), transform var(--d-force) var(--ease-force) var(--reveal-delay, 0ms); }
+.js [data-reveal="rise"]:not(.is-in) { opacity: 0; transform: translate3d(0, var(--m-rise), 0); }
+
+.js [data-reveal="fade"] { transition: opacity var(--d-force) var(--ease-force) calc(var(--reveal-delay, 0ms) + 120ms); }
+.js [data-reveal="fade"]:not(.is-in) { opacity: 0; }
+
+.js [data-reveal="wire"] span::after { transform-origin: left; transition: transform var(--d-force) var(--ease-force) var(--reveal-delay, 0ms); }
+.js [data-reveal="wire"]:not(.is-in) span::after { transform: scaleX(0); }
+.js [data-reveal="wire"]:not(.is-in), .js [data-reveal="wire"]:not(.is-in) span { color: transparent; }
+.js [data-reveal="wire"], .js [data-reveal="wire"] span { transition: color var(--d-measured) var(--ease-force) calc(var(--reveal-delay, 0ms) + 260ms); }
+
+.js [data-reveal="exposure"] { transition: transform var(--d-treatment) var(--ease-force) var(--reveal-delay, 0ms); }
+.js [data-reveal="exposure"]::after {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: var(--c-occlusion); transition: opacity var(--d-force) var(--ease-force) var(--reveal-delay, 0ms);
+}
+.js [data-reveal="exposure"]:not(.is-in) { transform: scale(var(--m-exposure-scale)); }
+.js [data-reveal="exposure"].is-in::after { opacity: 0; }
+
+.js [data-draw] { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset var(--d-force) var(--ease-force) calc(var(--reveal-delay, 0ms) + 150ms); }
+.js .is-in [data-draw] { stroke-dashoffset: 0; }
+
+/* Failsafe (set by the <head> timer if scripts never boot): everything visible, nothing stranded */
+html.motion-failed [data-reveal], html.motion-failed [data-reveal] *, html.motion-failed [data-hero-in], html.motion-failed .hero__light {
+  opacity: 1 !important; transform: none !important; color: inherit; stroke-dashoffset: 0 !important; transition: none !important;
+}
+html.motion-failed [data-reveal]::after { opacity: 0 !important; }
+
+/* ---------- Scene transition: the CUT (midline wipe) — motion.js §9 ------ */
+.cut { position: fixed; inset: 0; z-index: var(--z-cut); pointer-events: none; }
+.cut__panel {
+  position: absolute; top: 0; bottom: 0; width: 50.5%; background: var(--c-occlusion);
+  transform: translateX(var(--off)); transition: transform calc(var(--d-measured) * .65) var(--ease-settle);
+}
+.cut__panel--l { left: 0; --off: -101%; }
+.cut__panel--r { right: 0; --off: 101%; }
+.cut::after { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--c-signal); opacity: 0; transition: opacity var(--d-quick); }
+.cut__label { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--c-nitinol); opacity: 0; white-space: nowrap; transition: opacity var(--d-quick); }
+.cut.is-closed { pointer-events: auto; }
+.cut.is-closed .cut__panel { transform: none; }
+.cut.is-closed::after { opacity: .7; }
+.cut.is-closed:not(.is-open) .cut__label { opacity: 1; transition-delay: calc(var(--d-measured) * .4); }
+.cut.is-closed.is-open .cut__panel { transform: translateX(var(--off)); transition: transform var(--d-measured) var(--ease-force); }
+.cut.is-open::after { opacity: 0; }
+
+/* ---------- Ambient loops pause off-screen and in hidden tabs (motion.js §8) */
+[data-loop].is-paused, [data-loop].is-paused *, .is-tab-hidden [data-loop], .is-tab-hidden [data-loop] * { animation-play-state: paused !important; }
+
+/* ---------- In-site "Reduce motion" switch -------------------------------- */
+.motion-toggle {
+  display: inline-flex; align-items: center; gap: var(--s-3); min-height: 44px; padding: 0 var(--s-1);
+  background: none; border: 0; cursor: pointer; color: inherit;
+}
+.motion-toggle i { position: relative; width: 30px; height: 16px; border: 1px solid currentColor; border-radius: 999px; transition: background-color var(--d-quick) var(--ease-force); }
+.motion-toggle i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: 50%; background: currentColor; transition: transform var(--d-measured) var(--ease-force); }
+.motion-toggle[aria-pressed="true"] i { background: var(--c-ortho-blue); border-color: var(--c-signal); }
+.motion-toggle[aria-pressed="true"] i::after { transform: translateX(14px); background: var(--c-crescent); }
 
 /* ==========================================================================
    01 · HERO — "SHAPE MEMORY"
@@ -434,6 +509,9 @@ body[data-scene="light"] .nav__links a::after { background: var(--c-ortho-blue);
 .xray-toggle[aria-pressed="true"] { background: var(--c-ortho-blue); border-color: var(--c-ortho-blue); color: var(--c-crescent); }
 
 .compare__stage { position: relative; aspect-ratio: 16 / 9.4; overflow: hidden; cursor: ew-resize; touch-action: pan-y; }
+.compare__stage:active { cursor: grabbing; }
+.compare__bracket { transition: transform var(--d-quick) var(--ease-force); }
+.compare__stage:active .compare__bracket { transform: translate(-50%, -50%) scale(1.08); }
 .mock { position: absolute; inset: 0; overflow: hidden; }
 
 /* BEFORE — deliberately generic */
@@ -624,7 +702,7 @@ body[data-scene="light"] .nav__links a::after { background: var(--c-ortho-blue);
 }
 .arch { position: absolute; left: 50%; top: 52%; width: min(1200px, 120vw); height: auto; transform: translate(-50%, -50%); overflow: visible; }
 .arch__wire { fill: none; stroke: var(--c-signal); stroke-width: var(--wire); vector-effect: non-scaling-stroke; }
-.arch__brackets rect { fill: var(--c-porcelain); transform-box: fill-box; transform-origin: center; transition: opacity var(--d-measured) var(--ease-force), transform var(--d-force) cubic-bezier(.34, 1.56, .64, 1); }
+.arch__brackets rect { fill: var(--c-porcelain); transform-box: fill-box; transform-origin: center; transition: opacity var(--d-measured) var(--ease-force), transform var(--d-force) var(--ease-debond); }
 .debond__text { position: relative; z-index: 2; max-width: 52rem; text-align: center; }
 .debond__text .eyebrow { justify-content: center; }
 .debond__text h2 { margin-bottom: var(--s-6); }
@@ -706,11 +784,18 @@ body[data-scene="light"] .nav__links a::after { background: var(--c-ortho-blue);
 .field select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, #fff 50%), linear-gradient(135deg, #fff 50%, transparent 50%); background-position: calc(100% - 14px) 55%, calc(100% - 8px) 55%; background-size: 6px 6px; background-repeat: no-repeat; cursor: pointer; }
 .field select option { color: var(--c-occlusion); }
 .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,.55); }
-.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: none; border-bottom: 3px solid var(--c-crescent); }
+.field input:not([type="radio"]):not([type="checkbox"]), .field textarea {
+  background-image: linear-gradient(var(--c-crescent), var(--c-crescent));
+  background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px;
+  transition: background-size var(--d-measured) var(--ease-force), border-color var(--d-quick) var(--ease-force);
+}
+.field input:focus-visible, .field textarea:focus-visible { outline: none; background-size: 100% 2px; }
+.field select:focus-visible { outline: none; border-bottom: 3px solid var(--c-crescent); }
 .field [aria-invalid="true"] { border-bottom-color: #FFD7D0 !important; }
 .field__err { display: none; font-size: var(--t-small); color: #FFD7D0; }
 .field__err::before { content: "! "; font-weight: 700; }
-.field.has-err > .field__err, .chips.has-err > .field__err { display: block; }
+.field.has-err > .field__err, .chips.has-err > .field__err { display: block; animation: err-in var(--d-quick) var(--ease-force); }
+@keyframes err-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 
 .chips { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 .chips > legend { width: 100%; }
@@ -725,6 +810,8 @@ body[data-scene="light"] .nav__links a::after { background: var(--c-ortho-blue);
 .chips input:checked + span { background: var(--c-crescent); color: var(--c-ortho-blue); border-color: var(--c-crescent); }
 .chips input:focus-visible + span { outline: 2px solid var(--c-crescent); outline-offset: 3px; }
 .chips > .field__err { width: 100%; }
+.chips label:active span { transform: scale(.97); }
+.chips label span { transition: background-color var(--d-quick), color var(--d-quick), border-color var(--d-quick), transform var(--d-instant) var(--ease-force); }
 
 .cform__nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4) var(--s-5); margin-top: var(--s-8); padding-top: var(--s-6); border-top: 1px solid rgba(255,255,255,.3); }
 .cbtn {
@@ -734,7 +821,9 @@ body[data-scene="light"] .nav__links a::after { background: var(--c-ortho-blue);
 }
 .cbtn--solid { background: var(--c-crescent); color: var(--c-ortho-blue); border: 0; }
 .cbtn--solid:hover { background: var(--c-occlusion); color: var(--c-crescent); }
-.cbtn--solid[aria-busy="true"] { opacity: .7; cursor: progress; }
+.cbtn--solid[aria-busy="true"] { opacity: .85; cursor: progress; }
+.cbtn--solid[aria-busy="true"] .btn__wire { animation: busy 900ms var(--ease-settle) infinite alternate; }
+@keyframes busy { from { width: 1rem; } to { width: 3.25rem; } }
 .cbtn--ghost { background: transparent; color: var(--c-crescent); border: 1.5px solid rgba(255,255,255,.6); }
 .cbtn--ghost:hover { border-color: var(--c-crescent); }
 .cform__saved { margin-left: auto; color: rgba(255,255,255,.82); }
@@ -866,24 +955,34 @@ body[data-scene="light"] .nav__links a::after { background: var(--c-ortho-blue);
 }
 
 /* ==========================================================================
+   LITE TIER — touch, low-power, Save-Data: same story, lighter machinery
+   ========================================================================== */
+html[data-motion="lite"] .grain { animation: none; }
+html[data-motion="lite"] .crowd { height: 220vh; }
+html[data-motion="lite"] .wave span { animation-duration: 2.6s; }
+
+/* ==========================================================================
    REDUCED MOTION — same story, no movement
    ========================================================================== */
+html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-motion="reduced"] *::after {
+  animation-duration: 1ms !important; animation-iteration-count: 1 !important;
+  transition-duration: 1ms !important; transition-delay: 0ms !important;
+}
+html[data-motion="reduced"] .grain { animation: none; }
+html[data-motion="reduced"] .hero__light { opacity: 1; }
+html[data-motion="reduced"] .hero__title .ch { transform: none; }
+html[data-motion="reduced"] .crowd { height: auto; }
+html[data-motion="reduced"] .crowd__sticky { position: relative; height: auto; min-height: 100svh; padding-bottom: var(--s-10); }
+html[data-motion="reduced"] .crowd__head { position: relative; opacity: 1 !important; transform: none !important; }
+html[data-motion="reduced"] .crowd__field { display: none; }
+html[data-motion="reduced"] .crowd__resolve { position: relative; left: auto; top: auto; transform: none !important; opacity: 1 !important; margin: var(--s-10) auto 0; }
+html[data-motion="reduced"] .wave span { transform: none; }
+html[data-motion="reduced"] .steps { --steps: 1; }
+html[data-motion="reduced"] .menu { clip-path: none; }
+html[data-motion="reduced"] .consult__flood { clip-path: none; }
+html[data-motion="reduced"] .hero__content { transform: none !important; opacity: 1 !important; }
+
+/* No JavaScript: the OS preference still stops every loop and transition */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 1ms !important; animation-iteration-count: 1 !important;
-    transition-duration: 1ms !important; transition-delay: 0ms !important;
-  }
-  .grain { animation: none; }
-  .hero__light { opacity: 1; }
-  .hero__title .ch { transform: none; }
-  .js [data-align] { opacity: 1; transform: none; }
-  .crowd { height: auto; }
-  .crowd__sticky { position: relative; height: auto; min-height: 100svh; padding-bottom: var(--s-10); }
-  .crowd__head { position: relative; }
-  .crowd__field { display: none; }
-  .crowd__resolve { position: relative; left: auto; top: auto; transform: none; opacity: 1; margin: var(--s-10) auto 0; }
-  .wave span { transform: none; }
-  .steps { --steps: 1; }
-  .menu { clip-path: none; }
-  .consult__flood { clip-path: none; }
+  html:not([data-motion]) *, html:not([data-motion]) *::before, html:not([data-motion]) *::after { animation: none !important; transition: none !important; }
 }

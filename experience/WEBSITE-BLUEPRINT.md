@@ -160,7 +160,7 @@ Söhne's neutral geometry sits comfortably next to the logo's bold geometric wor
 
 ### 2.5 Motion tokens
 
-`--ease-force cubic-bezier(.16,1,.3,1)` (default) · `--ease-settle cubic-bezier(.65,0,.35,1)` · debond spring `cubic-bezier(.34,1.56,.64,1)` (finale only) · durations `120 / 240 / 600 / 1400 / 2400ms`. Full rationale is in Creative Direction §13.
+`--ease-force cubic-bezier(.16,1,.3,1)` (default) · `--ease-settle cubic-bezier(.65,0,.35,1)` · `--ease-release` (exits) · `--ease-debond cubic-bezier(.34,1.56,.64,1)` (finale only) · durations `120 / 240 / 600 / 1400 / 2400ms` (lite: 1100 / 1800). **The complete system (tokens, catalogue, kernel API, tiers, performance and accessibility) is in [MOTION-SYSTEM.md](./MOTION-SYSTEM.md).**
 
 ---
 

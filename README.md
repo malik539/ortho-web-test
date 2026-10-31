@@ -9,11 +9,14 @@ A cinematic creative direction and a complete website experience blueprint for [
 
 | Path | What it is |
 |---|---|
+| [`experience/MOTION-SYSTEM.md`](experience/MOTION-SYSTEM.md) | **The cinematic motion system:** principles, tokens (curves, durations, staggers, amplitudes, scroll smoothing), choreography rules, and the full catalogue (loading, text reveals, image transitions, parallax, depth, scroll triggers, pins, hover, micro-interactions, scene transitions), plus implementation, performance budgets, mobile and reduced-motion tiers, accessibility, device support and QA. |
 | [`experience/HERO.md`](experience/HERO.md) | **The cinematic hero, "Shape Memory":** concept, composition and solver, copy with A/B variants, typography, the 3D arch, lighting, entrance timeline, hover and scroll behavior, the CTA, performance, accessibility and QA. |
 | [`experience/WEBSITE-BLUEPRINT.md`](experience/WEBSITE-BLUEPRINT.md) | **The implementation-ready blueprint.** Experience strategy, the nine-question narrative, the logo-matched brand system, global systems (nav, menu, scenes, transitions), every section in order (job, final copy, layout per breakpoint, visuals, interactions, motion, transitions, CTA, accessibility, analytics, CMS fields), the full conversion flow, secondary pages, a responsive matrix, the accessibility spec, the performance budget, a QA checklist, and a content checklist. |
 | [`creative-direction/CREATIVE-DIRECTION.md`](creative-direction/CREATIVE-DIRECTION.md) | The creative direction (v1.1): idea, art direction, typography, color, imagery, lighting, texture, depth, motion and voice. |
 | [`creative-direction/tokens.json`](creative-direction/tokens.json) | Design tokens (W3C format) for Figma / Style Dictionary. |
-| [`site/`](site/) | Working prototype: `index.html`, `tokens.css`, `styles.css`, `main.js` (vanilla, no dependencies). |
+| [`site/`](site/) | Working prototype: `index.html`, `tokens.css`, `styles.css`, `motion.js` (the motion kernel), `main.js` (page scenes). Vanilla, no dependencies. |
+| [`site/motion.html`](site/motion.html) | **Motion Lab:** every curve, duration, reveal primitive, signature moment and hover state, live and replayable, read from the same tokens as the site. |
+| [`tests/motion-check.js`](tests/motion-check.js) | 21 automated motion checks (Playwright): idle frames, tiers, exact curves, reveals, cut navigation, reduce-motion switch, failsafe, overflow. |
 | [`site/assets/`](site/assets/) | Logo in full color, reversed (dark grounds) and white (on blue), plus the Orb as an SVG. |
 
 ## The journey
@@ -36,7 +39,15 @@ Then open <http://localhost:8000>.
 - **Any "Begin your consultation" button:** the Orb's blue floods the screen and the four-step records appointment opens. Try submitting it empty to see validation, close it halfway and reopen it (your draft is restored), then complete it to see the confirmation.
 - **Tablet or phone width:** the menu opens as a circle growing from the Menu button.
 - **Director's notes** (lower right) annotates every section with its job and the reasoning behind it.
-- Turn on *reduce motion* in your OS. The story stays the same and the movement stops.
+- **Nav links** to far-away sections *cut* (a midline wipe) instead of scrolling through the pinned scenes; nearby targets glide.
+- **Reduce motion:** use the switch in the footer or menu, or the OS setting. The story stays the same and the movement stops. The choice persists.
+- Open **`/motion.html`** for the Motion Lab.
+
+**Run the motion checks** (with the server running on port 8000):
+
+```bash
+BASE=http://localhost:8000 node tests/motion-check.js
+```
 
 ## Before launch
 

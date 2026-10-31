@@ -372,6 +372,8 @@ A radiograph layer shows "what's underneath": data, structure, measurement. Meta
 
 ## 13. Motion language
 
+> **Engineering spec:** [MOTION-SYSTEM.md](../experience/MOTION-SYSTEM.md) turns this language into tokens, a kernel (`site/motion.js`), tiers and budgets. The live reference is `site/motion.html`.
+
 ### Principles
 
 1. **Light, continuous force.** Motion is slow, steady and inevitable. Long ease-outs, no bounce. The single exception is debond, the one celebratory overshoot on the whole site.

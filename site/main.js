@@ -1,16 +1,17 @@
 /* ==========================================================================
    ORTHO MARKETING — "LIGHT, CONTINUOUS FORCE"
-   Experience runtime for the prototype. Vanilla JS, no dependencies.
-   Production note: the choreography maps 1:1 onto GSAP + ScrollTrigger.
+   Page scenes for the prototype. Vanilla JS, no dependencies.
+   All timing, curves, tiers, the clock, scroll scenes, reveals and in-page
+   navigation come from the motion kernel (motion.js → window.OMMotion).
 
    §0  Utilities + analytics          §8  Debond arch
    §1  Loader (the Orb)               §9  First-visit steps
-   §2  Cold open + hero arch          §10 Alignment reveals
+   §2  Cold open + hero arch          §10 Reveals (kernel)
    §3  Crowding scrub                 §11 HUD, scene-aware nav, scroll spy
    §4  Treatment rail                 §12 Menu
    §5  Before/after + radiograph      §13 Consultation overlay
    §6  Waveform                       §14 Director's notes
-   §7  FAQ                            §15 Frame loop
+   §7  FAQ                            §15 Wiring
    ========================================================================== */
 (() => {
   'use strict';
@@ -22,14 +23,15 @@
   const body = document.body;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const M = window.OMMotion;            // motion kernel: tokens, tiers, clock, scenes
+  if (!M) { root.classList.add('motion-failed'); return; }   // kernel missing: show everything, run nothing
   const finePointer = window.matchMedia('(pointer: fine)').matches;
 
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const lerp = (a, b, t) => a + (b - a) * t;
   const range = (v, a, b) => clamp((v - a) / (b - a));
-  const easeForce = (t) => 1 - Math.pow(1 - t, 4);
-  const easeSettle = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const easeForce = (t) => M.ease.force(t);    // exact token curves, shared with CSS
+  const easeSettle = (t) => M.ease.settle(t);
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   const seeded = (seed) => () => {
     seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
@@ -56,14 +58,7 @@
   };
   const animateSmile = (path, dur = 700, delay = 0) => new Promise((resolve) => {
     if (!path) return resolve();
-    if (reduce) { path.setAttribute('d', smileD(1)); return resolve(); }
-    const start = performance.now() + delay;
-    const tick = (now) => {
-      const t = clamp((now - start) / dur);
-      path.setAttribute('d', smileD(easeForce(t)));
-      if (t < 1) requestAnimationFrame(tick); else resolve();
-    };
-    requestAnimationFrame(tick);
+    M.tween({ duration: dur, delay, ease: 'force', onUpdate: (v) => path.setAttribute('d', smileD(v)), onComplete: resolve });
   });
 
   let vw = window.innerWidth;
@@ -174,7 +169,7 @@
           side, rank, len: mid + side * c, w: w * unit * 0.32, h: rank < 3 ? 0.17 : 0.15,
           dn: (rand() - 0.5) * 0.9 * k, dy: (rand() - 0.5) * 0.3 * k, dt: (rand() - 0.5) * 0.16,
           rot: (rand() - 0.5) * 70 * k * DEG, tip: (rand() - 0.5) * 30 * k * DEG,
-          a: reduce ? 1 : 0, e: 0, ev: 0, er: 0, erv: 0, prox: 0, sp: null,
+          a: M.reduced ? 1 : 0, e: 0, ev: 0, er: 0, erv: 0, prox: 0, sp: null,
         });
       });
     });
@@ -215,7 +210,7 @@
     const layout = () => {
       const r = canvas.getBoundingClientRect();
       W = Math.max(1, r.width); H = Math.max(1, r.height);
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, M.full ? 2 : 1.5);
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       const k = clamp((W / H - 0.5) / (1.7 - 0.5));     // 0 = tall phone, 1 = wide desktop
       const keep = { yaw: cam.yaw, pitch: cam.pitch, crane: cam.crane };
@@ -240,7 +235,7 @@
 
     const geometry = (now) => {
       brackets.forEach((b) => {
-        if (!reduce) b.a = startAt === null ? 0 : easeForce(clamp((now - startAt - HOLD - b.rank * 130) / 1700));
+        if (!M.reduced) b.a = startAt === null ? 0 : easeForce(clamp((now - startAt - HOLD - b.rank * 130) / 1700));
         const m = 1 - b.a;
         const base = at(b.len + b.dt * m);
         const N = v3(-base.tz, 0, base.tx);                 // labial (outward) normal
@@ -276,7 +271,7 @@
 
     const strokeWire = (P, alpha, fog, now, lit) => {
       const lx = light.x * W, ly = light.y * H;
-      const front = startAt === null || reduce ? -9 : clamp((now - startAt - HOLD) / 2300) * (mid + 0.6);
+      const front = startAt === null || M.reduced ? -9 : clamp((now - startAt - HOLD) / 2300) * (mid + 0.6);
       const hp = (now - pulseAt) / 1000;
       ctx.lineCap = 'butt';   // butt caps: no additive 'beads' where segments meet
       for (let pass = 0; pass < 2; pass++) {
@@ -376,7 +371,6 @@
     };
 
     const tick = (now) => {
-      raf = 0;
       let active = false;
       brackets.forEach((b) => {
         const te = -0.26 * b.prox, tr = 0.32 * b.prox * b.side;
@@ -392,31 +386,39 @@
       if (now - pulseAt < 1000) active = true;
       if (startAt !== null && now - startAt < 3000) active = true;
       draw(now);
-      if (active && visible) raf = requestAnimationFrame(tick);
+      return active && visible;
     };
-    const request = () => { if (!raf && visible) raf = requestAnimationFrame(tick); };
+    // The arch subscribes to the site clock only while something is moving.
+    const request = () => {
+      if (raf || !visible) return;
+      raf = 1;
+      M.add((now) => { const keep = tick(now); if (!keep) raf = 0; return keep; });
+    };
 
     const api = {
       start() { if (startAt === null) { startAt = performance.now(); request(); } },
+      settle() { brackets.forEach((b) => { b.a = 1; b.e = b.ev = b.er = b.erv = b.prox = 0; }); cam.crane = cam.tyaw = cam.tpitch = 0; request(); },
       resize() { layout(); request(); },
       setLight(x, y) { if (Math.abs(x - light.x) + Math.abs(y - light.y) > 0.001) { light.x = x; light.y = y; request(); } },
-      setView(nx, ny) { if (reduce) return; cam.tyaw = (nx - 0.5) * 0.1; cam.tpitch = (ny - 0.5) * 0.045; request(); },
-      setCrane(p) { if (reduce) return; if (Math.abs(p - cam.crane) > 0.0005) { cam.crane = p; request(); } },
+      setView(nx, ny) { if (M.reduced) return; cam.tyaw = (nx - 0.5) * 0.1; cam.tpitch = (ny - 0.5) * 0.045; request(); },
+      setCrane(p) { if (M.reduced) return; if (Math.abs(p - cam.crane) > 0.0005) { cam.crane = p; request(); } },
       setPointer(x, y) {
-        if (reduce) return;
+        if (M.reduced) return;
         pointer = x === null ? null : { x, y };
         brackets.forEach((b) => {
           b.prox = pointer && b.sp ? Math.pow(Math.max(0, 1 - Math.hypot(b.sp.x - pointer.x, b.sp.y - pointer.y) / 150), 2) : 0;
         });
         request();
       },
-      charge(on) { chargeT = on ? 1 : 0; if (on && !reduce) pulseAt = performance.now(); request(); },
+      charge(on) { chargeT = on ? 1 : 0; if (on && !M.reduced) pulseAt = performance.now(); request(); },
       setVisible(v) { visible = v; if (v) request(); },
     };
     layout();
     request();
     return api;
   })();
+
+  if (heroArch) M.onTier((t) => { if (t === 'reduced') heroArch.settle(); else heroArch.resize(); });
 
   // Glyphs align in a wave from the center outward — the same wave as the arch.
   const waveGlyphs = () => {
@@ -438,7 +440,7 @@
     setTimeout(() => {
       root.classList.add('is-aligned');
       if (heroArch) heroArch.start();
-    }, reduce ? 0 : 150);
+    }, M.reduced ? 0 : 150);
   };
 
   // The primary CTA "charges" the arch: intent sends a pulse down the wire.
@@ -458,11 +460,15 @@
     root.classList.add('is-loading');
     const orbAnim = loaderOrb.animate(
       [{ transform: 'translate(-50%, -50%) scale(0)' }, { transform: 'translate(-50%, -50%) scale(1)' }],
-      { duration: 700, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+      { duration: 700, easing: M.tokens.css.force, fill: 'forwards' }
     );
     const smile = animateSmile($('[data-orb-smile]'), 750, 320);
     // Hold until fonts are ready (so the hero doesn't reflow), min 1.1s, max 2.5s.
-    await Promise.race([Promise.all([fontsReady, wait(1100), smile, orbAnim.finished]), wait(2500)]);
+    // Never hold the visitor hostage: any input fast-forwards the loader.
+    let skipped = false;
+    const skip = new Promise((res) => ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((ev) =>
+      window.addEventListener(ev, () => { skipped = true; res(); }, { once: true, passive: true })));
+    await Promise.race([Promise.all([fontsReady, wait(1100), smile, orbAnim.finished]), wait(2500), skip]);
 
     // FLIP: fly to the O inside the nav logo (O occupies x 5–128, y 5–129 of 816×142).
     const r = brand.getBoundingClientRect();
@@ -478,7 +484,7 @@
         { transform: 'translate(-50%, -50%) scale(1)' },
         { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(${s})` },
       ],
-      { duration: 900, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', fill: 'forwards' }
+      { duration: skipped ? 480 : 900, easing: M.tokens.css.settle, fill: 'forwards' }
     ).finished;
 
     root.classList.remove('is-loading');
@@ -496,31 +502,44 @@
     requestAnimationFrame(startColdOpen);
   }
 
-  /* ---------- Operatory light ------------------------------------------- */
+  /* ---------- Operatory light: desktop pointer only, damped, on the shared clock ---- */
   const light = { x: 64, y: 32, tx: 64, ty: 32 };
-  let heroVisible = true;
+  let heroVisible = true, lightRunning = false;
+  const stepLight = () => {
+    light.x = lerp(light.x, light.tx, 0.06);
+    light.y = lerp(light.y, light.ty, 0.06);
+    hero.style.setProperty('--lx', light.x.toFixed(2) + '%');
+    hero.style.setProperty('--ly', light.y.toFixed(2) + '%');
+    if (heroArch) heroArch.setLight(light.x / 100, light.y / 100);
+    if (Math.abs(light.tx - light.x) + Math.abs(light.ty - light.y) < 0.05 || !heroVisible) lightRunning = false;
+    return lightRunning;
+  };
   if (hero && finePointer) {
     hero.addEventListener('pointermove', (e) => {
+      if (M.reduced) return;
       const r = hero.getBoundingClientRect();
       const nx = (e.clientX - r.left) / r.width, ny = (e.clientY - r.top) / r.height;
       light.tx = nx * 100;
       light.ty = ny * 100;
       if (heroArch) { heroArch.setView(nx, ny); heroArch.setPointer(e.clientX - r.left, e.clientY - r.top); }
+      if (!lightRunning) { lightRunning = true; M.add(stepLight); }
     });
     hero.addEventListener('pointerleave', () => { if (heroArch) { heroArch.setView(0.5, 0.5); heroArch.setPointer(null); } });
   }
 
-  // Scroll: the camera cranes up and over the arch while the copy lifts away.
+  // Scroll: the camera cranes up and over the arch while the copy lifts away (scene, smoothed).
   const heroContent = $('[data-hero-content]');
-  const updateHeroScroll = () => {
-    if (!hero || !heroVisible) return;
-    const p = clamp(window.scrollY / (hero.offsetHeight || 1));
-    if (heroArch) heroArch.setCrane(easeSettle(p));
-    if (heroContent && !reduce) {
-      heroContent.style.transform = `translate3d(0, ${(-p * 70).toFixed(1)}px, 0)`;
-      heroContent.style.opacity = (1 - clamp((p - 0.15) / 0.55)).toFixed(3);
-    }
-  };
+  if (hero) {
+    M.scene(hero, {
+      measure: M.progress.leave, smooth: 0.2, reduced: 0,
+      onProgress: (p) => {
+        if (heroArch) heroArch.setCrane(easeSettle(p));
+        if (!heroContent) return;
+        heroContent.style.transform = p ? `translate3d(0, ${(-p * 70).toFixed(1)}px, 0)` : '';
+        heroContent.style.opacity = p ? (1 - clamp((p - 0.15) / 0.55)).toFixed(3) : '';
+      },
+    });
+  }
 
   /* ======================================================================
      §3 ACT I — CROWDING (scroll-scrubbed)
@@ -557,13 +576,12 @@
       c.ex = clamp(ex, -maxX, maxX);
       c.ey = clamp(ey, -fieldCenterY + h / 2 + 72, vh - fieldCenterY - h / 2 - 56);
     });
+    if (!M.reduced) renderCrowd(crowdP);
   };
 
-  const updateCrowd = () => {
-    if (!crowd || reduce) return;
-    const r = crowd.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > vh) return;
-    const p = clamp(-r.top / (r.height - vh));
+  let crowdP = 0;
+  const renderCrowd = (p) => {
+    crowdP = p;
     const spread = easeSettle(range(p, 0.1, 0.6));
     crowd.style.setProperty('--hp', range(p, 0.16, 0.4).toFixed(3));
     crowd.style.setProperty('--rp', easeForce(range(p, 0.48, 0.76)).toFixed(3));
@@ -576,6 +594,8 @@
       s.setProperty('--to', lerp(1, fade, spread).toFixed(3));
     });
   };
+  // Pinned scene (sticky 300vh desktop, 220vh lite). Smoothing turns wheel steps into steady force.
+  if (crowd) M.scene(crowd, { measure: M.progress.track, smooth: 0.16, reduced: 'skip', onProgress: renderCrowd });
 
   /* ======================================================================
      §4 ACT II — TREATMENT RAIL
@@ -596,14 +616,16 @@
     }, { rootMargin: '-45% 0px -45% 0px' });
     phases.forEach((p) => io.observe(p));
   }
-  const updatePlan = () => {
-    if (!phasesWrap || !fill) return;
-    const r = phasesWrap.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > vh) return;
-    const first = phases[0].getBoundingClientRect();
-    const last = phases[phases.length - 1].getBoundingClientRect();
-    fill.style.setProperty('--fill', range(vh / 2, first.top + first.height / 2, last.top + last.height / 2).toFixed(3));
-  };
+  if (phasesWrap && fill && phases.length) {
+    M.scene(phasesWrap, {
+      measure: (r, h) => {
+        const a = phases[0].getBoundingClientRect(), b = phases[phases.length - 1].getBoundingClientRect();
+        return range(h / 2, a.top + a.height / 2, b.top + b.height / 2);
+      },
+      smooth: 0.2, reduced: 'live',
+      onProgress: (v) => fill.style.setProperty('--fill', v.toFixed(3)),
+    });
+  }
 
   /* ======================================================================
      §5 ACT III — BEFORE / AFTER + RADIOGRAPH
@@ -622,6 +644,7 @@
     };
     const noteInteraction = (method) => {
       demo.cancel = true;
+      if (demo.leg) demo.leg.cancel();
       if (!interacted) { interacted = true; track('compare_interact', { method }); }
     };
     input.addEventListener('input', () => { set(Number(input.value)); noteInteraction('keyboard'); });
@@ -643,35 +666,27 @@
       noteInteraction('xray');
     });
 
+    let slide = null;
     const slideTo = (target, dur = 900) => {
-      const from = Number(input.value);
-      const start = performance.now();
-      const tick = (now) => {
-        const t = clamp((now - start) / dur);
-        set(lerp(from, target, easeSettle(t)));
-        if (t < 1) requestAnimationFrame(tick);
-      };
-      if (reduce) set(target); else requestAnimationFrame(tick);
+      if (slide) slide.cancel();
+      slide = M.tween({ from: Number(input.value), to: target, duration: dur, ease: 'settle', onUpdate: set });
     };
 
     // One gentle demonstration sweep the first time it is seen.
-    const demo = { cancel: false };
-    if (!reduce) {
+    const demo = { cancel: false, leg: null };
+    if (!M.reduced) {
       const io = new IntersectionObserver(([e]) => {
         if (!e.isIntersecting) return;
         io.disconnect();
-        const start = performance.now() + 400;
         const keys = [50, 30, 64, 50];
-        const tick = (now) => {
-          if (demo.cancel) return;
-          const t = (now - start) / 900;
-          if (t < 0) return requestAnimationFrame(tick);
-          const k = Math.floor(t);
-          if (k >= keys.length - 1) { set(50); return; }
-          set(lerp(keys[k], keys[k + 1], easeSettle(t - k)));
-          requestAnimationFrame(tick);
+        const leg = (k) => {
+          if (demo.cancel || k >= keys.length - 1) return;
+          demo.leg = M.tween({
+            from: keys[k], to: keys[k + 1], duration: 900, delay: k ? 0 : 400, ease: 'settle',
+            onUpdate: (v) => { if (!demo.cancel) set(v); }, onComplete: () => leg(k + 1),
+          });
         };
-        requestAnimationFrame(tick);
+        leg(0);
       }, { threshold: 0.55 });
       io.observe(frame);
     }
@@ -717,7 +732,7 @@
   if (arch && archWire) {
     archLen = archWire.getTotalLength();
     archWire.style.strokeDasharray = archLen;
-    archWire.style.strokeDashoffset = reduce ? 0 : archLen;
+    archWire.style.strokeDashoffset = M.reduced ? 0 : archLen;
     const widths = [30, 28, 22, 22, 20, 18, 18, 18, 18, 20, 22, 22, 28, 30]; // molar → incisor → molar
     const rand = seeded(7);
     widths.forEach((w, i) => {
@@ -732,17 +747,13 @@
       rect.setAttribute('height', 16);
       rect.setAttribute('rx', 3);
       const crooked = (rand() - 0.5) * 50;
-      rect.style.transform = reduce ? `rotate(${angle}deg)` : `rotate(${angle + crooked}deg) scale(.4)`;
-      rect.style.opacity = reduce ? 1 : 0;
+      rect.style.transform = M.reduced ? `rotate(${angle}deg)` : `rotate(${angle + crooked}deg) scale(.4)`;
+      rect.style.opacity = M.reduced ? 1 : 0;
       archGroup.appendChild(rect);
       archBrackets.push({ el: rect, f, angle, crooked, on: false });
     });
   }
-  const updateArch = () => {
-    if (!arch || reduce) return;
-    const r = arch.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > vh) return;
-    const p = easeSettle(range(vh * 1.15 - (r.top + r.height / 2), 0, vh * 0.6));
+  const renderArch = (p) => {
     archWire.style.strokeDashoffset = (archLen * (1 - p)).toFixed(1);
     archBrackets.forEach((b) => {
       const on = p >= b.f - 0.02;
@@ -752,6 +763,9 @@
       b.el.style.transform = on ? `rotate(${b.angle}deg)` : `rotate(${b.angle + b.crooked}deg) scale(.4)`;
     });
   };
+  if (arch && archWire) {
+    M.scene(arch, { measure: M.progress.cross(1.15, 0.55), smooth: 0.14, reduced: 1, onProgress: (p) => renderArch(easeSettle(p)) });
+  }
 
   /* ======================================================================
      §9 FIRST-VISIT STEPS — the wire draws, brackets engage in sequence
@@ -761,37 +775,19 @@
     const items = $$('.step', steps);
     const engage = () => {
       steps.classList.add('is-in');
-      items.forEach((s, i) => setTimeout(() => s.classList.add('is-in'), reduce ? 0 : 300 + i * 450));
+      items.forEach((s, i) => setTimeout(() => s.classList.add('is-in'), M.reduced ? 0 : 300 + i * 450));
     };
-    if (reduce) engage();
+    if (M.reduced) engage();
     else {
       const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { engage(); io.disconnect(); } }, { threshold: 0.35 });
       io.observe(steps);
     }
+    M.onTier((t) => { if (t === 'reduced') engage(); });
   }
 
   /* ======================================================================
-     §10 ALIGNMENT REVEALS — [data-align]
+     §10 REVEALS — owned by the kernel ([data-reveal], see motion.js §7)
      ====================================================================== */
-  const aligners = $$('[data-align]');
-  if (aligners.length) {
-    const groups = new Map();
-    aligners.forEach((el) => {
-      const key = el.parentElement;
-      const idx = groups.get(key) || 0;
-      groups.set(key, idx + 1);
-      el.style.setProperty('--delay', idx * 110 + 'ms');
-      el.style.setProperty('--ar', (idx % 2 ? 1.4 : -2.2) + 'deg');
-    });
-    if (reduce || !('IntersectionObserver' in window)) {
-      aligners.forEach((el) => el.classList.add('is-in'));
-    } else {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
-      }, { threshold: 0.18, rootMargin: '0px 0px -6% 0px' });
-      aligners.forEach((el) => io.observe(el));
-    }
-  }
 
   /* ======================================================================
      §11 HUD, SCENE-AWARE NAV, SCROLL SPY, ACT TRACKING
@@ -874,7 +870,7 @@
       setInert(true);
       requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.add('is-open')));
       menu.addEventListener('keydown', trap);
-      setTimeout(() => $('.menu__links a', menu).focus(), reduce ? 0 : 250);
+      setTimeout(() => $('.menu__links a', menu).focus(), M.reduced ? 0 : 250);
       track('menu_open');
     };
     const closeMenu = (returnFocus = true) => {
@@ -883,7 +879,7 @@
       menuBtn.setAttribute('aria-expanded', 'false');
       setInert(false);
       menu.removeEventListener('keydown', trap);
-      setTimeout(() => { menu.hidden = true; }, reduce ? 0 : 800);
+      setTimeout(() => { menu.hidden = true; }, M.reduced ? 0 : 800);
       if (returnFocus) menuBtn.focus();
     };
     menuBtn.addEventListener('click', openMenu);
@@ -928,7 +924,7 @@
         const t = $('.cstep.is-active .cstep__title', consult);
         t.setAttribute('tabindex', '-1');
         t.focus({ preventScroll: true });
-        $('.consult__inner', consult).scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+        $('.consult__inner', consult).scrollTo({ top: 0, behavior: M.reduced ? 'auto' : 'smooth' });
       }
       track('consultation_step', { step: n });
     };
@@ -1000,7 +996,7 @@
       next.setAttribute('aria-busy', 'true');
       nextLabel.textContent = 'Sending…';
       // Production: POST the payload to the CRM endpoint here (see blueprint §6.7).
-      await wait(reduce ? 0 : 900);
+      await wait(M.reduced ? 0 : 900);
       next.removeAttribute('aria-busy');
       submitted = true;
       store.del(DRAFT);
@@ -1040,7 +1036,7 @@
         const t = $('.cstep.is-active .cstep__title', consult);
         t.setAttribute('tabindex', '-1');
         t.focus({ preventScroll: true });
-      }, reduce ? 0 : 450);
+      }, M.reduced ? 0 : 450);
     };
     const close = () => {
       if (consult.hidden) return;
@@ -1059,7 +1055,7 @@
         root.classList.remove('consult-open');
         setInert(false);
         if (trigger && document.contains(trigger)) trigger.focus({ preventScroll: true });
-      }, reduce ? 0 : 600);
+      }, M.reduced ? 0 : M.tokens.d.measured);
     };
 
     $$('[data-consult-open]').forEach((el) => el.addEventListener('click', (e) => open(e, el)));
@@ -1068,7 +1064,7 @@
       close();
       if (href && href.startsWith('#')) {
         e.preventDefault();
-        setTimeout(() => { const t = $(href); if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }, reduce ? 0 : 620);
+        setTimeout(() => { const t = $(href); if (t) M.navigate(t); }, M.reduced ? 0 : M.tokens.d.measured + 20);
       }
     }));
     consult.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
@@ -1087,29 +1083,12 @@
   }
 
   /* ======================================================================
-     §15 FRAME LOOP — one rAF; scroll work only when something moved
+     §15 WIRING — the kernel owns the clock; this file only registers work.
+     Nothing here runs per frame unless the visitor scrolls or points.
      ====================================================================== */
-  let dirty = true;
-  window.addEventListener('scroll', () => { dirty = true; }, { passive: true });
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => { vw = window.innerWidth; vh = window.innerHeight; if (heroArch) heroArch.resize(); setupCrowd(); dirty = true; }, 120);
-  });
+  M.onScroll(() => updateHud());
+  M.onResize((w, h) => { vw = w; vh = h; if (heroArch) heroArch.resize(); setupCrowd(); });
   if (hero) new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; if (heroArch) heroArch.setVisible(e.isIntersecting); }).observe(hero);
-
-  const frameLoop = (now) => {
-    if (hero && heroVisible && !reduce) {
-      if (!finePointer) { light.tx = 60 + Math.sin(now / 4200) * 16; light.ty = 32 + Math.cos(now / 5300) * 10; }
-      light.x = lerp(light.x, light.tx, 0.06);
-      light.y = lerp(light.y, light.ty, 0.06);
-      hero.style.setProperty('--lx', light.x.toFixed(2) + '%');
-      hero.style.setProperty('--ly', light.y.toFixed(2) + '%');
-      if (heroArch) heroArch.setLight(light.x / 100, light.y / 100);
-    }
-    if (dirty) { dirty = false; updateHud(); updateHeroScroll(); updateCrowd(); updatePlan(); updateArch(); }
-    requestAnimationFrame(frameLoop);
-  };
-
-  fontsReady.then(() => { if (heroArch) heroArch.resize(); setupCrowd(); dirty = true; requestAnimationFrame(frameLoop); });
+  fontsReady.then(() => { if (heroArch) heroArch.resize(); setupCrowd(); M.refresh(); });
+  root.classList.add('scenes-ready');
 })();
