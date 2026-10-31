@@ -1,19 +1,23 @@
 # Ortho Marketing — *Light, Continuous Force*
 
-A cinematic creative direction for [Ortho Marketing](https://orthomarketing.com/), delivered as a written direction plus a working homepage prototype that puts it into practice.
+A cinematic creative direction and a complete website experience blueprint for [Ortho Marketing](https://orthomarketing.com/), with a working prototype that builds every homepage section, from the loading screen to a submitted consultation request. The palette is matched to the agency's logo.
 
 > **We move markets the way you move teeth.**
-> Orthodontists move teeth with *light, continuous force*: gentle, constant pressure applied over time. This direction applies the same principle to the agency's brand, website and story, and turns its vocabulary (crowding, records, alignment, the archwire, debond, retention) into a complete visual and motion system.
+> Orthodontists move teeth with *light, continuous force*: gentle, constant pressure applied over time. The site applies the same principle to the agency's own story. Its building blocks are the logo's "O" (the Orb), a single archwire, the midline, and the alignment reveal.
 
 ## What's here
 
 | Path | What it is |
 |---|---|
-| [`creative-direction/CREATIVE-DIRECTION.md`](creative-direction/CREATIVE-DIRECTION.md) | The full creative direction: idea, storytelling, art direction, composition, typography, color, imagery, lighting, texture, depth, motion, voice, sitemap and page blueprints, components, accessibility, technical translation, production plan and launch verification checklist. |
+| [`experience/WEBSITE-BLUEPRINT.md`](experience/WEBSITE-BLUEPRINT.md) | **The implementation-ready blueprint.** Experience strategy, the nine-question narrative, the logo-matched brand system, global systems (nav, menu, scenes, transitions), every section in order (job, final copy, layout per breakpoint, visuals, interactions, motion, transitions, CTA, accessibility, analytics, CMS fields), the full conversion flow, secondary pages, a responsive matrix, the accessibility spec, the performance budget, a QA checklist, and a content checklist. |
+| [`creative-direction/CREATIVE-DIRECTION.md`](creative-direction/CREATIVE-DIRECTION.md) | The creative direction (v1.1): idea, art direction, typography, color, imagery, lighting, texture, depth, motion and voice. |
 | [`creative-direction/tokens.json`](creative-direction/tokens.json) | Design tokens (W3C format) for Figma / Style Dictionary. |
-| [`site/index.html`](site/index.html) | Working homepage prototype: the site as a film in five acts. |
-| [`site/tokens.css`](site/tokens.css) | The same tokens as CSS custom properties. |
-| [`site/styles.css`](site/styles.css) · [`site/main.js`](site/main.js) | Prototype styles and motion system (vanilla JS, no dependencies). |
+| [`site/`](site/) | Working prototype: `index.html`, `tokens.css`, `styles.css`, `main.js` (vanilla, no dependencies). |
+| [`site/assets/`](site/assets/) | Logo in full color, reversed (dark grounds) and white (on blue), plus the Orb as an SVG. |
+
+## The journey
+
+`00 Loader` → `01 Cold open` → `02 Diagnosis` → `03 Treatment plan` → `04 Before / After` → `05 The family` → `06 Live` → `07 Your first visit` → `08 Debond` → **Records appointment (consultation overlay)** → `09 End credits`
 
 ## View the prototype
 
@@ -21,17 +25,17 @@ A cinematic creative direction for [Ortho Marketing](https://orthomarketing.com/
 cd site && python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000>. Opening `site/index.html` directly also works.
+Then open <http://localhost:8000>.
 
 **Things to try:**
-- Watch the **cold open**: the operatory light switches on, and the crowded letters of the headline move into alignment along the red archwire.
-- Scroll through **Act I** slowly. Scrolling applies force: competitors' claims spread out and leave space in the center.
-- Move the cursor over the **bracket plate** to switch into radiograph view.
-- **Drag the wire** in Before / After.
-- Watch the **Treatment day** counter in the lower left. Reading the page is an 18-month course of treatment.
-- Press **Director's notes** (lower right) to annotate every scene with the reasoning behind it.
+- **Loading screen:** the Orb (the logo's O) appears, its crescent smiles, then it flies into the nav logo. It plays once per session; open a new tab or a private window to see it again.
+- **Act I:** scroll slowly. Competitors' claims spread out and leave space in the center.
+- **Act III:** drag the wire (or use the arrow keys), then press **Radiograph view**.
+- **Any "Begin your consultation" button:** the Orb's blue floods the screen and the four-step records appointment opens. Try submitting it empty to see validation, close it halfway and reopen it (your draft is restored), then complete it to see the confirmation.
+- **Tablet or phone width:** the menu opens as a circle growing from the Menu button.
+- **Director's notes** (lower right) annotates every section with its job and the reasoning behind it.
 - Turn on *reduce motion* in your OS. The story stays the same and the movement stops.
 
 ## Before launch
 
-The prototype uses fictional practice names and **illustrative metrics**. Facts about the agency came from public directory and podcast listings. See **§21 Verification before launch** in the creative direction for the full checklist.
+Case data, metrics and the testimonial are **illustrative**. Facts about the agency came from public directory and podcast listings and need confirming. See **Blueprint §10** and **Creative Direction §21**.

@@ -3,58 +3,105 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ortho Marketing — Light, Continuous Force</title>
-  <meta name="description" content="Concept prototype: a cinematic creative direction for Ortho Marketing, the brand, web and growth studio for orthodontic practices.">
-  <meta name="theme-color" content="#0D0C0B">
+  <title>Ortho Marketing — We move markets the way you move teeth</title>
+  <meta name="description" content="Ortho Marketing is the brand, web and growth studio for orthodontic practices. Family-run since 2008. Begin with a records appointment for your brand.">
+  <meta name="theme-color" content="#0A0A0C">
+  <link rel="icon" href="assets/orb.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/ortho-marketing-logo-reversed.png">
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="styles.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    // Progressive enhancement flags, set before first paint.
+    (function (d) {
+      var c = d.documentElement.classList; c.add('js');
+      var seen = false, rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      try { seen = sessionStorage.getItem('om-loaded') === '1'; } catch (e) {}
+      if (seen || rm) c.add('no-loader');
+    })(document);
+  </script>
 </head>
 <body data-scene="dark">
 
 <a class="skip" href="#main">Skip to content</a>
 
-<!-- Persistent layers -------------------------------------------------- -->
+<!-- ======================================================================
+     00 · LOADER — the Orb (the logo's O) calibrates, then flies into the nav
+     ====================================================================== -->
+<div class="loader" data-loader aria-hidden="true">
+  <span class="loader__panel loader__panel--l"></span>
+  <span class="loader__panel loader__panel--r"></span>
+  <svg class="orb loader__orb" data-loader-orb viewBox="0 0 124 124">
+    <defs><clipPath id="orb-clip-loader"><circle cx="62" cy="62" r="62"/></clipPath></defs>
+    <circle class="orb__body" cx="62" cy="62" r="62"/>
+    <path class="orb__smile" data-orb-smile clip-path="url(#orb-clip-loader)" d="M0 49.6A62 38.4 0 0 0 124 49.6L124 49.6A62 38.4 0 0 1 0 49.6Z"/>
+  </svg>
+  <p class="loader__line mono"><span>Ortho Marketing</span><span>Est. 2008</span></p>
+</div>
+
+<!-- Persistent layers -->
 <div class="midline" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
+<!-- ======================================================================
+     GLOBAL NAV
+     ====================================================================== -->
 <header class="nav" data-nav>
-  <a class="brand" href="#top" aria-label="Ortho Marketing — home">
-    <svg class="brand__mark" viewBox="0 0 28 22" aria-hidden="true">
-      <path d="M2 21 C 2 4, 26 4, 26 21" fill="none" stroke="currentColor" stroke-width="1.4"/>
-      <rect x="1" y="12" width="3" height="3" fill="currentColor"/>
-      <rect x="6.6" y="5.6" width="3" height="3" fill="currentColor"/>
-      <rect x="12.5" y="3.4" width="3" height="3" fill="var(--c-ligature)"/>
-      <rect x="18.4" y="5.6" width="3" height="3" fill="currentColor"/>
-      <rect x="24" y="12" width="3" height="3" fill="currentColor"/>
-    </svg>
-    <span class="brand__word">Ortho Marketing</span>
+  <a class="brand" href="#top" aria-label="Ortho Marketing — home" data-brand>
+    <img class="brand__logo brand__logo--dark" src="assets/ortho-marketing-logo-reversed.png" alt="" width="816" height="142">
+    <img class="brand__logo brand__logo--light" src="assets/ortho-marketing-logo.png" alt="" width="816" height="142">
   </a>
   <nav class="nav__links" aria-label="Primary">
     <a href="#treatment">Treatment</a>
     <a href="#results">Results</a>
     <a href="#studio">Studio</a>
     <a href="#live">Live</a>
+    <a href="#first-visit">First visit</a>
   </nav>
-  <a class="btn btn--primary btn--sm" href="#consult">
-    <span class="hide-sm">Book a consultation</span><span class="show-sm">Consult</span><span class="btn__wire" aria-hidden="true"></span>
-  </a>
+  <div class="nav__actions">
+    <a class="btn btn--primary btn--sm" href="#consultation" data-consult-open data-cta="nav">
+      <span class="hide-sm">Book a consultation</span><span class="show-sm">Consult</span><span class="btn__wire" aria-hidden="true"></span>
+    </a>
+    <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+      <span>Menu</span><i aria-hidden="true"></i>
+    </button>
+  </div>
 </header>
+
+<!-- Full-screen menu (tablet + mobile) -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Site menu" hidden data-menu>
+  <div class="menu__inner">
+    <ol class="menu__links">
+      <li><a href="#treatment"><span class="mono">01</span>Treatment</a></li>
+      <li><a href="#results"><span class="mono">02</span>Results</a></li>
+      <li><a href="#studio"><span class="mono">03</span>Studio</a></li>
+      <li><a href="#live"><span class="mono">04</span>Live</a></li>
+      <li><a href="#first-visit"><span class="mono">05</span>First visit</a></li>
+    </ol>
+    <div class="menu__foot">
+      <a class="btn btn--primary" href="#consultation" data-consult-open data-cta="menu"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
+      <p class="mono">Est. 2008 · Family-run · Orthodontic practices</p>
+    </div>
+  </div>
+  <button class="menu__close mono" type="button" data-menu-close>Close</button>
+</div>
 
 <main id="main">
 
-  <!-- COLD OPEN ======================================================== -->
+  <!-- ====================================================================
+       01 · COLD OPEN
+       ==================================================================== -->
   <section class="hero" id="top" data-scene="dark" aria-labelledby="hero-title">
     <div class="hero__light" aria-hidden="true"></div>
 
-    <div class="hero__meta mono" aria-hidden="true">
-      <span>Case file · Ortho Marketing</span>
-      <span>Est. 2008</span>
-      <span>For orthodontic practices</span>
-    </div>
+    <ul class="hero__meta mono" aria-label="About Ortho Marketing">
+      <li>Est. 2008</li>
+      <li>Family-run</li>
+      <li>Orthodontic practices</li>
+      <li class="hide-sm">Ortho Marketing Live · 170+ episodes</li>
+    </ul>
 
     <h1 class="hero__title" id="hero-title" data-crowd aria-label="We move markets the way you move teeth.">
       <span class="line">We move markets</span>
@@ -72,20 +119,22 @@
         websites and search. Steadily. Measurably. Until your practice is exactly where it should be.
       </p>
       <div class="cta-row">
-        <a class="btn btn--primary" href="#consult"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
-        <a class="link" href="#results">See the results</a>
+        <a class="btn btn--primary" href="#consultation" data-consult-open data-cta="hero"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
+        <a class="link" href="#results" data-cta="hero-results">See the results</a>
       </div>
     </div>
 
     <div class="hero__cue mono" aria-hidden="true"><span class="hero__cue-wire"></span>Scroll to begin treatment</div>
 
     <aside class="dnote" aria-label="Director's note">
-      <b>Cold open.</b> The operatory light switches on; the headline arrives “crowded” and moves into alignment along the archwire.
-      No video, no stock — the type <i>is</i> the hero image, so LCP is text.
+      <b>01 · Cold open — “Who are you?”</b> The loader’s Orb has just landed in the nav. The light powers on; glyphs arrive crowded
+      and align along the archwire. The H1 is real text from the first frame — LCP is never blocked by motion.
     </aside>
   </section>
 
-  <!-- ACT I — DIAGNOSIS ================================================ -->
+  <!-- ====================================================================
+       02 · ACT I — DIAGNOSIS
+       ==================================================================== -->
   <section class="crowd" id="crowding" data-scene="light" aria-labelledby="crowd-title">
     <div class="crowd__sticky">
       <header class="crowd__head wrap">
@@ -124,12 +173,14 @@
     </div>
 
     <aside class="dnote" aria-label="Director's note">
-      <b>Scroll-scrubbed.</b> The only time category cyan appears on the site is here — as noise.
-      Scrolling applies force: claims drift to the edges and settle, and the center becomes space.
+      <b>02 · Diagnosis — “Do they understand my problem?”</b> Scroll-scrubbed over 300vh. Category cyan appears only here, as noise.
+      Scroll applies force: claims drift to the edges, the center becomes space.
     </aside>
   </section>
 
-  <!-- ACT II — TREATMENT PLAN ========================================== -->
+  <!-- ====================================================================
+       03 · ACT II — TREATMENT PLAN
+       ==================================================================== -->
   <section class="plan" id="treatment" data-scene="dark" aria-labelledby="plan-title">
     <header class="plan__intro wrap">
       <p class="eyebrow mono"><span>Act II</span> Treatment plan</p>
@@ -159,6 +210,7 @@
 
       <div class="plan__phases">
         <article class="phase" data-phase="0">
+          <span class="phase__num" aria-hidden="true">01</span>
           <p class="phase__label mono">Phase 01 — Records</p>
           <h3 class="d2" data-align>Before we move anything, we measure <em>everything.</em></h3>
           <p class="phase__copy">
@@ -173,6 +225,7 @@
         </article>
 
         <article class="phase" data-phase="1">
+          <span class="phase__num" aria-hidden="true">02</span>
           <p class="phase__label mono">Phase 02 — Alignment</p>
           <h3 class="d2" data-align>An identity and website that feel like your <em>best appointment.</em></h3>
           <p class="phase__copy">
@@ -187,6 +240,7 @@
         </article>
 
         <article class="phase" data-phase="2">
+          <span class="phase__num" aria-hidden="true">03</span>
           <p class="phase__label mono">Phase 03 — Force</p>
           <h3 class="d2" data-align>Steady pressure. <em>Never a burst.</em></h3>
           <p class="phase__copy">
@@ -201,6 +255,7 @@
         </article>
 
         <article class="phase" data-phase="3">
+          <span class="phase__num" aria-hidden="true">04</span>
           <p class="phase__label mono">Phase 04 — Retention</p>
           <h3 class="d2" data-align>The work doesn’t end <em>at debond.</em></h3>
           <p class="phase__copy">
@@ -217,185 +272,29 @@
     </div>
 
     <aside class="dnote" aria-label="Director's note">
-      <b>Services as treatment phases.</b> The sticky rail is the archwire; each bracket engages as its phase scrolls into view.
-      Numerals arrive rotated and settle — the alignment reveal, never a generic fade-up.
+      <b>03 · Treatment plan — “What do they actually do?”</b> Desktop: sticky archwire rail, each bracket engages as its phase
+      crosses the viewport center. Tablet/mobile: rail retires; each phase carries its own numeral.
     </aside>
   </section>
 
-  <!-- INTERLUDE — THE CRAFT ============================================ -->
-  <section class="craft" id="craft" data-scene="dark" aria-labelledby="craft-title">
-    <figure class="plate plate--macro" data-radiograph>
-      <!-- Photographic layer -->
-      <svg class="macro macro--photo" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Macro still life: a steel orthodontic bracket with a red elastic ligature, lit by a single raking light on black velvet.">
-        <defs>
-          <radialGradient id="g-key" cx="28%" cy="18%" r="85%">
-            <stop offset="0" stop-color="#2b2723"/>
-            <stop offset=".45" stop-color="#14120f"/>
-            <stop offset="1" stop-color="#070606"/>
-          </radialGradient>
-          <linearGradient id="g-steel" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#f3f4f4"/>
-            <stop offset=".18" stop-color="#b9bdbf"/>
-            <stop offset=".42" stop-color="#5d6164"/>
-            <stop offset=".62" stop-color="#c9cdcf"/>
-            <stop offset=".85" stop-color="#4a4e51"/>
-            <stop offset="1" stop-color="#26292b"/>
-          </linearGradient>
-          <linearGradient id="g-steel-dark" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#7d8285"/>
-            <stop offset=".5" stop-color="#34383a"/>
-            <stop offset="1" stop-color="#17191a"/>
-          </linearGradient>
-          <linearGradient id="g-wire" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#5a5e61"/>
-            <stop offset=".28" stop-color="#f6f7f7"/>
-            <stop offset=".55" stop-color="#8c9194"/>
-            <stop offset="1" stop-color="#2a2d2f"/>
-          </linearGradient>
-          <linearGradient id="g-elastic" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#ff7a5c"/>
-            <stop offset=".35" stop-color="#e2412b"/>
-            <stop offset="1" stop-color="#7a1609"/>
-          </linearGradient>
-          <linearGradient id="g-spec" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#fff" stop-opacity="0"/>
-            <stop offset=".5" stop-color="#fff" stop-opacity=".85"/>
-            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-          </linearGradient>
-          <pattern id="p-mesh" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-            <rect width="9" height="9" fill="#2c2f31"/>
-            <rect width="4" height="9" fill="#3d4143"/>
-          </pattern>
-          <filter id="f-shadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="22" dy="30" stdDeviation="22" flood-color="#000" flood-opacity=".75"/>
-          </filter>
-          <filter id="f-soft"><feGaussianBlur stdDeviation="1.2"/></filter>
-          <radialGradient id="g-vignette" cx="50%" cy="50%" r="75%">
-            <stop offset=".55" stop-color="#000" stop-opacity="0"/>
-            <stop offset="1" stop-color="#000" stop-opacity=".8"/>
-          </radialGradient>
-        </defs>
-
-        <rect width="1600" height="900" fill="url(#g-key)"/>
-
-        <!-- archwire runs edge to edge -->
-        <g filter="url(#f-shadow)">
-          <rect x="-20" y="430" width="1640" height="40" rx="6" fill="url(#g-wire)"/>
-        </g>
-
-        <g transform="translate(800 450) scale(1.35)" filter="url(#f-shadow)">
-          <!-- mesh base pad -->
-          <rect x="-205" y="-185" width="410" height="370" rx="58" fill="url(#p-mesh)"/>
-          <rect x="-205" y="-185" width="410" height="370" rx="58" fill="none" stroke="#61666a" stroke-width="3"/>
-          <!-- body -->
-          <rect x="-165" y="-150" width="330" height="300" rx="26" fill="url(#g-steel-dark)"/>
-          <!-- slot -->
-          <rect x="-185" y="-44" width="370" height="88" fill="#0b0c0c"/>
-          <rect x="-185" y="-44" width="370" height="6" fill="#000" opacity=".6"/>
-          <!-- archwire in slot -->
-          <rect x="-185" y="-20" width="370" height="40" fill="url(#g-wire)"/>
-          <!-- elastic ligature -->
-          <rect x="-150" y="-128" width="300" height="256" rx="92" fill="none" stroke="url(#g-elastic)" stroke-width="34"/>
-          <rect x="-150" y="-128" width="300" height="256" rx="92" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="6" transform="translate(-6 -8)" filter="url(#f-soft)"/>
-          <!-- tie wings -->
-          <g>
-            <rect x="-160" y="-170" width="118" height="118" rx="30" fill="url(#g-steel)"/>
-            <rect x="42" y="-170" width="118" height="118" rx="30" fill="url(#g-steel)"/>
-            <rect x="-160" y="52" width="118" height="118" rx="30" fill="url(#g-steel)"/>
-            <rect x="42" y="52" width="118" height="118" rx="30" fill="url(#g-steel)"/>
-          </g>
-          <!-- specular strips -->
-          <g opacity=".75">
-            <rect x="-150" y="-160" width="70" height="10" rx="5" fill="url(#g-spec)"/>
-            <rect x="52" y="-160" width="70" height="10" rx="5" fill="url(#g-spec)"/>
-            <rect x="-150" y="62" width="70" height="8" rx="4" fill="url(#g-spec)" opacity=".6"/>
-            <rect x="52" y="62" width="70" height="8" rx="4" fill="url(#g-spec)" opacity=".6"/>
-          </g>
-          <!-- identification dot (distal-gingival) -->
-          <circle cx="-118" cy="-128" r="7" fill="#e2412b" opacity=".85"/>
-        </g>
-
-        <rect width="1600" height="900" fill="url(#g-vignette)"/>
-      </svg>
-
-      <!-- Radiograph layer: metal is radiopaque (glows); the elastic is radiolucent (disappears) -->
-      <svg class="macro macro--xray" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <defs>
-          <radialGradient id="x-bg" cx="50%" cy="50%" r="80%">
-            <stop offset="0" stop-color="#16222b"/>
-            <stop offset="1" stop-color="#05090c"/>
-          </radialGradient>
-          <filter id="x-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="6" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <rect width="1600" height="900" fill="url(#x-bg)"/>
-        <g filter="url(#x-glow)" fill="#cfe0ea">
-          <rect x="-20" y="430" width="1640" height="40" rx="6" opacity=".9"/>
-          <g transform="translate(800 450) scale(1.35)">
-            <rect x="-205" y="-185" width="410" height="370" rx="58" opacity=".22"/>
-            <rect x="-165" y="-150" width="330" height="300" rx="26" opacity=".45"/>
-            <rect x="-185" y="-44" width="370" height="88" fill="#0a1218" opacity=".9"/>
-            <rect x="-185" y="-20" width="370" height="40" opacity=".95"/>
-            <rect x="-160" y="-170" width="118" height="118" rx="30" opacity=".85"/>
-            <rect x="42" y="-170" width="118" height="118" rx="30" opacity=".85"/>
-            <rect x="-160" y="52" width="118" height="118" rx="30" opacity=".85"/>
-            <rect x="42" y="52" width="118" height="118" rx="30" opacity=".85"/>
-          </g>
-        </g>
-        <!-- measurement annotations -->
-        <g class="xray-annot" stroke="#9DB6C6" stroke-width="1.2" fill="none">
-          <path d="M1090 391 H1230 M1090 509 H1230 M1210 391 V509"/>
-          <path d="M600 236 L520 160 H300"/>
-          <path d="M330 472 V600 H120"/>
-          <path d="M556 450 A244 244 0 0 1 650 262" stroke-dasharray="4 6"/>
-        </g>
-        <g class="xray-annot" fill="#9DB6C6" font-family="IBM Plex Mono, monospace" font-size="22" letter-spacing="2">
-          <text x="1246" y="444">SLOT</text>
-          <text x="1246" y="474">.022 × .028″</text>
-          <text x="300" y="146">TIE WING · MESIAL</text>
-          <text x="120" y="632">.019 × .025″ SS ARCHWIRE</text>
-          <text x="400" y="330">TORQUE +17°</text>
-          <text x="1060" y="790" opacity=".75">ELASTIC LIGATURE: RADIOLUCENT</text>
-        </g>
-      </svg>
-
-      <span class="plate__scan" aria-hidden="true"></span>
-      <figcaption class="plate__caption mono">
-        <span>Plate 04</span>
-        <span>Twin bracket, elastic ligature · 100mm macro, f/11 · single strip light, camera left · black velvet</span>
-        <span class="plate__hint">Move across the plate → radiograph</span>
-      </figcaption>
-    </figure>
-
-    <div class="craft__text wrap">
-      <p class="eyebrow mono"><span>Interlude</span> The craft</p>
-      <h2 class="d2" id="craft-title" data-align>We light a bracket the way others light <em>a watch.</em></h2>
-      <p>
-        Precision deserves to be seen. Every image we make for a practice is directed with the discipline of luxury
-        still life — one light, deep shadow, nothing accidental. Move across the plate to see what’s underneath:
-        the same rigor we apply to your data.
-      </p>
-    </div>
-
-    <aside class="dnote" aria-label="Director's note">
-      <b>Photography direction, demonstrated.</b> Macro on black velvet, one raking light, the ligature as the only color.
-      Radiograph mode: metal glows (radiopaque), the elastic vanishes (radiolucent). Annotations use the Radiograph token only.
-    </aside>
-  </section>
-
-  <!-- ACT III — BEFORE / AFTER ========================================= -->
+  <!-- ====================================================================
+       04 · ACT III — BEFORE / AFTER
+       ==================================================================== -->
   <section class="results" id="results" data-scene="light" aria-labelledby="results-title">
     <header class="results__head wrap">
       <p class="eyebrow mono"><span>Act III</span> Before / After</p>
       <h2 class="d1" id="results-title" data-align>Same practice.<br> <em>Different market.</em></h2>
-      <p class="lede" data-align>Orthodontists trust a before-and-after more than any claim. So do we. Drag the wire.</p>
+      <p class="lede" data-align>Orthodontists trust a before-and-after more than any claim. So do we. Drag the wire — then take the radiograph.</p>
     </header>
 
     <div class="compare wrap">
       <div class="compare__frame" data-compare style="--pos:50%">
-        <div class="compare__chrome mono" aria-hidden="true"><span></span>alderlaneortho.com</div>
+        <div class="compare__chrome mono">
+          <span class="compare__url" aria-hidden="true"><i></i>alderlaneortho.com</span>
+          <button class="xray-toggle mono" type="button" aria-pressed="false" data-xray>
+            <span class="xray-toggle__dot" aria-hidden="true"></span>Radiograph view
+          </button>
+        </div>
 
         <div class="compare__stage">
           <!-- BEFORE: the category template -->
@@ -434,6 +333,19 @@
               <div class="ma-plate"><span>Portrait · north window · 85mm</span></div>
             </div>
             <div class="ma-strip"><span>4.9 · 640 Google reviews</span><span>Evening &amp; Saturday visits</span><span>Most insurance accepted</span></div>
+
+            <!-- Radiograph layer: the site's skeleton + the data underneath -->
+            <div class="xray" aria-hidden="true">
+              <span class="xray__scan"></span>
+              <span class="xray__bone xray__bone--nav"></span>
+              <span class="xray__bone xray__bone--plate"></span>
+              <span class="xray__bone xray__bone--copy"></span>
+              <span class="xray__bone xray__bone--strip"></span>
+              <span class="xray__tag xray__tag--cta">Map pack #1 · 9 of 11 target zips</span>
+              <span class="xray__tag xray__tag--copy">Organic consult requests +212%</span>
+              <span class="xray__tag xray__tag--plate">LCP 0.9s · real photography</span>
+              <span class="xray__tag xray__tag--strip">Reviews 4.9 · 640 · reply time &lt; 24h</span>
+            </div>
           </div>
 
           <div class="compare__wire" aria-hidden="true"><span class="compare__bracket"></span></div>
@@ -441,37 +353,48 @@
           <span class="compare__tag compare__tag--after mono" aria-hidden="true">After · Ortho Marketing</span>
         </div>
 
-        <label class="sr-only" for="compare-range">Reveal the redesigned website: drag to compare before and after</label>
+        <label class="sr-only" for="compare-range">Reveal the redesigned website: drag or use arrow keys to compare before and after</label>
         <input class="compare__range" id="compare-range" type="range" min="0" max="100" value="50" step="1">
       </div>
     </div>
 
-    <div class="metrics wrap" role="list">
-      <figure class="metric" role="listitem" data-align>
-        <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
-        <span class="metric__num">+212%</span>
-        <figcaption class="mono">Organic consultation requests, 12 months</figcaption>
-      </figure>
-      <figure class="metric" role="listitem" data-align>
-        <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
-        <span class="metric__num">9<small>/11</small></span>
-        <figcaption class="mono">Target zip codes where the practice holds #1 in the map pack</figcaption>
-      </figure>
-      <figure class="metric" role="listitem" data-align>
-        <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
-        <span class="metric__num">−38%</span>
-        <figcaption class="mono">Cost per new-patient start</figcaption>
+    <div class="results__proof wrap">
+      <div class="metrics" role="list">
+        <figure class="metric" role="listitem" data-align>
+          <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
+          <span class="metric__num">+212%</span>
+          <figcaption class="mono">Organic consultation requests, 12 months</figcaption>
+        </figure>
+        <figure class="metric" role="listitem" data-align>
+          <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
+          <span class="metric__num">9<small>/11</small></span>
+          <figcaption class="mono">Target zip codes where the practice holds #1 in the map pack</figcaption>
+        </figure>
+        <figure class="metric" role="listitem" data-align>
+          <svg class="metric__lead" viewBox="0 0 120 40" aria-hidden="true"><circle cx="5" cy="35" r="4"/><path d="M5 35 L40 6 H120"/></svg>
+          <span class="metric__num">−38%</span>
+          <figcaption class="mono">Cost per new-patient start</figcaption>
+        </figure>
+      </div>
+
+      <figure class="quote" data-align>
+        <blockquote>
+          <p>“They spoke to us like clinicians, not customers. Eighteen months later, our schedule looks like a different practice.”</p>
+        </blockquote>
+        <figcaption class="mono">Practice owner · Alder Lane Orthodontics</figcaption>
       </figure>
     </div>
-    <p class="results__note mono wrap">Illustrative figures for concept presentation — replace with verified client results before launch.</p>
+    <p class="results__note mono wrap">Illustrative case, figures and quote for concept presentation — replace with verified client results before launch.</p>
 
     <aside class="dnote" aria-label="Director's note">
-      <b>The format orthodontists already trust.</b> The divider is the archwire. The “after” uses the practice’s own palette:
-      we design their brand, not a copy of ours. Metrics are set as cephalometric annotations.
+      <b>04 · Results — “Does it work?”</b> Drag (or arrow-key) the archwire. “Radiograph view” reveals the after-site’s skeleton
+      and the data beneath it — proof under the surface. Metrics below are the accessible text equivalent.
     </aside>
   </section>
 
-  <!-- ACT IV — THE FAMILY ============================================= -->
+  <!-- ====================================================================
+       05 · ACT IV — THE FAMILY
+       ==================================================================== -->
   <section class="studio" id="studio" data-scene="dark" aria-labelledby="studio-title">
     <div class="studio__grid wrap">
       <figure class="plate plate--portrait" data-align>
@@ -496,7 +419,7 @@
         </svg>
         <figcaption class="plate__caption mono">
           <span>Plate 07</span>
-          <span>Portrait, President · north window, 7:10 a.m. · 85mm f/1.8 · negative fill camera right · Portra 400 grade</span>
+          <span>Portrait, President · north window, 7:10 a.m. · 85mm f/1.8 · negative fill camera right</span>
         </figcaption>
       </figure>
 
@@ -518,12 +441,14 @@
     </div>
 
     <aside class="dnote" aria-label="Director's note">
-      <b>Portrait direction.</b> Real people, real rooms, one motivated key light. The plate shows the lighting plan
-      that replaces stock photography everywhere on the site.
+      <b>05 · The family — “Can I trust them?”</b> The plate is a placeholder for the President’s portrait; it shows the lighting
+      plan every portrait on the site follows. Facts are set as a clinical record, not a sales pitch.
     </aside>
   </section>
 
-  <!-- ACT V — LIVE ===================================================== -->
+  <!-- ====================================================================
+       06 · ACT V — LIVE
+       ==================================================================== -->
   <section class="live" id="live" data-scene="dark" aria-labelledby="live-title">
     <div class="live__head wrap">
       <div>
@@ -539,40 +464,99 @@
     <div class="wave wrap" data-wave aria-hidden="true"></div>
 
     <ol class="episodes wrap">
-      <li><a href="#live">
+      <li><a href="#live" data-episode="172">
         <span class="ep__no mono">Ep. 172</span>
         <span class="ep__title">Streamlining your practice with virtual assistants</span>
         <span class="ep__guest mono">with the COO of MyOrthoVA</span>
         <span class="ep__play" aria-hidden="true"></span>
       </a></li>
-      <li><a href="#live">
+      <li><a href="#live" data-episode="168">
         <span class="ep__no mono">Ep. 168</span>
         <span class="ep__title">Bringing past patients back</span>
         <span class="ep__guest mono">with Blair Feldman, Retainer Club</span>
         <span class="ep__play" aria-hidden="true"></span>
       </a></li>
-      <li><a href="#live">
-        <span class="ep__no mono">Archive</span>
-        <span class="ep__title">How site speed shapes your Google ranking</span>
-        <span class="ep__guest mono">with Dean Steinman</span>
-        <span class="ep__play" aria-hidden="true"></span>
-      </a></li>
-      <li><a href="#live">
+      <li><a href="#live" data-episode="79">
         <span class="ep__no mono">Ep. 79</span>
         <span class="ep__title">Protecting your practice website from hackers</span>
         <span class="ep__guest mono">with our SEO manager</span>
         <span class="ep__play" aria-hidden="true"></span>
       </a></li>
     </ol>
-    <p class="wrap live__all"><a class="link" href="#live">Listen to every episode</a></p>
+    <p class="wrap live__all"><a class="link" href="#live" data-cta="live-all">Listen to every episode</a></p>
 
     <aside class="dnote" aria-label="Director's note">
-      <b>The podcast as broadcast.</b> The On-air lamp is the only pulsing element on the whole site.
-      Episode rows tension their wire on hover; the play bracket fills with Ligature.
+      <b>06 · Live — “Do they know my industry?”</b> The soft conversion for visitors not ready to book. The On-air lamp is the only
+      pulsing element on the site. Rows tension their wire on hover; the play bracket fills with Ortho Blue.
     </aside>
   </section>
 
-  <!-- FINALE — DEBOND ================================================== -->
+  <!-- ====================================================================
+       07 · ACT VI — YOUR FIRST VISIT (process + objections)
+       ==================================================================== -->
+  <section class="visit" id="first-visit" data-scene="light" aria-labelledby="visit-title">
+    <header class="visit__head wrap">
+      <p class="eyebrow mono"><span>Act VI</span> Your first visit</p>
+      <h2 class="d1" id="visit-title" data-align>What happens <em>when you reach out.</em></h2>
+      <p class="lede" data-align>No pitch deck. No pressure. A consultation built like a records appointment — so the first conversation is already useful.</p>
+    </header>
+
+    <ol class="steps wrap" data-steps>
+      <li class="step" data-align>
+        <span class="step__bracket" aria-hidden="true"></span>
+        <p class="step__no mono">Step 01 · About 3 minutes</p>
+        <h3 class="d3">Records</h3>
+        <p>Tell us about your practice in four short steps. Before we speak, a strategist reviews your market, your search presence and your reviews.</p>
+      </li>
+      <li class="step" data-align>
+        <span class="step__bracket" aria-hidden="true"></span>
+        <p class="step__no mono">Step 02 · 30 minutes</p>
+        <h3 class="d3">Consultation</h3>
+        <p>A video or phone call with a strategist — not a salesperson. We walk you through what we found, including what you’re already doing well.</p>
+      </li>
+      <li class="step" data-align>
+        <span class="step__bracket" aria-hidden="true"></span>
+        <p class="step__no mono">Step 03 · Yours to keep</p>
+        <h3 class="d3">Treatment plan</h3>
+        <p>A written plan with priorities, milestones and a clear investment. It’s yours to keep, whether or not we work together.</p>
+      </li>
+    </ol>
+
+    <div class="faq wrap">
+      <h3 class="faq__title d3" id="faq-title">Before you book</h3>
+      <div class="faq__list" aria-labelledby="faq-title">
+        <details>
+          <summary>Do you only work with orthodontists?<span class="faq__icon" aria-hidden="true"></span></summary>
+          <p>Orthodontic practices are our specialism — it’s in our name. Our strategy, our creative and our podcast are built around how patients and parents actually choose an orthodontist.</p>
+        </details>
+        <details>
+          <summary>How soon will we see results?<span class="faq__icon" aria-hidden="true"></span></summary>
+          <p>Paid search can generate consultation requests within weeks. Organic search, reviews and reputation compound over months. Your treatment plan sets milestones for both, and monthly force reports show progress against them.</p>
+        </details>
+        <details>
+          <summary>Do we need a new website?<span class="faq__icon" aria-hidden="true"></span></summary>
+          <p>Not always. Records tell us whether your current site can be aligned or should be rebuilt. If it’s working, we’ll tell you.</p>
+        </details>
+        <details>
+          <summary>We already have an agency. Can we still book?<span class="faq__icon" aria-hidden="true"></span></summary>
+          <p>Yes. Many consultations are second opinions. You’ll leave with an objective read on what’s working, whatever you decide.</p>
+        </details>
+        <details>
+          <summary>What does it cost?<span class="faq__icon" aria-hidden="true"></span></summary>
+          <p>Investment depends on your market, your goals and the phases you need. Your treatment plan states it clearly — no surprises.</p>
+        </details>
+      </div>
+    </div>
+
+    <aside class="dnote" aria-label="Director's note">
+      <b>07 · First visit — “What happens if I reach out?”</b> Risk reversal before the ask. Three steps on one wire (brackets engage
+      in sequence), then five objections answered in native, keyboard-accessible disclosures.
+    </aside>
+  </section>
+
+  <!-- ====================================================================
+       08 · FINALE — DEBOND
+       ==================================================================== -->
   <section class="debond" id="consult" data-scene="dark" aria-labelledby="consult-title">
     <svg class="arch" data-arch viewBox="0 0 1200 760" aria-hidden="true">
       <path class="arch__wire" d="M120 740 C 120 120, 360 40, 600 40 C 840 40, 1080 120, 1080 740" />
@@ -583,26 +567,32 @@
       <p class="eyebrow mono"><span>Finale</span> Debond</p>
       <h2 class="d1" id="consult-title">Let’s see where your practice <em>could be.</em></h2>
       <p class="lede">
-        Your first consultation is a records appointment for your brand. We map your market, audit your search
-        presence and walk you through a treatment plan — thirty minutes with a strategist, not a salesperson.
+        Begin with a records appointment for your brand. We map your market, audit your search presence and walk
+        you through a treatment plan.
       </p>
       <div class="cta-row cta-row--center">
-        <a class="btn btn--primary btn--lg" href="#consult"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
-        <a class="link" href="#live">Or listen first</a>
+        <a class="btn btn--primary btn--lg" href="#consultation" data-consult-open data-cta="finale"><span>Begin your consultation</span><span class="btn__wire" aria-hidden="true"></span></a>
+        <a class="link" href="#live" data-cta="finale-listen">Or listen first</a>
       </div>
+      <ul class="debond__assure mono">
+        <li>30 minutes</li><li>With a strategist</li><li>Plan is yours to keep</li>
+      </ul>
     </div>
 
     <aside class="dnote" aria-label="Director's note">
-      <b>The finale.</b> Scroll tensions the wire until it settles into a perfect arch — fourteen brackets, one per tooth.
-      It is the only moment on the site with a spring overshoot: debond day is a celebration.
+      <b>08 · Debond — “Let’s go.”</b> The wire settles into a perfect arch — fourteen brackets, one per tooth, the site’s only
+      spring overshoot. The CTA opens the consultation: the Orb expands from the click point and floods the screen with Ortho Blue.
     </aside>
   </section>
 </main>
 
-<!-- END CREDITS ======================================================== -->
+<!-- ======================================================================
+     09 · END CREDITS
+     ====================================================================== -->
 <footer class="credits" data-scene="dark">
   <div class="credits__roll wrap">
-    <p class="mono">Ortho Marketing presents</p>
+    <img class="credits__logo" src="assets/ortho-marketing-logo-reversed.png" alt="Ortho Marketing" width="816" height="142" loading="lazy">
+    <p class="mono">presents</p>
     <p class="credits__title">Light, <em>Continuous</em> Force</p>
     <dl>
       <div><dt class="mono">Starring</dt><dd>Your practice</dd></div>
@@ -617,14 +607,178 @@
       <a href="#results">Results</a>
       <a href="#studio">Studio</a>
       <a href="#live">Live</a>
-      <a href="#consult">Consultation</a>
+      <a href="#first-visit">First visit</a>
+      <a href="#consultation" data-consult-open data-cta="footer">Consultation</a>
     </nav>
     <p class="mono">© 2026 Ortho Marketing · Family-run since 2008</p>
-    <p class="mono credits__fine">Concept prototype for the creative direction “Light, Continuous Force.” Not the live site.</p>
+    <p class="mono credits__fine">Concept prototype — “Light, Continuous Force.” Not the live site.</p>
   </div>
 </footer>
 
-<!-- HUD ---------------------------------------------------------------- -->
+<!-- ======================================================================
+     CONVERSION — THE RECORDS APPOINTMENT (global overlay)
+     ====================================================================== -->
+<div class="consult" id="consultation" role="dialog" aria-modal="true" aria-labelledby="consult-dialog-title" hidden data-consult>
+  <div class="consult__flood" aria-hidden="true"></div>
+  <div class="consult__inner">
+    <header class="consult__head">
+      <img class="consult__logo" src="assets/ortho-marketing-logo-white.png" alt="Ortho Marketing" width="816" height="142">
+      <p class="mono consult__kicker">Records appointment</p>
+      <button class="consult__close mono" type="button" data-consult-close>Close <span aria-hidden="true">✕</span></button>
+    </header>
+
+    <div class="consult__body" data-consult-body>
+      <div class="cprog" aria-hidden="true">
+        <span class="cprog__fill" data-cprog-fill></span>
+        <span class="cprog__b is-on" style="--at:0%"><i>Practice</i></span>
+        <span class="cprog__b" style="--at:33.333%"><i>Goals</i></span>
+        <span class="cprog__b" style="--at:66.666%"><i>Today</i></span>
+        <span class="cprog__b" style="--at:100%"><i>Contact</i></span>
+      </div>
+      <p class="sr-only" aria-live="polite" data-cstatus>Step 1 of 4</p>
+
+      <form class="cform" novalidate data-consult-form>
+        <!-- STEP 1 -->
+        <fieldset class="cstep is-active" data-step="1">
+          <legend><span class="mono">Step 01 of 04</span><span class="cstep__title" id="consult-dialog-title">Tell us about your practice.</span></legend>
+          <div class="field">
+            <label for="f-practice">Practice name</label>
+            <input id="f-practice" name="practice" type="text" autocomplete="organization" required aria-describedby="e-practice">
+            <p class="field__err" id="e-practice" data-err>We need your practice name to prepare your records.</p>
+          </div>
+          <div class="field">
+            <label for="f-website">Website <span>(optional)</span></label>
+            <input id="f-website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="yourpractice.com">
+          </div>
+          <div class="field field--row">
+            <div class="field">
+              <label for="f-city">City &amp; state</label>
+              <input id="f-city" name="city" type="text" autocomplete="address-level2" required aria-describedby="e-city">
+              <p class="field__err" id="e-city" data-err>Add your city so we can map your market.</p>
+            </div>
+            <fieldset class="field chips" aria-describedby="e-locations">
+              <legend>Locations</legend>
+              <label><input type="radio" name="locations" value="1" required><span>1</span></label>
+              <label><input type="radio" name="locations" value="2-3"><span>2–3</span></label>
+              <label><input type="radio" name="locations" value="4+"><span>4+</span></label>
+              <p class="field__err" id="e-locations" data-err>Choose how many locations you have.</p>
+            </fieldset>
+          </div>
+        </fieldset>
+
+        <!-- STEP 2 -->
+        <fieldset class="cstep" data-step="2">
+          <legend><span class="mono">Step 02 of 04</span><span class="cstep__title">What should move first?</span></legend>
+          <p class="cstep__hint">Choose all that apply.</p>
+          <fieldset class="field chips chips--wrap" aria-describedby="e-goals">
+            <legend class="sr-only">Goals</legend>
+            <label><input type="checkbox" name="goals" value="starts" data-min-group="goals"><span>More new-patient starts</span></label>
+            <label><input type="checkbox" name="goals" value="adults"><span>More adult patients</span></label>
+            <label><input type="checkbox" name="goals" value="website"><span>A new website</span></label>
+            <label><input type="checkbox" name="goals" value="rebrand"><span>A rebrand</span></label>
+            <label><input type="checkbox" name="goals" value="reputation"><span>Reviews &amp; reputation</span></label>
+            <label><input type="checkbox" name="goals" value="location"><span>A new location</span></label>
+            <label><input type="checkbox" name="goals" value="recovery"><span>Recover from a slow year</span></label>
+            <p class="field__err" id="e-goals" data-err>Choose at least one goal.</p>
+          </fieldset>
+        </fieldset>
+
+        <!-- STEP 3 -->
+        <fieldset class="cstep" data-step="3">
+          <legend><span class="mono">Step 03 of 04</span><span class="cstep__title">Where are you today?</span></legend>
+          <fieldset class="field chips" aria-describedby="e-current">
+            <legend>Your marketing today</legend>
+            <label><input type="radio" name="current" value="in-house" required><span>In-house</span></label>
+            <label><input type="radio" name="current" value="agency"><span>Another agency</span></label>
+            <label><input type="radio" name="current" value="little"><span>Not much yet</span></label>
+            <p class="field__err" id="e-current" data-err>Tell us how your marketing runs today.</p>
+          </fieldset>
+          <div class="field">
+            <label for="f-budget">Monthly marketing investment</label>
+            <select id="f-budget" name="budget">
+              <option value="">Prefer not to say</option>
+              <option>Under $3,000</option>
+              <option>$3,000–$6,000</option>
+              <option>$6,000–$12,000</option>
+              <option>$12,000+</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-notes">Anything we should know? <span>(optional)</span></label>
+            <textarea id="f-notes" name="notes" rows="3" placeholder="A new competitor, a partner retiring, a second location opening…"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- STEP 4 -->
+        <fieldset class="cstep" data-step="4">
+          <legend><span class="mono">Step 04 of 04</span><span class="cstep__title">Where should we send your plan?</span></legend>
+          <div class="field field--row">
+            <div class="field">
+              <label for="f-name">Your name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
+              <p class="field__err" id="e-name" data-err>Please add your name.</p>
+            </div>
+            <div class="field">
+              <label for="f-role">Your role</label>
+              <select id="f-role" name="role">
+                <option>Orthodontist / owner</option>
+                <option>Practice manager</option>
+                <option>Marketing lead</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="field field--row">
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email">
+              <p class="field__err" id="e-email" data-err>We need a working email to send your treatment plan.</p>
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone <span>(optional)</span></label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+            </div>
+          </div>
+          <fieldset class="field chips">
+            <legend>Best time to talk</legend>
+            <label><input type="radio" name="time" value="morning"><span>Morning</span></label>
+            <label><input type="radio" name="time" value="midday"><span>Midday</span></label>
+            <label><input type="radio" name="time" value="afternoon"><span>Afternoon</span></label>
+          </fieldset>
+        </fieldset>
+
+        <div class="cform__nav">
+          <button class="cbtn cbtn--ghost" type="button" data-cback hidden>Back</button>
+          <button class="cbtn cbtn--solid" type="submit" data-cnext><span data-cnext-label>Continue</span><span class="btn__wire" aria-hidden="true"></span></button>
+          <p class="cform__saved mono" data-csaved>Saved as you go</p>
+        </div>
+      </form>
+    </div>
+
+    <!-- CONFIRMATION -->
+    <div class="cdone" data-consult-done hidden tabindex="-1">
+      <svg class="orb cdone__orb" viewBox="0 0 124 124" aria-hidden="true">
+        <defs><clipPath id="orb-clip-done"><circle cx="62" cy="62" r="62"/></clipPath></defs>
+        <circle class="orb__body orb__body--white" cx="62" cy="62" r="62"/>
+        <path class="orb__smile orb__smile--blue" data-done-smile clip-path="url(#orb-clip-done)" d="M0 49.6A62 38.4 0 0 0 124 49.6L124 49.6A62 38.4 0 0 1 0 49.6Z"/>
+      </svg>
+      <p class="mono">Records received</p>
+      <h2 class="cdone__title">Thank you<span data-done-name></span>.</h2>
+      <p class="cdone__copy">A strategist will review <span data-done-practice>your practice</span>’s market before your consultation, then email you to confirm a time.</p>
+      <ol class="cdone__next">
+        <li><span class="mono">01</span>We review your records — search, reviews, competitors.</li>
+        <li><span class="mono">02</span>We email you to schedule thirty minutes.</li>
+        <li><span class="mono">03</span>You receive your treatment plan.</li>
+      </ol>
+      <div class="cdone__cta">
+        <a class="cbtn cbtn--solid" href="#live" data-consult-close data-cta="done-listen"><span>Listen while you wait</span><span class="btn__wire" aria-hidden="true"></span></a>
+        <button class="cbtn cbtn--ghost" type="button" data-consult-close>Back to the site</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HUD -->
 <div class="hud mono" aria-hidden="true">
   <span class="hud__label">Treatment day</span>
   <span class="hud__day" data-day>001</span>

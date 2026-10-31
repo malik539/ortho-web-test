@@ -1,7 +1,7 @@
 # Light, Continuous Force
 ### A cinematic creative direction for Ortho Marketing
 
-**Version 1.0 · October 2026**
+**Version 1.1 · October 2026.** v1.1 replaces the original red accent with a palette matched to the supplied Ortho Marketing logo and aligns the homepage sequence with the [Website Experience Blueprint](../experience/WEBSITE-BLUEPRINT.md).
 Working prototype: [`/site/index.html`](../site/index.html) · Tokens: [`tokens.json`](./tokens.json) and [`/site/tokens.css`](../site/tokens.css)
 
 ---
@@ -114,7 +114,8 @@ The homepage is a short film in acts, and the acts follow the arc of orthodontic
 | **Cold open** | The consultation | Dark | Intrigue → recognition | "Who are these people?" | The operatory light switches on; crowded letters align along the archwire |
 | **Act I: Diagnosis** | Crowding | Light | Discomfort, being seen | "Do they understand my problem?" | Competitors' claims crowd together, then scroll pushes them to the edges and opens space |
 | **Act II: Treatment plan** | Records → alignment → force → retention | Dark | Clarity, control | "What do they actually do?" | The sticky archwire rail engages a bracket for each phase |
-| **Interlude: The craft** | The appliance | Dark | Desire | "Is their work beautiful?" | Macro plate of a bracket with a radiograph scanner |
+| *(Interlude: The craft, moved to `/treatment/alignment` in v1.1)* | The appliance | Dark | Desire | "Is their work beautiful?" | Macro plate of a bracket with a radiograph scanner |
+| **Act VI: Your first visit** | The first appointment | Light | Safety | "What happens if I reach out?" | Three steps on one wire, then the FAQ |
 | **Act III: Before / After** | The result | Light | Proof | "Does it work?" | Before/after slider where the divider is the archwire |
 | **Act IV: The family** | Chairside manner | Dark | Trust, kinship | "Will they care about my practice?" | Portrait lighting plan; family-run since 2008 |
 | **Act V: Live** | Continuing education | Graphite | Authority, generosity | "Do they know the industry?" | On-air broadcast lamp and waveform |
@@ -123,7 +124,7 @@ The homepage is a short film in acts, and the acts follow the arc of orthodontic
 
 ### Story devices that run through the whole site
 
-- **The archwire.** A single 1.5px line in Ligature red. It's the visual thread that ties every act together: it straightens in the hero, divides before from after, runs through the treatment rail, underlines on hover, and resolves into the arch at the end. It's always this weight and always this color.
+- **The archwire.** A single 1.5px line: Signal on dark grounds, Ortho Blue on light. It's the visual thread that ties every act together: it straightens in the hero, divides before from after, runs through the treatment rail, underlines on hover, and resolves into the arch at the end. It's always this weight, and always the brand blue for its ground.
 - **The treatment-day counter.** A fixed HUD in the lower left that maps scroll position to an 18-month course of treatment, `Treatment day 001 / 540`. Reading the site literally becomes a course of treatment.
 - **The midline.** A fixed vertical hairline at 50% of the viewport, at 8% opacity with difference blending so it works on dark and light. Orthodontists spend careers getting midlines right, and the site keeps one visible throughout.
 - **Hard cuts.** Changes between dark and light scenes are cinematic cuts, not gradients. The contrast is the drama.
@@ -216,49 +217,58 @@ Picture an orthodontic practice at 6:40 a.m., before anyone arrives. One lamp is
 
 ## 8. Color
 
-The light neutrals take their names from dental shade tabs and the darks from the operatory. The single accent is the colored elastic ligature, the one bit of personal expression a patient gets in treatment.
+**The palette is matched to the Ortho Marketing logo.** The logo was sampled at Ortho Blue `#1F2AFF`, near-black `#000201` and a white crescent. The darks are tuned to the logo's black. The light neutrals keep their dental shade-tab names (BL1, A1, B2), which bring warmth next to the electric blue.
 
 | Token | Name | Hex | Role |
 |---|---|---|---|
-| `--c-occlusion` | **Occlusion** | `#0D0C0B` | Main dark ground. Warm, never pure black. |
-| `--c-graphite` | **Graphite** | `#1C1A18` | Raised dark surfaces, the Live scene |
-| `--c-smoke` | **Smoke** | `#3A3632` | Hairlines on dark (decorative only) |
-| `--c-nitinol` | **Nitinol** | `#A3A7A9` | Secondary text and data on dark |
-| `--c-nitinol-dim` | **Nitinol Dim** | `#84888A` | Tertiary and meta text on dark |
+| `--c-ortho-blue` | **Ortho Blue** | `#1F2AFF` | The logo color. Primary CTAs, the Orb, the consultation flood, the wire on light grounds. |
+| `--c-ortho-blue-deep` | **Ortho Blue Deep** | `#1820D9` | Hover/pressed state on light grounds |
+| `--c-signal` | **Signal** | `#737BFF` | Ortho Blue lifted for wires, labels, links and focus rings on dark grounds |
+| `--c-crescent` | **Crescent** | `#FFFFFF` | The logo's smile. Text and controls on Ortho Blue. |
+| `--c-occlusion` | **Occlusion** | `#0A0A0C` | Main dark ground, tuned to the logo black |
+| `--c-graphite` | **Graphite** | `#16161A` | Raised dark surfaces, the Live scene |
+| `--c-smoke` | **Smoke** | `#2E2E35` | Hairlines on dark (decorative only) |
+| `--c-nitinol` | **Nitinol** | `#A4A7AE` | Secondary text and data on dark |
+| `--c-nitinol-dim` | **Nitinol Dim** | `#85888F` | Tertiary and meta text on dark |
 | `--c-porcelain` | **Porcelain · BL1** | `#F4F1EB` | Main light ground; text on dark |
 | `--c-enamel` | **Enamel · A1** | `#EAE3D5` | Secondary light ground |
 | `--c-dentin` | **Dentin · B2** | `#CFC3AC` | Hairlines on light (decorative only) |
 | `--c-umber` | **Umber** | `#5E5750` | Secondary text on light |
-| `--c-ligature` | **Ligature** | `#E2412B` | The accent: wire, primary CTA, active states |
-| `--c-ligature-deep` | **Ligature Deep** | `#B5321F` | Ligature for small text on light grounds |
-| `--c-radiograph` | **Radiograph** | `#9DB6C6` | Only inside x-ray views |
+| `--c-radiograph` | **Radiograph** | `#A9B4E8` | Only inside radiograph views |
+| `--c-alert` | **Alert** | `#C2321F` | Form errors on light grounds only |
+
+### The Orb
+
+The logo's "O" is a blue sphere with a white smile-shaped crescent. It's a lamp, a lens and a smile at once, and the site uses it as a system element: it calibrates in the loading screen, flies into the nav logo, returns as the origin of the blue flood that opens the consultation, and smiles again on the confirmation screen. The logo opens the experience and closes it.
 
 ### Proportions
 
-**About 55% Occlusion · 30% Porcelain/Enamel · 12% neutrals · no more than 3% Ligature in any viewport.**
+**About 55% Occlusion · 30% Porcelain/Enamel · 10% neutrals · no more than 5% Ortho Blue/Signal in any viewport.** The exception is the consultation overlay, the one full-bleed Ortho Blue surface.
 
 ### Rules
 
-- **Ligature is the archwire color.** Use it only for (1) the wire and lines, (2) the primary CTA, (3) active and focus states, and (4) Act labels. Never as a section background, and never for body text on light grounds (use Ligature Deep there).
-- **Radiograph appears only in x-ray views.** Its rarity is what makes the "see beneath the surface" moment work.
+- **On dark grounds, Ortho Blue is a fill only** (buttons, the Orb, glows), because it's 2.67:1 against Occlusion. Use **Signal** for every blue line, wire, label or focus ring on dark.
+- **On light grounds, Ortho Blue is the wire, the labels and the links** (6.57:1 on Porcelain).
+- **Primary buttons are always Ortho Blue with white text (7.41:1).** On dark grounds they get a 1px Signal inner edge so the button boundary meets 3:1.
+- **The archwire is Signal on dark and Ortho Blue on light.** It's always 1.5px.
 - **Category cyan (`#19B3C4`) appears exactly once,** in Act I, as the noise we push away.
+- **No red,** except form errors on light grounds. Errors on blue use `#FFD7D0`.
 - **Client practices get their own palettes.** The "after" mockup in Act III is deliberately forest and brass, not Ortho Marketing's colors. We design their brands; we don't clone ours.
 
 ### Contrast (WCAG 2.2)
 
 | Pair | Ratio | Passes |
 |---|---|---|
-| Porcelain on Occlusion | 17.34:1 | AAA |
-| Nitinol on Occlusion | 8.06:1 | AAA |
-| Nitinol Dim on Occlusion / Graphite | 5.46:1 / 4.85:1 | AA |
-| Radiograph on Occlusion | 9.25:1 | AAA |
-| Ligature on Occlusion | 4.68:1 | AA |
-| Occlusion text on Ligature button | 4.68:1 | AA |
+| Porcelain on Occlusion | 17.5:1 | AAA |
+| Nitinol on Occlusion | 8.21:1 | AAA |
+| Nitinol Dim on Occlusion / Graphite | 5.57:1 / 5.08:1 | AA |
+| Signal on Occlusion / Graphite | 5.66:1 / 5.16:1 | AA |
+| White on Ortho Blue | 7.41:1 | AAA |
+| Ortho Blue on Porcelain | 6.57:1 | AA |
+| Ortho Blue Deep on Porcelain | 8.29:1 | AAA |
 | Umber on Porcelain | 6.30:1 | AA |
-| Ligature Deep on Porcelain | 5.41:1 | AA |
-| Ligature on Porcelain | 3.71:1 | Large text and graphics only |
-
----
+| Error `#FFD7D0` on Ortho Blue | 5.6:1 | AA |
+| Ortho Blue on Occlusion | 2.67:1 | **Fills only**, never text or lines |
 
 ## 9. Imagery
 
@@ -276,7 +286,7 @@ The light neutrals take their names from dental shade tabs and the darks from th
 - *Light:* One strip light, raking from camera left, on black velvet. Polarized to control specular highlights.
 - *Lens:* 100mm macro at f/8–f/11, focus-stacked for edge-to-edge sharpness.
 - *Color:* Steel and black, with the elastic as the only color.
-- *Prototype reference:* Plate 04 in the Interlude.
+- *Where it appears:* the `/treatment/alignment` hero (the bracket-macro plate with the radiograph scanner).
 
 **3 · The After: patients living**
 - *Subject:* What a finished smile makes possible: a teen on stage, a bride mid-laugh, an adult presenting at work.
@@ -301,7 +311,7 @@ Warm highlights (about 3200K practical light), neutral midtones, shadows lifted 
 ### Illustration and data: the cephalometric language
 
 Data never appears as stock charts. It's drawn as **cephalometric tracing**:
-- Landmarks are 6px dots in Ligature Deep on light grounds or Ligature on dark.
+- Landmarks are 6px dots in Ortho Blue on light grounds or Signal on dark.
 - Leader lines are 1px and angle into a horizontal label.
 - Angles are dashed arcs with the measurement in mono.
 - *Market cephalometrics:* the classic ceph landmarks S–N–A–B are recast as the patient funnel: **S**earch → **N**otice → **A**ppointment → **B**egin treatment. The angle between A and B is conversion.
@@ -318,7 +328,7 @@ A radiograph layer shows "what's underneath": data, structure, measurement. Meta
 
 **On the site itself,** the light has to be consistent with the photography:
 
-- **Operatory light.** In dark heroes, a warm radial light (`rgba(255,238,210,0.17)` at most) follows the cursor with heavy damping (lerp 0.06 per frame). On touch devices it drifts on its own along a slow path that takes 25–35 seconds per cycle.
+- **Operatory light.** In dark heroes, a cool radial light (a white core with a Signal halo, at most 16% opacity) follows the cursor with heavy damping (lerp 0.06 per frame). On touch devices it drifts on its own along a slow path that takes 25–35 seconds per cycle.
 - **Power-on.** The cold open starts black. The light comes up over 1.4 seconds with a short dip, like an operatory lamp warming up.
 - **Light direction.** Every gradient, vignette and plate originates from the upper left, so photography and UI read as one lit space.
 - **No drop shadows on UI.** Elevation comes from light and surface tone. The only soft shadows are on photographic plates and the before/after frame.
@@ -332,7 +342,7 @@ A radiograph layer shows "what's underneath": data, structure, measurement. Meta
 | **Film grain** | Full-screen overlay | SVG fractal noise at 5.5% opacity, jittered in 6 steps (~7fps). Static when reduced motion is on. |
 | **Enamel** | Light scenes | Warm porcelain, never `#FFF`. Ivory tones layered to suggest translucency. |
 | **Steel** | Lines and illustrations | 1px Nitinol hairlines. Brushed-metal gradients only inside illustrated plates. |
-| **Elastic** | The accent | The one saturated material: Ligature. |
+| **Elastic** | The accent | The one saturated material: Ortho Blue, the elastic color the brand chose. |
 | **Radiograph** | X-ray views | Luminous blue-gray on blue-black, with a soft glow. |
 | **Paper** (print) | Proposals, leave-behinds | Uncoated warm white stock, mono captions, display headlines. |
 
@@ -391,7 +401,7 @@ A radiograph layer shows "what's underneath": data, structure, measurement. Meta
 |---|---|---|
 | **Cold open** | Page load | 0ms black → 200ms light powers on (1.4s) → 350ms each glyph moves from crowded (±8° rotation, ±0.07em offset) into alignment over 2.4s with an 18ms stagger, while the archwire relaxes from a damped wave to a straight line over 2.6s. The text is readable from the first frame. |
 | **Crowding** | Scroll-scrub across 300vh | 0–10% the claims sit crowded. 10–60% they spread to the periphery, rotation goes to 0° and opacity to 20%. 16–40% the act header lifts away. 48–76% "We create space." aligns into the empty center. |
-| **Treatment rail** | Scroll position | Sticky numerals cross-fade with rotation as each phase crosses the viewport center. Brackets engage (fill with Ligature). The wire fills continuously with scroll. |
+| **Treatment rail** | Scroll position | Sticky numerals cross-fade with rotation as each phase crosses the viewport center. Brackets engage (fill with Signal). The wire fills continuously with scroll. |
 | **Radiograph** | Cursor / idle | A scanner band (±14% wide) follows the cursor with 0.08 damping and sweeps slowly (about a 16-second cycle) when idle. |
 | **Before / after** | Drag, keyboard, or first view | The first time it's seen, a demo sweep (50 → 30 → 64 → 50%, 900ms per segment) that cancels on any interaction. The divider is the archwire with a bracket handle. |
 | **On air** | Ambient | The only pulsing element on the site: a 2.6s glow cycle. |
@@ -403,10 +413,10 @@ A radiograph layer shows "what's underneath": data, structure, measurement. Meta
 ### Micro-interactions
 
 - **Buttons:** the wire after the label lengthens from 1.75 to 3rem with a bracket square riding at its end. Pressing nudges the button down 1px.
-- **Text links:** the underline offset increases (0.35 → 0.6em) and the underline turns Ligature, as if it were under tension.
+- **Text links:** the underline offset increases (0.35 → 0.6em) and the underline turns the brand blue, as if it were under tension.
 - **Nav links:** a wire draws in left to right and retracts to the right.
-- **Episode rows:** a wire draws across the row over 1.4s and the play bracket fills with Ligature.
-- **Focus:** a 2px Ligature outline with a 4px offset. Always visible on keyboard focus.
+- **Episode rows:** a wire draws across the row over 1.4s and the play bracket fills with Ortho Blue.
+- **Focus:** a 2px outline (Signal on dark, Ortho Blue on light) with a 4px offset. Always visible on keyboard focus.
 
 ### Sound (optional, off by default)
 
@@ -539,7 +549,7 @@ Animate `transform` and `opacity` only. One `requestAnimationFrame` loop drives 
 - *How we work:* the four creative principles, written for clients.
 
 **Live (index and episode)**
-- *Index:* on-air header, latest episode with a waveform player (the played portion in Ligature), then the episode list.
+- *Index:* on-air header, latest episode with a waveform player (the played portion in Signal), then the episode list.
 - *Episode:* guest portrait lit studio-style, chapter markers on the waveform, full transcript (good for SEO and accessibility), related episodes.
 
 **Journal**
@@ -561,16 +571,16 @@ Animate `transform` and `opacity` only. One `requestAnimationFrame` loop drives 
 | Component | Anatomy | Notes |
 |---|---|---|
 | **Nav** | Arch logomark + wordmark · 4 links · primary CTA | Transparent and scene-aware. Hides going down. Full-screen menu under 1024px. |
-| **Primary button** | Label + wire + bracket square | Ligature with Occlusion text (4.68:1). Hover goes to Porcelain. Radius 2px. Sizes sm/md/lg. |
-| **Text link** | Underline at 1px | Tension hover (offset plus Ligature color). |
-| **Act label (eyebrow)** | `ACT II` in Ligature + 40px wire + label in Nitinol | Opens every major section. |
+| **Primary button** | Label + wire + bracket square | Ortho Blue with white text (7.41:1). 1px Signal edge on dark. Hover: white with blue text on dark, Ortho Blue Deep on light. Radius 2px. Sizes sm/md/lg. |
+| **Text link** | Underline at 1px | Tension hover (offset plus brand blue). |
+| **Act label (eyebrow)** | `ACT II` in Signal (Ortho Blue on light) + 40px wire + label in Nitinol | Opens every major section. |
 | **Plate** | Image or illustration container + mono caption (plate number, technical credits) | Every image carries its own "film slate". The radiograph variant is optional. |
 | **Phase** | Mono label · d2 headline · lede · spec grid (Deliverables / Clinical parallel / Timeline) | Used on Home and the Treatment pages. |
 | **Metric** | Ceph leader line + landmark dot · display number · mono caption | Always states the time period and source. |
 | **Compare slider** | Browser chrome · two layers · archwire divider with bracket handle · range input | Keyboard accessible, with aria-valuetext. |
 | **Episode row** | Number · title (d3) · guest (mono) · play bracket | The wire draws across on hover. |
 | **Quote** | Italic display quote · mono attribution · optional small portrait plate | Real names and practices only. |
-| **Form field** | Mono label above · underline input · wire turns Ligature on focus · error in Ligature Deep | One question per line. Generous 64px rows. |
+| **Form field** | Mono label above · underline input · underline thickens on focus · inline error | In the consultation overlay: white on Ortho Blue, errors in `#FFD7D0`. Full spec in the Blueprint §5. |
 | **HUD** | `TREATMENT DAY 001 / 540` + progress hairline | Fixed, with difference blend. |
 | **Credits footer** | Billing-block layout (Starring, Treatment, Filmed on location, Running time) + nav + legal | Ends every page. |
 
@@ -596,7 +606,7 @@ Animate `transform` and `opacity` only. One `requestAnimationFrame` loop drives 
 
 Target **WCAG 2.2 AA** throughout.
 
-- **Contrast:** see the table in [§8](#8-color). Ligature on Porcelain is only used for large text and graphics.
+- **Contrast:** see the table in [§8](#8-color). Ortho Blue on dark grounds is used for fills only.
 - **Motion:** the full `prefers-reduced-motion` alternative in [§13](#13-motion-language). No flashing, and nothing that pulses faster than once every 2.6s.
 - **Split-text headlines:** the heading gets an `aria-label` with the full sentence, and the glyph spans are `aria-hidden`.
 - **Compare slider:** a native range input that's keyboard operable, with `aria-valuetext` ("62% redesigned website visible") and a visible focus ring on the frame.
@@ -647,8 +657,9 @@ Each phase gets an indexable landing page. Every case is a crawlable page. Episo
 
 ### How the prototype implements each signature effect
 
-| Effect | File · section |
-|---|---|
+The section-by-section map from blueprint to code is in [Website Experience Blueprint §9.4](../experience/WEBSITE-BLUEPRINT.md#94-prototype--production-map).
+
+---|---|
 | Crowded-glyph split and alignment | `main.js` §1, `styles.css` "COLD OPEN" |
 | Archwire wave-to-line | `main.js` §1 (`wireD`, `animateWire`) |
 | Operatory light | `main.js` LOOP; `.hero__light` |
